@@ -1,0 +1,30 @@
+
+.CalendarSync {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 10px 524px;
+    grid-template-rows: 168px;
+    background: #F3F5F7;
+    border-radius: 10px;
+
+}
+
+.SyncColorPointContainer {
+    margin-top: 46px;
+    margin-left: 1px;
+}
+
+
+.SyncInfoContainer {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 144.2%;
+    color: #1E1E1E;
+    margin-top: 28px;
+    margin-left: 41px;
+    height: 69px;
+    display: grid;
+    grid-template-rows: 29px 29px;
+    grid-row-gap: 10px;
+}

@@ -1,0 +1,53 @@
+.TooltipContainer {
+    position: fixed;
+    z-index: 10000;
+    width: 343px;
+    height: 138px;
+    border-radius: 20px;
+    background-color: #FFFFFF;
+    bottom: 48px;
+    right: 61px;
+
+}
+
+.TooltipContent{
+    padding-top: 28px;
+    padding-left: 34px;
+}
+.StatusAndCloseButtonContainer{
+    display: grid;
+    grid-template-columns:  277px  14px;
+    grid-template-rows: 14px;
+}
+.TooltipCloseButtonContainer{
+    align-self: center;
+    justify-self: center;
+    cursor: pointer;
+}
+.TooltipStatusWarning{
+    height: 12px;
+    width: 12px;
+    border-radius: 100%;
+    background-color: #FFCC40;
+}
+.TooltipStatusDanger{
+    height: 12px;
+    width: 12px;
+    border-radius: 100%;
+    background-color: #E34040;
+}
+.TooltipStatusOk{
+    height: 12px;
+    width: 12px;
+    border-radius: 100%;
+    background-color: #62D2B1;
+}
+.TooltipTextContainer{
+    font-family: Roboto,serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 144.2%;
+    color: #1E1E1E;
+    padding-top: 15px;
+}

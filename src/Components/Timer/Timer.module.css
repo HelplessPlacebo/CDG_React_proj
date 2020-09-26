@@ -1,0 +1,56 @@
+.TimeRContainer {
+    margin-top: 56px;
+    margin-left: 200px;
+    width: 217px;
+    height: 238px;
+}
+
+.TimerWorklogName {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 144.2%;
+    text-align: center;
+    color: #000000;
+    margin-bottom: 14px;
+    outline: none;
+    border: none;
+    background-color: #F9FAFC;
+    width: 217px;
+}
+
+.TimerIssueName {
+    outline: none;
+    border: none;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 144.2%;
+    text-align: center;
+    font-variant: small-caps;
+    color: #828282;
+    margin-bottom: 11px;
+    background-color: #F9FAFC;
+    width: 217px;
+}
+
+.TimerControlButtonsContainer {
+    margin-left: 50px;
+    margin-top: 25px;
+}
+
+.TimerControlButtons {
+    display: grid;
+    grid-template-columns: 48px 48px;
+    grid-template-rows: 48px;
+    grid-column-gap: 22px;
+}
+
+.Timer {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 54px;
+    line-height: 144.2%;
+    text-align: center;
+    color: #1E1E1E;
+}

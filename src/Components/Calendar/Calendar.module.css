@@ -1,0 +1,207 @@
+.CalendarContainer {
+
+    width: 197px;
+    height: 58px;
+    border-radius: 30px;
+    background-color: #F0F3F5;
+
+}
+
+.CalendarContent {
+
+    display: grid;
+    grid-template-columns: 160px 12px;
+    grid-template-rows: 19px;
+}
+
+.CalendarIcon {
+    padding-left: 10px;
+    padding-top: 15.5px;
+    width: 12px;
+    height: 12px;
+}
+
+.CalendarDate {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 144.2%;
+    font-variant: small-caps;
+    text-transform: uppercase;
+    color: #3744BD;
+    text-align: center;
+    padding-top: 16px;
+}
+/**************************** DropDown Calendar ********************************/
+.DropDownCalendar {
+    padding-top: 6px;
+    z-index: 10000;
+    position: absolute;
+    width: 462px;
+    height: 472px;
+    border-radius: 10px;
+    background: #FFFFFF;
+}
+
+.DropDownCalendarHeader {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    color: #000000;
+    text-align: center;
+    padding-top: 37px;
+    padding-left: 62px;
+    width: 338px;
+    height: 19px;
+}
+
+.DropDOwnCalendarContentContainer {
+    padding-left: 63px;
+    padding-top: 46px;
+    width: 340px;
+    height: 305px;
+}
+
+.DropDownCalendarContent{
+    display: grid;
+    grid: repeat(6, 27px)/repeat(7, 25px);
+    grid-column-gap: 27px;
+    grid-row-gap: 23px;
+}
+
+.DropDownCalendarFooterContainer{
+    padding-top: 90px;
+    padding-left: 114px;
+    width: 223px;
+    height: 16px;
+}
+
+.DropDownCalendarFooter {
+    display: grid;
+    grid-template-columns: 51px 84px 61px;
+    grid-template-rows: 14px;
+    grid-column-gap: 15px;
+}
+
+.DropDownCalendarFooterElement {
+    display: grid;
+    grid-template-columns: 21px 1fr;
+    grid-column-gap: 5px;
+}
+
+.DropDownCalendarProgressLineDanger {
+    width: 20px;
+    height: 6px;
+    border: 1px solid #FFFFFF;
+    border-radius: 48px;
+    background: #E34040;
+}
+
+
+.DropDownCalendarProgressLineOk {
+    width: 20px;
+    height: 6px;
+    border: 1px solid #FFFFFF;
+    border-radius: 48px;
+    background: #62D2B1;
+}
+
+.DropDownCalendarProgressLineWarning{
+    width: 20px;
+    height: 6px;
+    border: 1px solid #FFFFFF;
+    border-radius: 48px;
+    background: #FFCC40;
+}
+
+.DropDownProgressStatus{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 11px;
+    line-height: 13px;
+    color: #898989;
+
+}
+.DayBgClicked{
+    cursor: default;
+    background-color: #3744BD;
+    border-radius: 40px;
+    height: 40px;
+    width: 40px;
+}
+.DayBgCurrentDay{
+    cursor: default;
+    background-color: #d63a94;
+    border-radius: 40px;
+    height: 40px;
+    width: 40px;
+}
+
+.DayBgDefault {
+    cursor: default;
+    height: 40px;
+    width: 40px;
+}
+.DropDownCalendarDay{
+    padding-left: 7px;
+    padding-top: 7px;
+    cursor: default;
+    height: 35px;
+    width: 30px;
+    display: grid;
+    grid-template-columns: 25px;
+    grid-template-rows: 21px 6px;
+    grid-row-gap: 2px;
+    text-align: center;
+}
+
+.DropDownCalendarDayFaded{
+    padding-left: 7px;
+    padding-top: 7px;
+    cursor: default;
+    height: 35px;
+    width: 30px;
+    display: grid;
+    grid-template-columns: 25px;
+    grid-template-rows: 21px 6px;
+    grid-row-gap: 2px;
+    text-align: center;
+    opacity: 30%;
+    color: #CCCCCC;
+}
+
+.DropDownCalendarDayNumber {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #444444;
+}
+.DropDownCalendarDayNumberClicked {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.DropDownCalendarDayNames {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #999999;
+}
+.bg {
+    z-index: 9998;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}

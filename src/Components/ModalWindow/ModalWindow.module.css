@@ -1,0 +1,137 @@
+.modal{
+    z-index : 9999;
+    position : fixed;
+    top : 50%;
+    left : 50%;
+    width: 660px;
+    height: 470px;
+    box-shadow: 0 3px 10px -.5px rgba(0, 0, 0, .2);
+    padding : 15px;
+    border-radius : 10px;
+    transform : translate(-50%, -50%);
+    background : #fff;
+
+}
+.bg {
+    z-index: 9998;
+    background: rgba(41, 41, 41, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.ModalTitle {
+    margin-top: 30px;
+    margin-left: 56px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 144.2%;
+    color: #1E1E1E;
+}
+
+.ModalSlider {
+    margin-left: 56px;
+    margin-top: 79px;
+    width: 543px;
+    height: 54px;
+}
+
+.ModalTextFields {
+    width: 543px;
+    height: 124px;
+    margin-left: 56px;
+    margin-top: 29px;
+}
+
+.NewWorklogContentContainer {
+
+}
+
+.NewWorklogContentTitle {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 144.2%;
+    color: #4F4F4F;
+}
+.ModalInputError{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 144.2%;
+    margin-left: 420px;
+    margin-top: 17px;
+    color: #E34040;;
+}
+.NewWorklogContentInput {
+    width: 543px;
+    margin-top: 6px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 144.2%;
+    color: #C4CACB;
+    outline: none;
+    border: none;
+}
+.marginCheck{
+    display: inline-block;
+    position: relative;
+
+}
+
+.marginCheck:after{
+    position: absolute;
+    content: '';
+    border-bottom: 1px solid #E9ECF2;
+    width: 543px;
+    transform: translateX(-50%);
+    bottom: -15px;
+    left: 50%;
+}
+
+.NewWorklogControlButtonsContainer {
+    margin-top: 38px;
+    margin-left: 240px;
+    width: 117px;
+    height: 46px;
+
+}
+
+.NewWorklogControlButtons {
+    width: 117px;
+    height: 46px;
+    display: inline-flex;
+}
+
+.NewWorklogSubmitButtonSize {
+
+}
+
+.NewWorklogControlButton {
+    margin-top: 9.3px;
+    margin-left: 27px;
+}
+
+.NewWorklogSubmitButton {
+    outline: none;
+    width: 45px;
+    height: 45px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent url('../../assets/imgs/confirmButton.svg') no-repeat center top;
+    text-indent: -1000em;
+    cursor: pointer;
+
+}
+
+.Err{
+    margin: 30px 0 20px 0;
+    color: firebrick;
+    font-size: 20px;
+}

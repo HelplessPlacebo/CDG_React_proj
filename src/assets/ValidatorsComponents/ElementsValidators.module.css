@@ -1,0 +1,57 @@
+.formControl.error textarea,
+.formControl.error  input{
+border: solid #b21b1c 2px;
+}
+.formControl.error span{
+    color: #b20400;
+    font-style: italic;
+}
+.textarea {
+    resize: none;
+    width: 20%;
+height: 55px;
+}
+.button{
+    width: 200px;
+    height: 200px;
+    color: tomato;
+}
+
+.input {
+    text-align: center;
+    width: 250px;
+    height: 50px;
+    font-size: 15px;
+    border-radius: 7px;
+    padding-left: 10px;
+}
+.TextAreaMessage{
+    margin-top: 40px;
+    resize: none;
+    width: 50%;
+    height: 149px;
+}
+.textareaAboutMe{
+    resize: none;
+    width: 40%;
+    height: 100px;
+}
+.ContactFormInput{
+    text-align: center;
+    width: 200px;
+    height: 29px;
+    font-size: 15px;
+    margin-bottom: 25px;
+    border-radius: 7px;
+    padding-left: 10px;
+}
+.TextAreaDialogsMessage{
+    margin-top: 15px;
+    resize: none;
+    width: 500px;
+    height: 111px;
+}
+.TaskFormInput{
+    width: 40px;
+    height: 40px;
+}

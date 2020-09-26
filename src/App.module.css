@@ -1,0 +1,46 @@
+
+
+@font-face {
+
+    font-family: 'Roboto', serif;
+    src: url(./assets/roboto/Roboto-Regular.woff2) format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: fallback;
+}
+
+.MainWrapper {
+    font-family: 'Roboto', serif;
+    display: grid;
+    grid-template-columns: 1296px 624px;
+}
+
+.CalendarAndButtonsContainer {
+    font-family: 'Roboto', serif;
+    padding-top: 52px;
+    padding-left: 96px;
+}
+
+.CalendarAndButtons {
+    width: 1069px;
+    display: grid;
+    grid-template-columns: 893px 79px 1fr;
+    grid-template-rows: 58px;
+}
+
+.TImeTracking_and_Calendar {
+    display: grid;
+    grid-template-rows: 363px 497px;
+}
+.AppContainer{
+    font-family: 'Roboto', serif;
+    background-color: #F9FAFC;
+    overflow: hidden;
+}
+@media (max-width: 1500px) {
+    .AppContainer {
+        font-family: 'Roboto', serif;
+        background-color: #F9FAFC;
+        overflow: initial;
+    }
+}

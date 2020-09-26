@@ -1,0 +1,85 @@
+.TimetrackingHeaderContainer {
+    width: 529px;
+    height: 32px;
+    padding-left: 36px;
+}
+
+.TTLayout {
+    display: grid;
+    grid-template-columns: 1px 1fr;
+    grid-template-rows: 1fr;
+}
+
+.TTContent {
+    width: 624px;
+    height: 363px;
+}
+.TTMainContentRoot{
+
+}
+
+.TimetrackingHeader {
+    padding-top: 7px;
+    display: grid;
+    grid-template-columns: 505px 24px;
+    grid-template-rows: 32px;
+
+}
+
+.TimeTrackingLogo {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 144.2%;
+    color: #1E1E1E;
+}
+
+.MoreIconSizeContainer {
+}
+
+.MoreIconSize {
+    width: 24px;
+    height: 24px;
+}
+
+/***********************************************/
+/******************  time tracking button new worklog****************/
+.NewWorklogContainer {
+    padding-left: 274px;
+    padding-top: 84px;
+}
+
+
+.NewWorklog {
+    width: 112px;
+    height: 114px;
+}
+
+
+.NewWorklogButtonSize {
+    width: 100%;
+    height: 100%;
+}
+.NewWorklogButtonPose {
+    padding-left: 22px;
+    padding-right: 24px;
+    border-top: 22px;
+}
+
+.NewWorklogButtonDescriptionContainer {
+
+}
+
+.NewWorklogButtonDescription {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 144.2%;
+    text-align: center;
+    font-variant: small-caps;
+    color: #C4CACB;
+}
+.TTHorizStrokePose {
+    height: 1px;
+    padding-top: 110px;
+}

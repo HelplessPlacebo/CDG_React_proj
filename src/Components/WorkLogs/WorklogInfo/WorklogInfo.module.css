@@ -1,0 +1,46 @@
+.SummaryWorklogInfo {
+    display: grid;
+    grid-template-columns: 899px 101px 85px;
+    grid-template-rows: 50px;
+}
+
+.DateBlockContainer {
+    width: 255px;
+    height: 32px;
+}
+
+.DateBlockSize {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 144.2%;
+    color: #1E1E1E;
+}
+
+.DownloadIcon {
+    align-self: center;
+    margin-left: 47px;
+}
+
+.DateTime {
+
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 144.2%;
+    color: #BBBBBB;
+}
+
+/******************************* Progress bar ********* */
+.Progress {
+    margin-top: 8px;
+    position: relative;
+
+    width: 100px;
+    height: 6px;
+}
+
+
+.WLlineStrokeContainer{
+    margin-top: 34px;
+}

@@ -1,0 +1,38 @@
+.AllButtonBgActive {
+
+    width: 79px;
+    height: 47px;
+    background: #F0F3F5;
+    border-radius: 30px;
+}
+
+.AllButtonBg {
+
+    width: 79px;
+    height: 47px;
+    cursor: pointer;
+}
+.item a {
+    margin-top: 10px;
+    margin-left: 27px;
+    margin-bottom: 18px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 144.2%;
+    color: #C4CACB !important;
+    text-decoration: none  !important;
+}
+
+.ActiveItem a {
+    margin-top: 10px;
+    margin-left: 27px;
+    margin-bottom: 18px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 144.2%;
+    color: #4F4F4F !important;
+    text-decoration: none  !important;
+}
+

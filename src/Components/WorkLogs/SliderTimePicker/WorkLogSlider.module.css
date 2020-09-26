@@ -1,0 +1,24 @@
+.SliderTimesContainer {
+    margin-top: 14px;
+    margin-left: 108px;
+    width: 1090px;
+    height: 14px;
+}
+
+.SliderTimes {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 144.2%;
+    color: #C4CACB;
+    display: grid;
+    grid-template-columns: repeat(13, 34px);
+    grid-template-rows: 14px;
+    grid-column-gap: 54px;
+}
+.TimePickerLine{
+    width: 1229px;
+    margin-left: 44px;
+    margin-top: 45px;
+    height: 39px;
+}
