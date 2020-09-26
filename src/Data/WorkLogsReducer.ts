@@ -347,7 +347,7 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
     }
 
 
-    const FindWorklogById = (id: number | undefined, IsNesting?: boolean, ParentId?: number | null) => {
+    const FindWorklogById = (id: number | undefined, ParentId?: number | null) => {
         let WorklogsBlocksCopy: Array<TWorklogBlock> = GetWorklogsBlockCopy()
         let SoughtWorklog = {} as TWorkLog
         let WorklogBlockIndex = undefined as number | undefined
@@ -357,7 +357,7 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
         WorklogsBlocksCopy.map((WorklogBlock, Index) => {
             WorklogBlock.Worklogs.map((Worklog, WLIndex) => {
 
-                if (IsNesting) {
+                if (ParentId) {
                     Worklog.NestingItems?.map((NestingItem, NestingIndex) => {
                         if (NestingItem.id === id) {
                             let SoughtNestingItem = {
@@ -426,7 +426,7 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
         }
 
         case SET_IS_PLAYING_WORKLOG_BY_ID: {
-            let SoughtWorklog = FindWorklogById(action.ElementId, action.IsNesting, action.ParentId).SoughtWorklog
+            let SoughtWorklog = FindWorklogById(action.ElementId, action.ParentId).SoughtWorklog
             return {
                 ...state,
                 //@ts-ignore
@@ -438,7 +438,7 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
         case CHANGE_WORKLOG: {
             let WorklogsBlocksCopy: Array<TWorklogBlock> = GetWorklogsBlockCopy()
             WorklogsBlocksCopy.map(WB => WB.Worklogs.map(Worklog => {
-                if (action.NewWlIsNesting) {
+                if (action.parentId) {
                     if (Worklog.id === action.NewWlParentId) {
                         Worklog.NestingItems?.map(NestingItem => {
                             if (NestingItem.id === action.WorkLogId) {
@@ -464,7 +464,7 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
                     }
                 }
             }))
-
+            debugger
             return {
                 ...state,
                 WorkLogsBlocks: WorklogsBlocksCopy
@@ -481,14 +481,6 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
                         if (Worklog.id === action.DelParentId) {
                             NewNestingWorklogs.push(Worklog.NestingItems?.filter(NestingItem => NestingItem.id !== action.DelWorklogId))
                             WorklogsBlocksCopy[index].Worklogs[WLIndex].NestingItems = NewNestingWorklogs[index]
-
-                            /* Worklog.NestingItems?.map((NestingItem, NestingIndex) => {
-                                 if(  NestingItem.id === action.DelWorklogId){
-
-                                     //@ts-ignore fix this in the next time
-                                     WorklogsBlocksCopy[index].Worklogs[WLIndex].NestingItems[NestingIndex]
-                                 }
-                             })*/
                         }
                     })
                 } else {
@@ -510,7 +502,7 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
         }
         case ADD_TO_FAVORITE : {
 
-            let {SoughtWorklog, ...Indexes} = FindWorklogById(action.WorklogId, action.IsNesting, action.ParentId)
+            let {SoughtWorklog, ...Indexes} = FindWorklogById(action.WorklogId, action.ParentId)
             return {
                 ...state,
                 FavoritesWorklogs: [...state.FavoritesWorklogs, SoughtWorklog]
@@ -551,14 +543,14 @@ export const DeleteWorklog = (DelWorklogId: number, DelParentId: number | null =
 }
 export type TDeleteWorklog = typeof DeleteWorklog
 
-export const SetIsPlayingWorklogById = (IsPlaying: boolean, ElementId?: number, IsNesting = false, ParentId: number | null = null) => {
-    return {type: SET_IS_PLAYING_WORKLOG_BY_ID, IsPlaying, ElementId, IsNesting, ParentId} as const
+export const SetIsPlayingWorklogById = (IsPlaying: boolean, ElementId?: number,  ParentId: number | null = null) => {
+    return {type: SET_IS_PLAYING_WORKLOG_BY_ID, IsPlaying, ElementId, ParentId} as const
 }
 export type TSetIsPlayingWorklogById = typeof SetIsPlayingWorklogById
 
-export const ChangeWorklog = (WorkLogId: number, NewWorklog: TWorkLog, NewWlIsNesting = false, NewWlParentId: number | null = null) => {
+export const ChangeWorklog = (WorkLogId: number,parentId : number, NewWorklog: TWorkLog, NewWlParentId: number | null = null) => {
 
-    return {type: CHANGE_WORKLOG, WorkLogId, NewWorklog, NewWlIsNesting, NewWlParentId} as const
+    return {type: CHANGE_WORKLOG, WorkLogId, NewWorklog, parentId, NewWlParentId} as const
 }
 export type TChangeWorklog = typeof ChangeWorklog
 
@@ -567,8 +559,8 @@ export const SetWorklogToChange = (WorklogToChange: TWorkLog | undefined = undef
 }
 export type TSetWorklogToChange = typeof SetWorklogToChange
 
-export const AddToFavorite = (WorklogId: number, IsNesting = false, ParentId: number | null = null) => {
-    return {type: ADD_TO_FAVORITE, WorklogId, IsNesting, ParentId} as const
+export const AddToFavorite = (WorklogId: number,  ParentId: number | null = null) => {
+    return {type: ADD_TO_FAVORITE, WorklogId, ParentId} as const
 }
 export type TAddToFavorite = typeof AddToFavorite
 

@@ -41,7 +41,7 @@ const WorkLogDropDown: React.FC<TWorklogDropDownProps> = (props) => {
     const OnAddToFavorites = () =>{
         if(!props.PlayingWorklog.id && props.ComponentToDraw === "Worklogs"
             && props.FavoritesWorklogs.every(el=> el.id !== props.WorklogId)){
-            if(props.ParentId)  props.AddToFavorite(props.WorklogId,true,props.ParentId)
+            if(props.ParentId)  props.AddToFavorite(props.WorklogId,props.ParentId)
             else props.AddToFavorite(props.WorklogId)
         }
 

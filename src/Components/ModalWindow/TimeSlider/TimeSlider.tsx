@@ -16,7 +16,7 @@ export type TTimeSliderProps = {
         start: string | null
         end: string | null
     }
-    SetTimerValue : Dispatch<any>
+    SetTimerValue: Dispatch<any>
 }
 
 
@@ -26,20 +26,20 @@ const TimeSlider: React.FC<TTimeSliderProps> = (props) => {
         end: props.value?.end ? props.value.end as string | null : "22:00"
     })
 
-    let [LeftPose,SetLeftPose] = useState<number>()
-    let [RightPose,SetRightPose] = useState<number>()
-    let [LeftOffset,SetLeftOffset] = useState<number>()
-    let [RightOffset,SetRightOffset] = useState<number>()
+    let [LeftPose, SetLeftPose] = useState<number>()
+    let [RightPose, SetRightPose] = useState<number>()
+    let [LeftOffset, SetLeftOffset] = useState<number>()
+    let [RightOffset, SetRightOffset] = useState<number>()
 
 
-    const TimerButtonsInit = ()=>{
+    const TimerButtonsInit = () => {
         let slider = document.querySelectorAll(".input-range")
-        let el =  document.querySelectorAll(".input-range__slider")
+        let el = document.querySelectorAll(".input-range__slider")
         // SetLeftPose(el[0].getBoundingClientRect())
         // SetRightPose(el[1].getBoundingClientRect())
-        let SliderWidth = getComputedStyle(slider[0],null).width
+        let SliderWidth = getComputedStyle(slider[0], null).width
         let SliderPoseStart = findPosX(slider[0])
-        let SliderPoseEnd = SliderPoseStart + Number.parseInt(SliderWidth.substr(0,SliderWidth.length-2))
+        let SliderPoseEnd = SliderPoseStart + Number.parseInt(SliderWidth.substr(0, SliderWidth.length - 2))
         let LeftMargin = findPosX(el[0])
         let RightMargin = findPosX(el[1])
         SetLeftOffset(SliderPoseStart)
@@ -48,14 +48,9 @@ const TimeSlider: React.FC<TTimeSliderProps> = (props) => {
         SetRightPose(RightMargin)
     }
 
-    useEffect(()=>{
-
-        //ReactDOM.createPortal(<div>123</div>,document.querySelectorAll(".input-range__slider-container")[0])
-    },[])
-
     useEffect(() => {
             props.value && SetValue(props.value)
-             TimerButtonsInit()
+            TimerButtonsInit()
         }, [props.value && props.value]
     );
 
@@ -88,8 +83,8 @@ const TimeSlider: React.FC<TTimeSliderProps> = (props) => {
             onChange={timeChangeHandler}
             step={props.step}
             value={value}/>
-             <LeftLabel Position={LeftPose} offsetLeft={LeftOffset}  value={value} />
-            <RightLabel Position={RightPose} value={value} offsetRight={RightOffset}/>
+        <LeftLabel Position={LeftPose} offsetLeft={LeftOffset} value={value}/>
+        <RightLabel Position={RightPose} value={value} offsetRight={RightOffset}/>
     </>);
 
 }

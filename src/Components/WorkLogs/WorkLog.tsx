@@ -15,14 +15,12 @@ import {
     TSetWorklogToChange, TTimerData, TAddToFavorite, TAddWorklog
 } from "../../Data/WorkLogsReducer";
 import ArrowUp from "../../assets/imgs/arrow-up.svg"
-import {DifferenceInTime} from "../../assets/secondary/DifferenceInTime";
 import WorkLogDropDown from "./DropDown/WorklogDropDown";
 import StopButton from "../../assets/imgs/stop_button.svg"
-import NestingWorkLog from "./NestingWorkLog";
 import DeleteWorklogConfirmModal from "../DeleteConfirmModal/DeleteConfirmModal";
 import {TDeleteModalParams} from "./WorkLogsBlock";
 import {TComponentToDraw} from "./WorkLogsContainer";
-import WLActiveBG from "../../assets/imgs/ActiveWorklogBG.svg"
+import NestingWorkLog from "./NestingWorkLog";
 
 
 export type TWorklogProps = {
@@ -35,9 +33,6 @@ export type TWorklogProps = {
     Issue?: string
     NestingItems?: Array<TNestingItem>
     status: "ok" | "warning" | "danger" | string
-    NestingIsShowing: boolean
-    OnHideNestingWorklogs: () => void
-    OnShowNestingWorklogs: () => void
     SetIsPlayingWorklogById: TSetIsPlayingWorklogById
     PlayingWorklog: TWorkLog
     id: number
@@ -60,7 +55,15 @@ export type TWorklogProps = {
 const WorkLog: React.FC<TWorklogProps> = (props) => {
 
     let [ShowMenu, SetShowMenu] = useState<boolean>()
+    let [NestingIsShowing, SetNestingIsShowing] = useState(false)
 
+    const OnShowNestingWorklogs = () => {
+        SetNestingIsShowing(true)
+    }
+
+    const OnHideNestingWorklogs = () => {
+        SetNestingIsShowing(false)
+    }
     const OnShowMenu = () => {
         SetShowMenu(true)
     }
@@ -69,7 +72,8 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
     }
 
     const onPlayButtonClicked = () => {
-        !props.PlayingWorklog.id && props.SetIsPlayingWorklogById(true, props.id)
+
+        !props.PlayingWorklog.id && props.SetIsPlayingWorklogById(true, props.id,props.ParentId)
 
     }
     const onStopButtonClicked = () => {
@@ -97,93 +101,90 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
             ? WLS.WorklogBlockContainerActive
             : WLS.WorklogBlockContainer}>
             <div className="WorklogBG">
-            <div className={WLS.WorklogActive}>
-                <div className={WLS.WorklogBlock}>
+                <div className={WLS.WorklogActive}>
+                    <div className={WLS.WorklogBlock}>
 
-                    {props.IsNesting
-                        ? <div className={WLS.NestingButtonPose}>
-                            {props.NestingIsShowing
-                                ? <div onClick={props.OnHideNestingWorklogs} className={WLS.NestingBG}><img
-                                    className={WLS.TwwContentImg} src={ArrowUp} alt=""/>
-                                </div>
+                        {props.IsNesting
+                            ? <div className={WLS.NestingButtonPose}>
+                                {NestingIsShowing
+                                    ? <div onClick={OnHideNestingWorklogs} className={WLS.NestingBG}><img
+                                        className={WLS.TwwContentImg} src={ArrowUp} alt=""/>
+                                    </div>
 
-                                : <div onClick={props.OnShowNestingWorklogs} className={WLS.NestingBG}> <span
-                                    className={WLS.TwwContentText}>
+                                    : <div onClick={OnShowNestingWorklogs} className={WLS.NestingBG}> <span
+                                        className={WLS.TwwContentText}>
                                 {props.NestingItems?.length}
                             </span>
-                                </div>
-                            }
-                        </div>
-
-                        : props.StartTime && props.EndTime ? <div className={WLS.WorkTime}>
-                                <div className={WLS.StartTime}>
-                                    {props.StartTime}
-                                </div>
-                                <div className={WLS.Minus}>
-                                    -
-                                </div>
-                                <div className={WLS.EndTime}>
-                                    {props.EndTime}
-                                </div>
+                                    </div>
+                                }
                             </div>
-                            : <div></div>}
 
-                    <div className={props.PlayingWorklog.id === props.id
-                        ? WLS.ColorPointPoseActive
-                        : WLS.ColorPointPose}>
-                        <img src={props.status === "ok"
-                            ? CP_ok : props.status === "warning"
-                                ? CP_warning : props.status === "danger"
-                                    ? CP_danger : undefined} alt=""
-                        />
-                    </div>
+                            : props.StartTime && props.EndTime ? <div className={WLS.WorkTime}>
+                                    <div className={WLS.StartTime}>
+                                        {props.StartTime}
+                                    </div>
+                                    <div className={WLS.Minus}>
+                                        -
+                                    </div>
+                                    <div className={WLS.EndTime}>
+                                        {props.EndTime}
+                                    </div>
+                                </div>
+                                : <div></div>}
 
-                    <div onClick={OnSetWorklogToChange} className={WLS.WorklogContentContainer}>
-                        <div className={WLS.JiraCode}>
-                            {props.JiraCode}
+                        <div className={props.PlayingWorklog.id === props.id
+                            ? WLS.ColorPointPoseActive
+                            : WLS.ColorPointPose}>
+                            <img src={props.status === "ok"
+                                ? CP_ok : props.status === "warning"
+                                    ? CP_warning : props.status === "danger"
+                                        ? CP_danger : undefined} alt=""
+                            />
                         </div>
-                        <div className={WLS.TaskField}>
-                            {props.TaskField}
-                        </div>
-                    </div>
 
-                    {/*   <div className={WLS.ProgressBarContainer}>
-                    <ProgressBar status={props.status}/>
-                </div>*/}
-
-                    <div className={WLS.TimerValueContainer}>
-                        <div className={WLS.TimerValue}>{props.TimerValue}</div>
-                    </div>
-
-                    {props.PlayingWorklog.id === props.id
-
-                        ? <div className={WLS.ControlButtonsContainer}>
-                            <div onClick={onStopButtonClicked} className={WLS.StopButton}>
-                                <img src={StopButton} alt="stop-button"/>
+                        <div onClick={OnSetWorklogToChange} className={WLS.WorklogContentContainer}>
+                            <div className={WLS.JiraCode}>
+                                {props.JiraCode}
+                            </div>
+                            <div className={WLS.TaskField}>
+                                {props.TaskField}
                             </div>
                         </div>
 
-                        : <div className={WLS.ControlButtonsContainer}>
-                            <div onClick={onPlayButtonClicked} className={WLS.PlayButton}>
-                                <img src={PlayButton} alt="play-button"/>
-                            </div>
-                        </div>}
 
-                    <div className="WLMoreContainer">
-                        <div  className={props.PlayingWorklog.id === props.id
-                            ? WLS.WLInfoButtonActive
-                            : WLS.WorklogMoreButton}>
-                            <img src={WLMoreButtonBG} alt=""/>
+                        <div className={WLS.TimerValueContainer}>
+                            <div className={WLS.TimerValue}>{props.TimerValue}</div>
                         </div>
-                        <div onClick={OnShowMenu} className={props.PlayingWorklog.id === props.id
-                            ? WLS.WorklogMoreVerticalActive
-                            :WLS.WorklogMoreVertical}>
-                            <img src={WLMoreButtonVertical} alt="more-vertical"/>
+
+                        {props.PlayingWorklog.id === props.id
+
+                            ? <div className={WLS.ControlButtonsContainer}>
+                                <div onClick={onStopButtonClicked} className={WLS.StopButton}>
+                                    <img src={StopButton} alt="stop-button"/>
+                                </div>
+                            </div>
+
+                            : <div className={WLS.ControlButtonsContainer}>
+                                <div onClick={onPlayButtonClicked} className={WLS.PlayButton}>
+                                    <img src={PlayButton} alt="play-button"/>
+                                </div>
+                            </div>}
+
+                        <div className="WLMoreContainer">
+                            <div  className={props.PlayingWorklog.id === props.id
+                                ? WLS.WLInfoButtonActive
+                                : WLS.WorklogMoreButton}>
+                                <img src={WLMoreButtonBG} alt=""/>
+                            </div>
+                            <div onClick={OnShowMenu} className={props.PlayingWorklog.id === props.id
+                                ? WLS.WorklogMoreVerticalActive
+                                :WLS.WorklogMoreVertical}>
+                                <img src={WLMoreButtonVertical} alt="more-vertical"/>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-         </div>
 
             <DeleteWorklogConfirmModal DeleteModalParams={props.DeleteModalParams} DeleteWorklog={props.DeleteWorklog}
                                        WorkLogToDeleteId={props.id} isOpen={props.DeleteModalIsOpen}
@@ -206,7 +207,7 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
                                       ComponentToDraw={props.ComponentToDraw}
                                       AddWorklog={props.AddWorklog}
                                       TimerValue={props.TimerValue}
-                                      NestingIsShowing={props.NestingIsShowing}
+                                      NestingIsShowing={NestingIsShowing}
                                       TaskField={props.TaskField}
                                       JiraCode={props.JiraCode}
                                       EndTime={props.EndTime}
@@ -216,31 +217,10 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
                                       IsNesting={props.IsNesting}
                                       NestingItems={props.NestingItems}
         />}
-        {/*fix duplicating */}
-        {props.NestingIsShowing && props.NestingItems?.map(el => {
 
-            return <NestingWorkLog
-                ComponentToDraw={props.ComponentToDraw}
-                FavoritesWorklogs={props.FavoritesWorklogs}
-                AddToFavorite={props.AddToFavorite}
-                openWorklogChangeModal={props.openWorklogChangeModal}
-                PlayingWorklog={props.PlayingWorklog}
-                SetWorklogToChange={props.SetWorklogToChange}
-                OnDeleteModalOpen={props.OnDeleteModalOpen}
-                SetDeleteModalParams={props.SetDeleteModalParams}
-                SetIsPlayingWorklogById={props.SetIsPlayingWorklogById}
-                ParentId={props.id}
-                AddWorklog={props.AddWorklog}
-                NestingIsShowing={props.NestingIsShowing}
-                {...el}
-                key={el.id}
-                TimerValue={el.TimerValue
-                    ? el.TimerValue
-                    : el.StartTime && el.EndTime ? DifferenceInTime([el.StartTime, el.EndTime])
-                        : null}
+        {NestingIsShowing &&  <NestingWorkLog {...props} />
 
-            />
-        })}
+        }
     </div>)
 }
 

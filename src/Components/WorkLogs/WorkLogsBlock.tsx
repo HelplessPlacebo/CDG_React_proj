@@ -45,17 +45,8 @@ export type TDeleteModalParams = {
 
 const WorkLogsBlock: React.FC<TWorklogsBlockProps> = (props) => {
 
-    let [NestingIsShowing, SetNestingIsShowing] = useState(false)
     let [DeleteModalIsOpen, SetDeleteModalIsOpen] = useState(false)
     let [DeleteModalParams, SetDeleteModalParams] = useState<TDeleteModalParams>()
-
-    const OnShowNestingWorklogs = () => {
-        SetNestingIsShowing(true)
-    }
-
-    const OnHideNestingWorklogs = () => {
-        SetNestingIsShowing(false)
-    }
 
     const OnDeleteModalOpen = (e: React.MouseEvent<HTMLElement>) => {
         SetDeleteModalIsOpen(true)
@@ -87,9 +78,6 @@ const WorkLogsBlock: React.FC<TWorklogsBlockProps> = (props) => {
                 <WorkLog
                     {...el}
                     {...props}
-                    NestingIsShowing={NestingIsShowing}
-                    OnHideNestingWorklogs={OnHideNestingWorklogs}
-                    OnShowNestingWorklogs={OnShowNestingWorklogs}
                     TimerValue={el.TimerValue
                         ? el.TimerValue
                         : el.StartTime && el.EndTime

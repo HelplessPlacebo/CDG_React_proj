@@ -107,12 +107,12 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
             //@ts-ignore
             if (props[Obj].ParentId) {
                 //@ts-ignore
-                props.ChangeWorklog(props[Obj].id, NewWL, true, props[Obj].ParentId)
+                props.ChangeWorklog(props[Obj].id, props[Obj].ParentId ,NewWL,  props[Obj].ParentId)
                 //@ts-ignore
                 props.SetIsPlayingWorklogById(false, props[Obj].id)
             } else {
                 //@ts-ignore
-                props.ChangeWorklog(props[Obj].id, NewWL)
+                props.ChangeWorklog(props[Obj].id, undefined,NewWL)
                 //@ts-ignore
                 props.SetIsPlayingWorklogById(false, props[Obj].id)
             }
