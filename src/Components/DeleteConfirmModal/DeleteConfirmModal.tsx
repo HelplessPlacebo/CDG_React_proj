@@ -1,4 +1,4 @@
-import React, {SyntheticEvent, useState} from "react";
+import React from "react";
 import DS from "./DeleteConfirm.module.css"
 import ConfirmButton from "../../assets/imgs/confirmButton.svg"
 import DeclineButton from "../../assets/imgs/declineButton.svg"

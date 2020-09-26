@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import LS from "./TimeSlider.module.css"
 export type TLeftLabelProps = {
     Position : number | undefined

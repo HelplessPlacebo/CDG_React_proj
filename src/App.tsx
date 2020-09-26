@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import AS from "./App.module.css"
 import NavBar from "./Components/NavBar/NavBar";
 import WorkLogsContainer from "./Components/WorkLogs/WorkLogsContainer";
@@ -12,7 +12,7 @@ import {
     TWorkLog, TSetIsPlayingWorklogById, TChangeWorklog, TAddWorklog,
     AddWorklog, TTimerData, TAddToFavorite,AddToFavorite
 } from "./Data/WorkLogsReducer";
-import {Redirect, Route,withRouter} from "react-router-dom";
+import {Redirect, Route} from "react-router-dom";
 import FavoritesPage from "./Components/Favorites/FavoritesPage";
 import CalendarAndControlButtons from "./Components/CalendarAndControllButtons/CalendarAndControlButtons";
 import {TCurrentDate} from "./Data/CalendarReducer";

@@ -1,7 +1,6 @@
 import React from "react";
 import FS from "./Favorites.module.css"
 import {NavLink} from "react-router-dom";
-import {TAddToFavorite} from "../../Data/WorkLogsReducer";
 
 export type TFavoritesProps = {
     FavoritesIsClicked: boolean

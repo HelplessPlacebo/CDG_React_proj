@@ -1,4 +1,4 @@
-import {GlobalState} from "../../../my-app/src/data/redux-store";
+import {GlobalState} from "./redux-store";
 import {ThunkAction} from "redux-thunk";
 import {API} from "../API/requests"
 
