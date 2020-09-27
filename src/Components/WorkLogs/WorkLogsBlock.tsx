@@ -15,7 +15,7 @@ import {
     TTimerData,
     TWorkLog
 } from "../../Data/WorkLogsReducer";
-import WorkLogTimeLine from "./SliderTimePicker/WorkLogTimeLine";
+import WorkLogTimeLine from "./TimePicker/WorkLogTimeLine";
 import {TComponentToDraw} from "./WorkLogsContainer";
 import {TShowTooltip} from "../../App";
 

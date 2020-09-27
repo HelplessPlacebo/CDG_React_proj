@@ -5,6 +5,7 @@ import NewWorklogButton from "../../assets/imgs/new_worklog_button.svg";
 import {TAddWorklog, TTimerData, TWorklogBlock} from "../../Data/WorkLogsReducer";
 import WorkLogsContainer from "../WorkLogs/WorkLogsContainer";
 
+
 export type TFavoritesPageProps = {
     FavoritesIsClicked: boolean
     WorklogsBlocks: Array<TWorklogBlock>

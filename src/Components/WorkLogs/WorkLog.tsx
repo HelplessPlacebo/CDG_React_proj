@@ -21,7 +21,7 @@ import DeleteWorklogConfirmModal from "../DeleteConfirmModal/DeleteConfirmModal"
 import {TDeleteModalParams} from "./WorkLogsBlock";
 import {TComponentToDraw} from "./WorkLogsContainer";
 import NestingWorkLog from "./NestingWorkLog";
-
+import WorklogActiveBG from "../../assets/imgs/ActiveWorklogBG.svg"
 
 export type TWorklogProps = {
     StartTime: string | null
@@ -96,11 +96,16 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
     }
 
     return  (<div className={WLS.WorkLogs}>
-
         <div className={props.id === props.PlayingWorklog.id
             ? WLS.WorklogBlockContainerActive
             : WLS.WorklogBlockContainer}>
             <div className="WorklogBG">
+
+                {
+                     <img className={props.PlayingWorklog.id === props.id ? WLS.WorklogActiveBG :WLS.WorklogBG}
+                          src={WorklogActiveBG} alt=""/>
+                }
+
                 <div className={WLS.WorklogActive}>
                     <div className={WLS.WorklogBlock}>
 
@@ -172,7 +177,7 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
 
                         <div className="WLMoreContainer">
                             <div  className={props.PlayingWorklog.id === props.id
-                                ? WLS.WLInfoButtonActive
+                                ? WLS.WorklogMoreButtonActive
                                 : WLS.WorklogMoreButton}>
                                 <img src={WLMoreButtonBG} alt=""/>
                             </div>

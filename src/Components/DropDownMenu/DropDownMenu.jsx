@@ -3,6 +3,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreHoriz';
+import DDMS from "./DropDownMenu.module.css"
 
 const options = [
     'Jira link',
@@ -24,7 +25,8 @@ export default function LongMenu() {
     };
 
     return (
-        <div className="dropDownMenu">
+        <div className={DDMS.dropDownMenu}>
+
             <IconButton
                 aria-label="more"
                 aria-controls="long-menu"
@@ -49,7 +51,7 @@ export default function LongMenu() {
                         backgroundColor : "#FFFFFF",
                         borderRadius : '10px',
                         width: '192px',
-                        outlined : "none"
+                        outlined : "none",
                     },
                 }}
             >

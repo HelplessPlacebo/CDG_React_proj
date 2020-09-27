@@ -1,14 +1,11 @@
 .CalendarContainer {
-
     width: 197px;
     height: 58px;
     border-radius: 30px;
     background-color: #F0F3F5;
-
 }
 
 .CalendarContent {
-
     display: grid;
     grid-template-columns: 160px 12px;
     grid-template-rows: 19px;
