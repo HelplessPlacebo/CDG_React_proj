@@ -33,7 +33,6 @@
 .WorklogBlockContainer:hover .WorklogMoreVertical{
     display: block;
     z-index: 400;
-
 }
 
 .WorklogMoreVertical{

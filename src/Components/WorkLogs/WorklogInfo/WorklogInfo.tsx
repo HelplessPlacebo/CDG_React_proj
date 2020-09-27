@@ -60,6 +60,10 @@ const WorklogInfo: React.FC<TWorklogInfoProps> = (props) => {
             props.SetWorklogStatus({target: "worklogblock", status: "ok", id: props.BlockInfo.id})
             props.showTooltip({text: "your worklog successfully logged.", status: "ok"})
         }
+        else {
+            props.showTooltip({text: "Issue does not exist.", status: "danger"})
+            props.SetWorklogStatus({target: "worklogblock", status: "danger", id: props.BlockInfo.id})
+        }
     }
 
 
