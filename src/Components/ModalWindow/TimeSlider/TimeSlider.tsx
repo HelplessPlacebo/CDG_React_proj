@@ -4,7 +4,6 @@ import TimeRangeSlider from 'react-time-range-slider';
 import LeftLabel from "./SliderValueLeftLabel";
 import RightLabel from "./SliderValueRightLabel";
 import {findPosX} from "../../../assets/secondary/FindElementPose";
-import ReactDOM from "react-dom"
 
 export type TTimeSliderProps = {
     step: number

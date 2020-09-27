@@ -31,6 +31,7 @@ export type TWorklogProps = {
     TimerValue: string | null
     IsNesting?: boolean
     Issue?: string
+    IsFavorites : boolean
     NestingItems?: Array<TNestingItem>
     status: "ok" | "warning" | "danger" | string
     SetIsPlayingWorklogById: TSetIsPlayingWorklogById
@@ -47,7 +48,6 @@ export type TWorklogProps = {
     openWorklogChangeModal: () => void
     TimerData: TTimerData | undefined
     AddToFavorite: TAddToFavorite
-    FavoritesWorklogs: Array<TWorkLog>
     ComponentToDraw: TComponentToDraw
     AddWorklog: TAddWorklog
 }
@@ -130,7 +130,7 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
                                         {props.EndTime}
                                     </div>
                                 </div>
-                                : <div></div>}
+                                : <div> </div>}
 
                         <div className={props.PlayingWorklog.id === props.id
                             ? WLS.ColorPointPoseActive
@@ -203,7 +203,6 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
                                       WorklogId={props.id}
                                       OnDeleteModalOpen={props.OnDeleteModalOpen} onHideMenu={OnHideMenu}
                                       AddToFavorite={props.AddToFavorite}
-                                      FavoritesWorklogs={props.FavoritesWorklogs}
                                       ComponentToDraw={props.ComponentToDraw}
                                       AddWorklog={props.AddWorklog}
                                       TimerValue={props.TimerValue}
@@ -216,6 +215,7 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
                                       Issue={props.Issue}
                                       IsNesting={props.IsNesting}
                                       NestingItems={props.NestingItems}
+                                      IsFavorites={props.IsFavorites}
         />}
 
         {NestingIsShowing &&  <NestingWorkLog {...props} />

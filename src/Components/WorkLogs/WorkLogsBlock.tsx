@@ -30,11 +30,10 @@ export type TWorklogsBlockProps = {
     openWorklogChangeModal: () => void
     TimerData: TTimerData | undefined
     ComponentToDraw: TComponentToDraw
-    FavoritesWorklogs: Array<TWorkLog>
     AddToFavorite: TAddToFavorite
     AddWorklog: TAddWorklog
     SendWorklogBlockThunk: TSendWorklogBlockThunk
-    showTooltip : TShowTooltip
+    showTooltip: TShowTooltip
     SetWorklogStatus: TSetWorklogStatus
 }
 
@@ -61,7 +60,6 @@ const WorkLogsBlock: React.FC<TWorklogsBlockProps> = (props) => {
             <WorklogInfo DateOfCreation={props.BlockInfo.BlockCreatedDate}
                          SummaryTime={props.BlockInfo.SummaryTime}
                          SummaryStatus={props.BlockInfo.SummaryStatus}
-                         FavoritesWorklogs={props.FavoritesWorklogs}
                          Worklogs={props.Worklogs}
                          SendWorklogBlockThunk={props.SendWorklogBlockThunk}
                          BlockInfo={props.BlockInfo}
@@ -71,30 +69,58 @@ const WorkLogsBlock: React.FC<TWorklogsBlockProps> = (props) => {
         </div>
         }
 
-
-        {props[props.ComponentToDraw] && props[props.ComponentToDraw].map(el => {
-
-            return <div key={el.id} className="worklog">
-                <WorkLog
-                    {...el}
-                    {...props}
-                    TimerValue={el.TimerValue
-                        ? el.TimerValue
-                        : el.StartTime && el.EndTime
-                            ? DifferenceInTime([el.StartTime, el.EndTime])
-                            : null}
-                    DeleteModalIsOpen={DeleteModalIsOpen}
-                    OnDeleteModalClose={OnDeleteModalClose}
-                    OnDeleteModalOpen={OnDeleteModalOpen}
-                    SetDeleteModalParams={SetDeleteModalParams}
-                    DeleteModalParams={DeleteModalParams}
-                    AddWorklog={props.AddWorklog}
-                />
-            </div>
-        })}
+        {
+            props.ComponentToDraw === "Worklogs" ?
+                props.Worklogs.map(el => {
+                    return <div key={el.id} className="worklog">
+                        <WorkLog
+                            {...el}
+                            {...props}
+                            TimerValue={el.TimerValue
+                                ? el.TimerValue
+                                : el.StartTime && el.EndTime
+                                    ? DifferenceInTime([el.StartTime, el.EndTime])
+                                    : null}
+                            DeleteModalIsOpen={DeleteModalIsOpen}
+                            OnDeleteModalClose={OnDeleteModalClose}
+                            OnDeleteModalOpen={OnDeleteModalOpen}
+                            SetDeleteModalParams={SetDeleteModalParams}
+                            DeleteModalParams={DeleteModalParams}
+                            AddWorklog={props.AddWorklog}
+                        />
+                    </div>
+                })
+                : <div style={{paddingTop: "50px"}} className="FavoritesWorklogContainer">
+                    {
+                        props.Worklogs.map(Worklog => {
+                             if(Worklog.IsFavorites) {
+                               return <div key={Worklog.id} className="FavoritesWorklog">
+                                    <WorkLog
+                                        {...Worklog}
+                                        {...props}
+                                        TimerValue={Worklog.TimerValue
+                                            ? Worklog.TimerValue
+                                            : Worklog.StartTime && Worklog.EndTime
+                                                ? DifferenceInTime([Worklog.StartTime, Worklog.EndTime])
+                                                : null}
+                                        DeleteModalIsOpen={DeleteModalIsOpen}
+                                        OnDeleteModalClose={OnDeleteModalClose}
+                                        OnDeleteModalOpen={OnDeleteModalOpen}
+                                        SetDeleteModalParams={SetDeleteModalParams}
+                                        DeleteModalParams={DeleteModalParams}
+                                        AddWorklog={props.AddWorklog}
+                                    />
+                                </div>
+                            }
+                        })
+                    }
+                </div>
+        }
+        {props.ComponentToDraw === "Worklogs" &&
         <div className={WLS.WorkLogSliderPose}>
             <WorkLogTimeLine/>
         </div>
+        }
 
     </>)
 }

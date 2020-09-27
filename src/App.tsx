@@ -10,7 +10,7 @@ import {GlobalState} from "./Data/redux-store";
 import {
     SetIsPlayingWorklogById, ChangeWorklog,
     TWorkLog, TSetIsPlayingWorklogById, TChangeWorklog, TAddWorklog,
-    AddWorklog, TTimerData, TAddToFavorite,AddToFavorite
+    AddWorklog, TTimerData, TAddToFavorite, AddToFavorite, TWorklogBlock
 } from "./Data/WorkLogsReducer";
 import {Redirect, Route} from "react-router-dom";
 import FavoritesPage from "./Components/Favorites/FavoritesPage";
@@ -28,7 +28,7 @@ export type TAppOwnProps = {
 export type T_MSTP_App = {
     PlayingWorklog: TWorkLog
     CurrentDate: TCurrentDate
-    FavoritesWorklogs : Array<TWorkLog>
+    WorklogsBlocks: Array<TWorklogBlock>
 }
 
 export type T_MDTP_App = {
@@ -118,9 +118,10 @@ const App: React.FC<TAppProps> = (props) => {
 
                                 <Route exact path='/Home/Favorites'
                                        render={() => <FavoritesPage FavoritesIsClicked={FavoritesIsClicked}
-                                                                    FavoritesWorklogs={props.FavoritesWorklogs}
+                                                                    WorklogsBlocks={props.WorklogsBlocks}
                                                                     openWorklogChangeModal={openWorklogChangeModal}
                                                                     TimerData={TimerData}
+                                                                    AddWorklog={props.AddWorklog}
                                        />}/>
 
                             </div>
@@ -161,7 +162,7 @@ const App: React.FC<TAppProps> = (props) => {
 const MapStateToProps = (state: GlobalState): T_MSTP_App => ({
     PlayingWorklog: state.WorklogsData.PlayingWorklog,
     CurrentDate: state.CalendarData.CurrentDate,
-    FavoritesWorklogs : state.WorklogsData.FavoritesWorklogs
+    WorklogsBlocks : state.WorklogsData.WorkLogsBlocks
 })
 
 export default compose(

@@ -11,7 +11,6 @@ export type TWorklogDropDownProps = {
     PlayingWorklog: TWorkLog
     AddToFavorite : TAddToFavorite
     WorklogId : number
-    FavoritesWorklogs : Array<TWorkLog>
     ComponentToDraw : TComponentToDraw
     AddWorklog : TAddWorklog
     StartTime: string | null
@@ -24,6 +23,7 @@ export type TWorklogDropDownProps = {
     NestingItems?: Array<TNestingItem>
     status: "ok" | "warning" | "danger" | string
     NestingIsShowing: boolean
+    IsFavorites : boolean
 }
 
 const WorkLogDropDown: React.FC<TWorklogDropDownProps> = (props) => {
@@ -39,8 +39,7 @@ const WorkLogDropDown: React.FC<TWorklogDropDownProps> = (props) => {
         }
     }
     const OnAddToFavorites = () =>{
-        if(!props.PlayingWorklog.id && props.ComponentToDraw === "Worklogs"
-            && props.FavoritesWorklogs.every(el=> el.id !== props.WorklogId)){
+        if(!props.PlayingWorklog.id && props.ComponentToDraw === "Worklogs"){
             if(props.ParentId)  props.AddToFavorite(props.WorklogId,props.ParentId)
             else props.AddToFavorite(props.WorklogId)
         }
@@ -59,7 +58,8 @@ const WorkLogDropDown: React.FC<TWorklogDropDownProps> = (props) => {
                 JiraCode: props.JiraCode,
                 IsNesting: props.IsNesting,
                 status: props.status,
-                TimerValue: "00:00:00"
+                TimerValue: "00:00:00",
+                IsFavorites : props.IsFavorites
             }
             props.AddWorklog(CurrentWorklog)
         }

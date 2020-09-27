@@ -2,19 +2,23 @@ import React from "react";
 import TTS from "../TimeTracking/TimeTracking.module.css";
 import FS from "./Favorites.module.css"
 import NewWorklogButton from "../../assets/imgs/new_worklog_button.svg";
-import {TTimerData, TWorkLog} from "../../Data/WorkLogsReducer";
+import {TAddWorklog, TTimerData, TWorklogBlock} from "../../Data/WorkLogsReducer";
 import WorkLogsContainer from "../WorkLogs/WorkLogsContainer";
 
 export type TFavoritesPageProps = {
     FavoritesIsClicked: boolean
-    FavoritesWorklogs: Array<TWorkLog>
+    WorklogsBlocks: Array<TWorklogBlock>
     TimerData: TTimerData | undefined
     openWorklogChangeModal: () => void
+    AddWorklog : TAddWorklog
 }
 
 const FavoritesPage: React.FC<TFavoritesPageProps> = (props) => {
+    const AddNewFavoritesWorklog = () =>{
+        props.AddWorklog(undefined,undefined,true)
+    }
     return (<div>
-        {props.FavoritesWorklogs.length > 0
+        {props.WorklogsBlocks.map(WBL=>WBL.Worklogs.some(Worklog => Worklog.IsFavorites)).includes(true)
             ? <div className="Worklogs">
                 <WorkLogsContainer TimerData={props.TimerData}
                                    openWorklogChangeModal={props.openWorklogChangeModal}
@@ -28,8 +32,8 @@ const FavoritesPage: React.FC<TFavoritesPageProps> = (props) => {
                 </div>
 
                 <div style={{paddingTop: "60px"}} className={TTS.NewWorklog}>
-                    <div className={TTS.NewWorklogButtonPose}>
-                        <img className={TTS.NewWorklogButtonSize}
+                    <div  className={TTS.NewWorklogButtonPose}>
+                        <img onClick={AddNewFavoritesWorklog} className={TTS.NewWorklogButtonSize}
                              src={NewWorklogButton}
                              alt="new_worklog_button"/>
                     </div>

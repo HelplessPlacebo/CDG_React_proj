@@ -59,6 +59,7 @@
 .NewWorklogButtonSize {
     width: 100%;
     height: 100%;
+    cursor: pointer;
 }
 .NewWorklogButtonPose {
     padding-left: 22px;

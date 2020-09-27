@@ -21,7 +21,6 @@ export type TNestingWorkLogProps = {
     SetWorklogToChange: TSetWorklogToChange
     openWorklogChangeModal: () => void
     AddToFavorite: TAddToFavorite
-    FavoritesWorklogs : Array<TWorkLog>
     ComponentToDraw : TComponentToDraw
     AddWorklog : TAddWorklog
     OnDeleteModalClose: () => void
@@ -30,6 +29,7 @@ export type TNestingWorkLogProps = {
     DeleteModalParams: TDeleteModalParams | undefined
     TimerData: TTimerData | undefined
     id : number
+    IsFavorites : boolean
 }
 
 const NestingWorkLog: React.FC<TNestingWorkLogProps> = (props) => {
@@ -48,6 +48,7 @@ const NestingWorkLog: React.FC<TNestingWorkLogProps> = (props) => {
                          id={NestingItem.id}
                          IsNesting={false}
                          ParentId={props.id}
+                         IsFavorites={NestingItem.IsFavorites}
                         />
             )})
         }

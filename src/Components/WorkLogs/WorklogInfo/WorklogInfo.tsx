@@ -19,7 +19,6 @@ export type TWorklogInfoProps = {
     BlockInfo: TBlockInfo
     Worklogs: Array<TWorkLog>
     SendWorklogBlockThunk: TSendWorklogBlockThunk
-    FavoritesWorklogs: Array<TWorkLog>
     showTooltip: TShowTooltip
     SetWorklogStatus: TSetWorklogStatus
 }
@@ -52,7 +51,6 @@ const WorklogInfo: React.FC<TWorklogInfoProps> = (props) => {
         if (props.Worklogs.every(Worklog => Worklog.EndTime && Worklog.StartTime && Worklog.TimerValue
             && Worklog.TaskField && Worklog.Issue)) {
             let ObjToSend: TSendWorklogsData = {
-                FavoritesWorklogs: props.FavoritesWorklogs,
                 WorkLogsBlocks: {
                     BlockInfo: props.BlockInfo,
                     Worklogs: props.Worklogs

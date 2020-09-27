@@ -24,6 +24,7 @@ export type TNestingItem = {
     Issue?: string
     id: number
     TimerValue: string | null
+    IsFavorites : boolean
 }
 
 export type TBlockInfo = {
@@ -45,6 +46,7 @@ export type TWorkLog = {
     id: number
     Issue?: string
     ParentId?: number
+    IsFavorites : boolean
 }
 
 export type  TWorklogBlock = {
@@ -59,7 +61,6 @@ export type TTimerData = {
 }
 export type TSendWorklogsData = {
     WorkLogsBlocks: TWorklogBlock
-    FavoritesWorklogs: Array<TWorkLog>
 }
 
 let DefaultState = {
@@ -78,7 +79,8 @@ let DefaultState = {
             status: "warning",
             IsNesting: false,
             TimerValue: "02:00:00",
-            id: 444553452341241
+            id: 444553452341241,
+            IsFavorites : false
         }, {
             StartTime: "10:00",
             EndTime: "11:15",
@@ -87,7 +89,8 @@ let DefaultState = {
             status: "ok",
             IsNesting: false,
             TimerValue: "01:15:00",
-            id: 213124124125122
+            id: 213124124125122,
+            IsFavorites : false
         }, {
             StartTime: "09:00",
             EndTime: "10:00",
@@ -97,6 +100,7 @@ let DefaultState = {
             IsNesting: true,
             TimerValue: "03:50:00",
             id: 2131241255143,
+            IsFavorites : false,
             NestingItems: [{
                 StartTime: "11:30",
                 EndTime: "13:00",
@@ -104,7 +108,8 @@ let DefaultState = {
                 TaskField: "Marketing strategy",
                 status: "warning",
                 id: 123213213244,
-                TimerValue: "01:30:00"
+                TimerValue: "01:30:00",
+                IsFavorites : false,
             }, {
                 StartTime: "13:20",
                 EndTime: "16:00",
@@ -112,7 +117,8 @@ let DefaultState = {
                 TaskField: "Moodboarding",
                 status: "ok",
                 id: 1232312351245,
-                TimerValue: "03:20:00"
+                TimerValue: "03:20:00",
+                IsFavorites : false
             }]
         }]
     },
@@ -131,7 +137,8 @@ let DefaultState = {
                 status: "danger",
                 IsNesting: false,
                 TimerValue: "01:00:00",
-                id: 444553452341246
+                id: 444553452341246,
+                IsFavorites : false
             }, {
                 StartTime: "10:00",
                 EndTime: "11:15",
@@ -140,7 +147,8 @@ let DefaultState = {
                 status: "ok",
                 IsNesting: false,
                 TimerValue: "01:15:00",
-                id: 213124124125127
+                id: 213124124125127,
+                IsFavorites : false
             }, {
                 StartTime: "09:00",
                 EndTime: "10:00",
@@ -150,6 +158,7 @@ let DefaultState = {
                 IsNesting: true,
                 TimerValue: "03:50:00",
                 id: 2131241255148,
+                IsFavorites : false,
                 NestingItems: [{
                     StartTime: "11:30",
                     EndTime: "13:00",
@@ -157,7 +166,8 @@ let DefaultState = {
                     TaskField: "Marketing strategy",
                     status: "warning",
                     id: 123213213249,
-                    TimerValue: "01:30:00"
+                    TimerValue: "01:30:00",
+                    IsFavorites : false
                 }, {
                     StartTime: "13:20",
                     EndTime: "16:00",
@@ -165,7 +175,8 @@ let DefaultState = {
                     TaskField: "Moodboarding",
                     status: "ok",
                     id: 12323123512410,
-                    TimerValue: "03:20:00"
+                    TimerValue: "03:20:00",
+                    IsFavorites : false
                 }]
             }]
         },
@@ -184,7 +195,8 @@ let DefaultState = {
                 status: "danger",
                 IsNesting: false,
                 TimerValue: "01:00:00",
-                id: 4445534523412411
+                id: 4445534523412411,
+                IsFavorites : false
             }, {
                 StartTime: "10:00",
                 EndTime: "11:15",
@@ -193,7 +205,8 @@ let DefaultState = {
                 status: "ok",
                 IsNesting: false,
                 TimerValue: "01:15:00",
-                id: 2131241241251212
+                id: 2131241241251212,
+                IsFavorites : false
             }, {
                 StartTime: "09:00",
                 EndTime: "10:00",
@@ -203,6 +216,7 @@ let DefaultState = {
                 IsNesting: true,
                 TimerValue: "03:50:00",
                 id: 21312412551413,
+                IsFavorites : false,
                 NestingItems: [{
                     StartTime: "11:30",
                     EndTime: "13:00",
@@ -210,7 +224,8 @@ let DefaultState = {
                     TaskField: "Marketing strategy",
                     status: "warning",
                     id: 1232132132414,
-                    TimerValue: "01:30:00"
+                    TimerValue: "01:30:00",
+                    IsFavorites : false
                 }, {
                     StartTime: "13:20",
                     EndTime: "16:00",
@@ -218,7 +233,8 @@ let DefaultState = {
                     TaskField: "Moodboarding",
                     status: "ok",
                     id: 12323123512415,
-                    TimerValue: "03:20:00"
+                    TimerValue: "03:20:00",
+                    IsFavorites : false
                 }]
             }]
         },
@@ -237,7 +253,8 @@ let DefaultState = {
                 status: "danger",
                 IsNesting: false,
                 TimerValue: "01:00:00",
-                id: 4445534523412416
+                id: 4445534523412416,
+                IsFavorites : false
             }, {
                 StartTime: "10:00",
                 EndTime: "11:15",
@@ -246,7 +263,8 @@ let DefaultState = {
                 status: "ok",
                 IsNesting: false,
                 TimerValue: "01:15:00",
-                id: 2131241241251217
+                id: 2131241241251217,
+                IsFavorites : false
             }, {
                 StartTime: "09:00",
                 EndTime: "10:00",
@@ -256,6 +274,7 @@ let DefaultState = {
                 IsNesting: true,
                 TimerValue: "03:50:00",
                 id: 21312412551418,
+                IsFavorites : false,
                 NestingItems: [{
                     StartTime: "11:30",
                     EndTime: "13:00",
@@ -263,7 +282,8 @@ let DefaultState = {
                     TaskField: "Marketing strategy",
                     status: "warning",
                     id: 1232132132419,
-                    TimerValue: "01:30:00"
+                    TimerValue: "01:30:00",
+                    IsFavorites : false
                 }, {
                     StartTime: "13:20",
                     EndTime: "16:00",
@@ -271,7 +291,8 @@ let DefaultState = {
                     TaskField: "Moodboarding",
                     status: "ok",
                     id: 12323123512420,
-                    TimerValue: "03:20:00"
+                    TimerValue: "03:20:00",
+                    IsFavorites : false
                 }]
             }]
         }, {
@@ -289,7 +310,8 @@ let DefaultState = {
                 status: "ok",
                 IsNesting: false,
                 TimerValue: "01:00:00",
-                id: 31232175895321
+                id: 31232175895321,
+                IsFavorites : false
             },
                 {
                     StartTime: "10:00",
@@ -299,7 +321,8 @@ let DefaultState = {
                     status: "ok",
                     IsNesting: false,
                     TimerValue: "01:15:00",
-                    id: 76967845623522
+                    id: 76967845623522,
+                    IsFavorites : false
                 }, {
                     StartTime: "11:00",
                     EndTime: "13:15",
@@ -308,12 +331,12 @@ let DefaultState = {
                     status: "warning",
                     IsNesting: false,
                     TimerValue: "03:50:00",
-                    id: 12312434256623
+                    id: 12312434256623,
+                    IsFavorites : false
                 }
             ]
         }] as Array<TWorklogBlock>,
     PlayingWorklog: {} as TWorkLog,
-    FavoritesWorklogs: [] as Array<TWorkLog>,
     WorklogToChange: undefined as TWorkLog | undefined
 }
 
@@ -398,9 +421,10 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
                 Issue: undefined,
                 TimerValue: "00:00:00",
                 JiraCode: "JRM-310",
-                status: "warning",
+                status: "danger",
                 IsNesting: false,
-                ParentId: undefined
+                ParentId: undefined,
+                IsFavorites : !!action.IsFavorites
             }
 
             action.NewWorklog
@@ -464,7 +488,6 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
                     }
                 }
             }))
-            debugger
             return {
                 ...state,
                 WorkLogsBlocks: WorklogsBlocksCopy
@@ -501,11 +524,22 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
             }
         }
         case ADD_TO_FAVORITE : {
-
+            let WorklogsBlocksCopy: Array<TWorklogBlock> = GetWorklogsBlockCopy()
             let {SoughtWorklog, ...Indexes} = FindWorklogById(action.WorklogId, action.ParentId)
+            if(action.ParentId){
+                if(Indexes.WorklogBlockIndex !== undefined && Indexes.WorklogIndex !== undefined && Indexes.NestingWorklogIndex !== undefined){
+                    //@ts-ignore
+                  WorklogsBlocksCopy[Indexes.WorklogBlockIndex].Worklogs[Indexes.WorklogIndex].NestingItems[Indexes.NestingWorklogIndex].IsFavorites = true
+                }
+            }else {
+                if (Indexes.WorklogBlockIndex !== undefined && Indexes.WorklogIndex !== undefined) {
+                    WorklogsBlocksCopy[Indexes.WorklogBlockIndex].Worklogs[Indexes.WorklogIndex].IsFavorites = true
+                }
+            }
+
             return {
                 ...state,
-                FavoritesWorklogs: [...state.FavoritesWorklogs, SoughtWorklog]
+                WorkLogsBlocks: WorklogsBlocksCopy
             }
         }
         case SET_WORKLOG_STATUS: {
@@ -532,9 +566,9 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
     }
 }
 
-export const AddWorklog = (NewWorklog ?: TWorkLog, to?: string) => {
+export const AddWorklog = (NewWorklog ?: TWorkLog, to?: string, IsFavorites?: boolean) => {
 
-    return {type: ADD_WORKLOG, NewWorklog, to} as const
+    return {type: ADD_WORKLOG, NewWorklog, to, IsFavorites} as const
 }
 export type TAddWorklog = typeof AddWorklog
 
