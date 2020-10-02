@@ -3,8 +3,7 @@ import GCS from "./GoogleCalendar.module.css"
 import ActiveSmallCalendar from "../../assets/imgs/calendar_active.svg"
 import SmallCalendar from "../../assets/imgs/calendar_gray.svg"
 import CSCElement from "../CalendarSyncsElement/CSCElement";
-
-
+//@ts-ignore
 export type TCalendarProps = {}
 
 const GoogleCalendar: React.FC<TCalendarProps> = (props) => {
@@ -59,6 +58,7 @@ const GoogleCalendar: React.FC<TCalendarProps> = (props) => {
                                    LineColor={el.LineColor}/>
             })}
         </div> : undefined}
+
     </div>)
 }
 

@@ -36,7 +36,7 @@ const CalendarDay: React.FC<TCalendarDayProps> = (props) => {
     return (<div className={props.ClickedMonthDay?.id === props.id
         ? CDS.DayBgClicked
         : props.DayNumber === props.CurrentDay
-            ? CDS.DayBgCurrentDay
+            ? props.Signature === "main" ? CDS.DayBgCurrentDay : undefined
             : CDS.DayBgDefault}>
         <div onClick={onDayClick}
              className={props.Signature !== "main"

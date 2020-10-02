@@ -6,18 +6,17 @@ export type TLeftLabelProps = {
     end : string | null,
     start : string | null
     } | undefined
-    offsetLeft : number | undefined
+    offsetRight : number | undefined
 }
 
-const RightLabel :React.FC<TLeftLabelProps> = (props) =>{
-console.log(props.offsetLeft,props.Position)
-    return <div className={LS.LeftLabel}
-                style={{display : `${!props.value &&  !props.Position ? "none" : "block" }`,
-                    left : `${props.Position && props.offsetLeft 
-                    && props.Position - props.offsetLeft +70 + "px"}` }}>
+const LeftLabel :React.FC<TLeftLabelProps> = (props) =>{
+
+    return <div className={LS.RightLabel}
+                style={{ display : `${!props.value && !props.Position ? "none" : "block" }`,
+                    right : `${props.Position && props.offsetRight &&   props.offsetRight - props.Position  +15 + "px" }`}}>
             <div className={LS.LeftLabelImage} > </div>
-            <div className={LS.LabelValue}> {props.value && props.value.start && props.value.start } </div>
+            <div className={LS.LabelValue}> {props.value && props.value.end && props.value.end } </div>
     </div>
 }
 
-export default RightLabel
+export default LeftLabel

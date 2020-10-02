@@ -1,9 +1,10 @@
 import React, {useState, useEffect, Dispatch} from 'react';
 //@ts-ignore
 import TimeRangeSlider from 'react-time-range-slider';
-import LeftLabel from "./SliderValueRightLabel";
-import RightLabel from "./SliderValueLeftLabel";
+import LeftLabel from "./SliderValueLeftLabel";
+import RightLabel from "./SliderValueRightLabel";
 import {findPosX} from "../../../assets/secondary/FindElementPose";
+
 
 
 export type TTimeSliderProps = {
@@ -26,6 +27,7 @@ const TimeSlider: React.FC<TTimeSliderProps> = (props) => {
         end: props.value?.end ? props.value.end as string | null : "22:00"
     })
 
+
     let [LeftPose, SetLeftPose] = useState<number>()
     let [RightPose, SetRightPose] = useState<number>()
     let [LeftOffset, SetLeftOffset] = useState<number>()
@@ -37,27 +39,34 @@ const TimeSlider: React.FC<TTimeSliderProps> = (props) => {
         let slider = document.querySelectorAll(".input-range")
         //get slider  handlers
         let el = document.querySelectorAll(".input-range__slider")
-        // SetLeftPose(el[0].getBoundingClientRect())
-        // SetRightPose(el[1].getBoundingClientRect())
-        let SliderWidth = getComputedStyle(slider[0], null).width
-        // slider start pose
-        let SliderPoseStart = findPosX(slider[0])
-        // get slider pose
-        let SliderPoseEnd = SliderPoseStart + Number.parseInt(SliderWidth.substr(0, SliderWidth.length - 2))
-        //get offsets  for left and right labels
-        let LeftMargin = findPosX(el[0])
-        let RightMargin = findPosX(el[1])
+    // SetLeftPose(el[0].getBoundingClientRect())
+    // SetRightPose(el[1].getBoundingClientRect())
+    let SliderWidth = getComputedStyle(slider[0], null).width
+    // slider start pose
+    let SliderPoseStart = findPosX(slider[0])
+    // get slider pose
+    let SliderPoseEnd = SliderPoseStart + Number.parseInt(SliderWidth.substr(0, SliderWidth.length - 2))
+    //get offsets  for left and right labels
+    let LeftMargin = findPosX(el[0])
+    let RightMargin = findPosX(el[1])
+    SetLeftOffset(SliderPoseStart)
+    SetRightOffset(SliderPoseEnd)
+    SetLeftPose(LeftMargin)
+    SetRightPose(RightMargin)
+}
 
-        SetLeftOffset(SliderPoseStart)
-        SetRightOffset(SliderPoseEnd)
-        SetLeftPose(LeftMargin)
-        SetRightPose(RightMargin)
-        console.log()
+
+    const UpdateLabelsValue = () =>{
+        let LeftLabel = document.getElementById("LeftSliderLabel")
+        let RightLabel = document.getElementById("RightSliderLabel")
+        if(LeftLabel)   LeftLabel.innerHTML = `<div>${value.start}</div>`
+        if(RightLabel)  RightLabel.innerHTML = `<div>${value.end}</div>`
     }
 
     useEffect(() => {
             props.value && SetValue(props.value)
-            TimerButtonsInit()
+             TimerButtonsInit()
+        // UpdateLabelsValue()
         }, [props.value && props.value]
     );
 
@@ -69,10 +78,12 @@ const TimeSlider: React.FC<TTimeSliderProps> = (props) => {
     const timeChangeHandler = (time: any) => {
         TimerButtonsInit()
         SetValue(time)
+        UpdateLabelsValue()
+
     }
 
-    const changeCompleteHandler = (time: any) => {
-        TimerButtonsInit()
+    const changeCompleteHandler = (time : any) => {
+       TimerButtonsInit()
         props.SetTimerValue(value)
         SetValue(time)
         /* console.log("Complete Handler Called", time);*/
@@ -90,8 +101,10 @@ const TimeSlider: React.FC<TTimeSliderProps> = (props) => {
             onChange={timeChangeHandler}
             step={props.step}
             value={value}/>
+
         <LeftLabel Position={LeftPose} offsetLeft={LeftOffset} value={value}/>
         <RightLabel Position={RightPose} value={value} offsetRight={RightOffset}/>
+       {/* <SliderLabels  value={value}  SetValue={SetValue} UpdateLabelsValue={UpdateLabelsValue}/>*/}
     </>);
 
 }

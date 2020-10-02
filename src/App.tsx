@@ -47,6 +47,10 @@ export type TTooltipInfo = {
 export type TShowTooltip = (TooltipInfo : TTooltipInfo) => void
 
 const App: React.FC<TAppProps> = (props) => {
+
+
+
+
     let [WorklogChangeModalIsOpen, SetWorklogChangeModalIsOpen] = useState(false)
     let [FavoritesIsClicked, SetFavoritesIsClicked] = useState(false)
     let [TimerData, SetTimerData] = useState<TTimerData | undefined>(undefined)
@@ -97,7 +101,6 @@ const App: React.FC<TAppProps> = (props) => {
                                                        OnAllClicked={OnAllClicked}
                                                        OnFavoritesClick={OnFavoritesClick}
                                                        CurrentDate={props.CurrentDate}
-
                             />
                         </div>
 
@@ -152,7 +155,6 @@ const App: React.FC<TAppProps> = (props) => {
                 : <LoginModal/>
 
             }
-
         </div>
     );
 }

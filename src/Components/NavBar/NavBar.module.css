@@ -1,5 +1,4 @@
 
-
 .navContainer   {
     font-family: 'Roboto', serif;
     background: #3744BD;
@@ -110,6 +109,5 @@ a:after {
 }
 a:hover:after,
 a:focus:after {
-
     width: 120%;
 }

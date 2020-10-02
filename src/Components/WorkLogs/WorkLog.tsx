@@ -57,6 +57,7 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
     let [ShowMenu, SetShowMenu] = useState<boolean>()
     let [NestingIsShowing, SetNestingIsShowing] = useState(false)
 
+
     const OnShowNestingWorklogs = () => {
         SetNestingIsShowing(true)
     }
@@ -72,9 +73,7 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
     }
 
     const onPlayButtonClicked = () => {
-
         !props.PlayingWorklog.id && props.SetIsPlayingWorklogById(true, props.id,props.ParentId)
-
     }
     const onStopButtonClicked = () => {
         props.SetIsPlayingWorklogById(false, props.id)
@@ -96,13 +95,13 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
     }
 
     return  (<div className={WLS.WorkLogs}>
-        <div className={props.id === props.PlayingWorklog.id
+        <div className={props.PlayingWorklog.id === props.id || ShowMenu
             ? WLS.WorklogBlockContainerActive
             : WLS.WorklogBlockContainer}>
             <div className="WorklogBG">
 
                 {
-                     <img className={props.PlayingWorklog.id === props.id ? WLS.WorklogActiveBG :WLS.WorklogBG}
+                     <img className={props.PlayingWorklog.id === props.id || ShowMenu? WLS.WorklogActiveBG :WLS.WorklogBG}
                           src={WorklogActiveBG} alt=""/>
                 }
 
@@ -137,7 +136,7 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
                                 </div>
                                 : <div> </div>}
 
-                        <div className={props.PlayingWorklog.id === props.id
+                        <div className={props.PlayingWorklog.id === props.id || ShowMenu
                             ? WLS.ColorPointPoseActive
                             : WLS.ColorPointPose}>
                             <img src={props.status === "ok"
@@ -176,12 +175,12 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
                             </div>}
 
                         <div className="WLMoreContainer">
-                            <div  className={props.PlayingWorklog.id === props.id
+                            <div  className={props.PlayingWorklog.id === props.id || ShowMenu
                                 ? WLS.WorklogMoreButtonActive
                                 : WLS.WorklogMoreButton}>
                                 <img src={WLMoreButtonBG} alt=""/>
                             </div>
-                            <div onClick={OnShowMenu} className={props.PlayingWorklog.id === props.id
+                            <div onMouseEnter={OnShowMenu} className={props.PlayingWorklog.id === props.id || ShowMenu
                                 ? WLS.WorklogMoreVerticalActive
                                 :WLS.WorklogMoreVertical}>
                                 <img src={WLMoreButtonVertical} alt="more-vertical"/>
