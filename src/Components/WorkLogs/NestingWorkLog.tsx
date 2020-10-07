@@ -1,7 +1,7 @@
 import React from "react";
 import {
     TAddToFavorite,
-    TAddWorklog, TDeleteWorklog, TNestingItem,
+    TAddWorklog, TDeleteFromFavorites, TDeleteWorklog, TNestingItem,
     TSetIsPlayingWorklogById,
     TSetWorklogToChange, TTimerData,
     TWorkLog
@@ -12,9 +12,9 @@ import {TDeleteModalParams} from "./WorkLogsBlock";
 
 
 export type TNestingWorkLogProps = {
-    NestingItems?: Array<TNestingItem>
+    NestingItems?: Array<TNestingItem> | null
     SetIsPlayingWorklogById: TSetIsPlayingWorklogById
-    PlayingWorklog: TWorkLog
+    PlayingWorklog: TWorkLog | null
     ParentId?: number
     SetDeleteModalParams: any
     OnDeleteModalOpen: (e: React.MouseEvent<HTMLElement>) => void
@@ -25,7 +25,7 @@ export type TNestingWorkLogProps = {
     AddWorklog : TAddWorklog
     OnDeleteModalClose: () => void
     DeleteModalIsOpen: boolean
-    DeleteWorklog: TDeleteWorklog
+    DeleteWorklog: TDeleteWorklog | TDeleteFromFavorites
     DeleteModalParams: TDeleteModalParams | undefined
     TimerData: TTimerData | undefined
     id : number
@@ -49,6 +49,7 @@ const NestingWorkLog: React.FC<TNestingWorkLogProps> = (props) => {
                          IsNesting={false}
                          ParentId={props.id}
                          IsFavorites={NestingItem.IsFavorites}
+                         Issue={NestingItem.Issue}
                         />
             )})
         }

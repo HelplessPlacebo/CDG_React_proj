@@ -1,7 +1,8 @@
 import React from "react";
 import TS from "./Tooltip.module.css"
-import TooltipCloseButton from "../../assets/imgs/Tooltip_Close_button.svg"
+//import TooltipCloseButton from "../../assets/imgs/Tooltip_Close_button.svg"
 import {TTooltipInfo} from "../../App";
+import CloseIcon from '@material-ui/icons/Close';
 
 export type TTooltipProps = {
     TooltipInfo : TTooltipInfo| undefined
@@ -27,7 +28,8 @@ const Tooltip: React.FC<TTooltipProps> = (props) => {
                         </div>
 
                         <div onClick={props.hideTooltil} className={TS.TooltipCloseButtonContainer}>
-                            <img src={TooltipCloseButton} alt="tooltip-close"/>
+                            <CloseIcon fontSize={"inherit"} color={"inherit"} > </CloseIcon>
+                            {/*<img src={TooltipCloseButton} alt="tooltip-close"/>*/}
                         </div>
                     </div>
 

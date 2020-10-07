@@ -15,10 +15,10 @@ const Timer = (props) => {
     const [IssueInputValue,SetIssueInputValue] = useState()
 
     const OnWorklogInputValueChange = (e) =>{
-        SetWorklogInputValue(e.currentTarget.value)
+        SetWorklogInputValue(e.target.value)
     }
     const OnIssueInputValueChange = (e) =>{
-        SetIssueInputValue(e.currentTarget.value)
+        SetIssueInputValue(e.target.value)
     }
 
 
@@ -30,19 +30,10 @@ const Timer = (props) => {
         setIsActive(!isActive)
         let TimerData = {
             TimerValue : ToFullTime(hours) + ":"+ ToFullTime(minutes) + ":" +ToFullTime(seconds),
-            TimerIssue  : IssueInputValue ? IssueInputValue : props.PlayingWorklog.Issue,
-            TimerTaskField: WorklogInputValue ? WorklogInputValue : props.PlayingWorklog.TaskField,
+            TimerIssue  : IssueInputValue ? IssueInputValue : props.PlayingWorklog?.Issue,
+            TimerTaskField: WorklogInputValue ? WorklogInputValue : props.PlayingWorklog?.TaskField,
         }
         props.SetTimerData(TimerData)
-
-        // if(props.PlayingWorklog.ParrentId){
-        //     props.ChangeWorklog(props.PlayingWorklog.id,NewWorklog,true,props.PlayingWorklog.ParrentId)
-        //     props.SetIsPlayingWorklogById(false,props.PlayingWorklog.id)
-        // }
-        // else{
-        //     props.ChangeWorklog(props.PlayingWorklog.id,NewWorklog)
-        //     props.SetIsPlayingWorklogById(false,props.PlayingWorklog.id)
-        // }
     }
 
     useEffect(() => {
@@ -74,14 +65,14 @@ const Timer = (props) => {
         <div className={TS.TimeRContainer}>
             <input className={TS.TimerWorklogName}
                    placeholder={"add worklog"}
-                   defaultValue={props.PlayingWorklog.TaskField}
+                   //defaultValue={props.PlayingWorklog.TaskField}
                    value={WorklogInputValue}
                    onChange={OnWorklogInputValueChange}
                    type="text"/>
 
             <input className={TS.TimerIssueName}
                    placeholder={"add issue"}
-                   defaultValue={props.PlayingWorklog.Issue && props.PlayingWorklog.Issue}
+                 //  defaultValue={props.PlayingWorklog.Issue && props.PlayingWorklog.Issue}
                    value={IssueInputValue}
                    onChange={OnIssueInputValueChange}
                    type="text"/>

@@ -6,7 +6,7 @@ import WLS from "./WorkLog.module.css"
 import {
     TAddToFavorite,
     TAddWorklog,
-    TBlockInfo,
+    TBlockInfo, TDeleteFromFavorites,
     TDeleteWorklog,
     TSendWorklogBlockThunk,
     TSetIsPlayingWorklogById,
@@ -15,7 +15,7 @@ import {
     TTimerData,
     TWorkLog
 } from "../../Data/WorkLogsReducer";
-import WorkLogTimeLine from "./TimePicker/WorkLogTimeLine";
+//import WorkLogTimeLine from "./TimePicker/WorkLogTimeLine";
 import {TComponentToDraw} from "./WorkLogsContainer";
 import {TShowTooltip} from "../../App";
 
@@ -24,7 +24,7 @@ export type TWorklogsBlockProps = {
     BlockInfo?: TBlockInfo
     Worklogs: Array<TWorkLog>
     SetIsPlayingWorklogById: TSetIsPlayingWorklogById
-    PlayingWorklog: TWorkLog
+    PlayingWorklog: TWorkLog | null
     DeleteWorklog: TDeleteWorklog
     SetWorklogToChange: TSetWorklogToChange
     openWorklogChangeModal: () => void
@@ -35,6 +35,7 @@ export type TWorklogsBlockProps = {
     SendWorklogBlockThunk: TSendWorklogBlockThunk
     showTooltip: TShowTooltip
     SetWorklogStatus: TSetWorklogStatus
+    DeleteFromFavorites : TDeleteFromFavorites
 }
 
 export type TDeleteModalParams = {
@@ -109,6 +110,7 @@ const WorkLogsBlock: React.FC<TWorklogsBlockProps> = (props) => {
                                         SetDeleteModalParams={SetDeleteModalParams}
                                         DeleteModalParams={DeleteModalParams}
                                         AddWorklog={props.AddWorklog}
+                                        DeleteWorklog={props.DeleteFromFavorites}
                                     />
                                 </div>
                             }
@@ -116,11 +118,11 @@ const WorkLogsBlock: React.FC<TWorklogsBlockProps> = (props) => {
                     }
                 </div>
         }
-        {props.ComponentToDraw === "Worklogs" &&
-        <div className={WLS.WorkLogSliderPose}>
-            <WorkLogTimeLine/>
-        </div>
-        }
+        {/*{props.ComponentToDraw === "Worklogs" &&*/}
+        {/*<div className={WLS.WorkLogSliderPose}>*/}
+        {/*    <WorkLogTimeLine/>*/}
+        {/*</div>*/}
+        {/*}*/}
 
     </>)
 }

@@ -12,7 +12,7 @@ import {
     TNestingItem,
     TWorkLog,
     TDeleteWorklog,
-    TSetWorklogToChange, TTimerData, TAddToFavorite, TAddWorklog
+    TSetWorklogToChange, TTimerData, TAddToFavorite, TAddWorklog, TBlockInfo, TDeleteFromFavorites
 } from "../../Data/WorkLogsReducer";
 import ArrowUp from "../../assets/imgs/arrow-up.svg"
 import WorkLogDropDown from "./DropDown/WorklogDropDown";
@@ -30,17 +30,17 @@ export type TWorklogProps = {
     TaskField: string | null
     TimerValue: string | null
     IsNesting?: boolean
-    Issue?: string
+    Issue?: string | null
     IsFavorites : boolean
-    NestingItems?: Array<TNestingItem>
+    NestingItems?: Array<TNestingItem> | null
     status: "ok" | "warning" | "danger" | string
     SetIsPlayingWorklogById: TSetIsPlayingWorklogById
-    PlayingWorklog: TWorkLog
+    PlayingWorklog: TWorkLog | null
     id: number
     OnDeleteModalOpen: (e: React.MouseEvent<HTMLElement>) => void
     OnDeleteModalClose: () => void
     DeleteModalIsOpen: boolean
-    DeleteWorklog: TDeleteWorklog
+    DeleteWorklog: TDeleteWorklog | TDeleteFromFavorites
     SetDeleteModalParams: Dispatch<any>
     DeleteModalParams: TDeleteModalParams | undefined
     SetWorklogToChange: TSetWorklogToChange
@@ -50,13 +50,13 @@ export type TWorklogProps = {
     AddToFavorite: TAddToFavorite
     ComponentToDraw: TComponentToDraw
     AddWorklog: TAddWorklog
+    BlockInfo?: TBlockInfo
 }
 
 const WorkLog: React.FC<TWorklogProps> = (props) => {
 
     let [ShowMenu, SetShowMenu] = useState<boolean>()
     let [NestingIsShowing, SetNestingIsShowing] = useState(false)
-
 
     const OnShowNestingWorklogs = () => {
         SetNestingIsShowing(true)
@@ -73,7 +73,7 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
     }
 
     const onPlayButtonClicked = () => {
-        !props.PlayingWorklog.id && props.SetIsPlayingWorklogById(true, props.id,props.ParentId)
+        !props.PlayingWorklog && props.SetIsPlayingWorklogById(true, props.id,props.ParentId)
     }
     const onStopButtonClicked = () => {
         props.SetIsPlayingWorklogById(false, props.id)
@@ -81,7 +81,7 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
     }
 
     const OnSetWorklogToChange = () => {
-        if (!props.PlayingWorklog.id) {
+        if ( !props.PlayingWorklog) {
             let keys = ["id", "StartTime", "TaskField", "TimerValue", "EndTime"
                 , "status", "IsNesting", "JiraCode", "NestingItems", "Issue", "ParentId"]
             let WorklogToChange = {} as TWorkLog
@@ -95,13 +95,13 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
     }
 
     return  (<div className={WLS.WorkLogs}>
-        <div className={props.PlayingWorklog.id === props.id || ShowMenu
+        <div className={props.PlayingWorklog?.id === props.id || ShowMenu
             ? WLS.WorklogBlockContainerActive
             : WLS.WorklogBlockContainer}>
             <div className="WorklogBG">
 
                 {
-                     <img className={props.PlayingWorklog.id === props.id || ShowMenu? WLS.WorklogActiveBG :WLS.WorklogBG}
+                     <img className={props.PlayingWorklog?.id === props.id || ShowMenu? WLS.WorklogActiveBG :WLS.WorklogBG}
                           src={WorklogActiveBG} alt=""/>
                 }
 
@@ -136,7 +136,7 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
                                 </div>
                                 : <div> </div>}
 
-                        <div className={props.PlayingWorklog.id === props.id || ShowMenu
+                        <div className={props.PlayingWorklog?.id === props.id || ShowMenu
                             ? WLS.ColorPointPoseActive
                             : WLS.ColorPointPose}>
                             <img src={props.status === "ok"
@@ -160,7 +160,7 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
                             <div className={WLS.TimerValue}>{props.TimerValue}</div>
                         </div>
 
-                        {props.PlayingWorklog.id === props.id
+                        {props.PlayingWorklog?.id === props.id
 
                             ? <div className={WLS.ControlButtonsContainer}>
                                 <div onClick={onStopButtonClicked} className={WLS.StopButton}>
@@ -175,12 +175,12 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
                             </div>}
 
                         <div className="WLMoreContainer">
-                            <div  className={props.PlayingWorklog.id === props.id || ShowMenu
+                            <div  className={props.PlayingWorklog?.id === props.id || ShowMenu
                                 ? WLS.WorklogMoreButtonActive
                                 : WLS.WorklogMoreButton}>
                                 <img src={WLMoreButtonBG} alt=""/>
                             </div>
-                            <div onMouseEnter={OnShowMenu} className={props.PlayingWorklog.id === props.id || ShowMenu
+                            <div onMouseEnter={OnShowMenu} className={props.PlayingWorklog?.id === props.id || ShowMenu
                                 ? WLS.WorklogMoreVerticalActive
                                 :WLS.WorklogMoreVertical}>
                                 <img src={WLMoreButtonVertical} alt="more-vertical"/>
@@ -194,32 +194,18 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
                                        WorkLogToDeleteId={props.id} isOpen={props.DeleteModalIsOpen}
                                        onClose={props.OnDeleteModalClose}/>
 
-            <div className={props.PlayingWorklog.id === props.id
+            <div className={props.PlayingWorklog?.id === props.id
                 ? WLS.WLlinestrokeActive
                 : WLS.WLlinestroke}>
                 <LineStroke/>
             </div>
 
         </div>
-        {ShowMenu && <WorkLogDropDown ParentId={props.ParentId}
-                                      SetDeleteModalParams={props.SetDeleteModalParams}
-                                      PlayingWorklog={props.PlayingWorklog}
+        {ShowMenu && <WorkLogDropDown {...props}
+                                      onHideMenu={OnHideMenu}
                                       WorklogId={props.id}
-                                      OnDeleteModalOpen={props.OnDeleteModalOpen} onHideMenu={OnHideMenu}
-                                      AddToFavorite={props.AddToFavorite}
-                                      ComponentToDraw={props.ComponentToDraw}
-                                      AddWorklog={props.AddWorklog}
-                                      TimerValue={props.TimerValue}
                                       NestingIsShowing={NestingIsShowing}
-                                      TaskField={props.TaskField}
-                                      JiraCode={props.JiraCode}
-                                      EndTime={props.EndTime}
-                                      StartTime={props.StartTime}
-                                      status={props.status}
-                                      Issue={props.Issue}
-                                      IsNesting={props.IsNesting}
-                                      NestingItems={props.NestingItems}
-                                      IsFavorites={props.IsFavorites}
+
         />}
 
         {NestingIsShowing &&  <NestingWorkLog {...props} />

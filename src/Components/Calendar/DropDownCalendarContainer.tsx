@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from "react-redux";
 import {compose} from "redux";
-// import {withRouter} from 'react-router-dom'
 import {GlobalState} from "../../Data/redux-store"
 import {
     TCalendars,
@@ -9,6 +8,7 @@ import {
     SetClickedMonthDay, TCurrentDate, TClickedDay,
 } from "../../Data/CalendarReducer";
 import DropDownCalendar from "./DropDownCalendar";
+import {TWorklogBlock} from "../../Data/WorkLogsReducer";
 
 export type TDropDownCalendarContainerOwnProps = {}
 
@@ -16,6 +16,7 @@ export type T_MSTP_DropDownCalendarContainer = {
     Calendars: TCalendars
     ClickedMonthDay: TClickedDay
     CurrentDate : TCurrentDate
+    WorklogsBlocks: Array<TWorklogBlock>
 }
 
 export type T_MDTP_DropDownCalendarContainer = {
@@ -35,7 +36,8 @@ class DropDownCalendarContainer extends React.Component<TDropDownCalendarContain
 let StateToProps = (state: GlobalState): T_MSTP_DropDownCalendarContainer => ({
     Calendars: state.CalendarData.Calendars,
     ClickedMonthDay: state.CalendarData.ClickedMonthDay,
-    CurrentDate : state.CalendarData.CurrentDate
+    CurrentDate : state.CalendarData.CurrentDate,
+    WorklogsBlocks : state.WorklogsData.WorkLogsBlocks
 
 })
 

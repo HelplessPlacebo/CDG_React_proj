@@ -1,6 +1,14 @@
 import React, {Dispatch} from "react";
 import WLDD from "./WorklogDropDown.module.css"
-import {randomInteger, TAddToFavorite, TAddWorklog, TNestingItem, TWorkLog} from "../../../Data/WorkLogsReducer";
+import {
+    CurrentDate,
+    randomInteger,
+    TAddToFavorite,
+    TAddWorklog,
+    TBlockInfo,
+    TNestingItem,
+    TWorkLog
+} from "../../../Data/WorkLogsReducer";
 import {TComponentToDraw} from "../WorkLogsContainer";
 
 export type TWorklogDropDownProps = {
@@ -8,7 +16,7 @@ export type TWorklogDropDownProps = {
     OnDeleteModalOpen : (e : React.MouseEvent<HTMLElement>)=> void
     SetDeleteModalParams : Dispatch<any>
     ParentId ? : number
-    PlayingWorklog: TWorkLog
+    PlayingWorklog: TWorkLog | null
     AddToFavorite : TAddToFavorite
     WorklogId : number
     ComponentToDraw : TComponentToDraw
@@ -19,17 +27,18 @@ export type TWorklogDropDownProps = {
     TaskField: string | null
     TimerValue: string | null
     IsNesting?: boolean
-    Issue?: string
-    NestingItems?: Array<TNestingItem>
+    Issue?: string | null
+    NestingItems?: Array<TNestingItem> | null
     status: "ok" | "warning" | "danger" | string
     NestingIsShowing: boolean
     IsFavorites : boolean
+    BlockInfo?: TBlockInfo
 }
 
 const WorkLogDropDown: React.FC<TWorklogDropDownProps> = (props) => {
 
     const OnDeleteModalOpenContainer = (e : React.MouseEvent<HTMLElement>)=>{
-        if(!props.PlayingWorklog.id && props.ComponentToDraw === "Worklogs"){
+        if(props.BlockInfo?.BlockCreatedDate === CurrentDate && !props.PlayingWorklog){
             props.SetDeleteModalParams({
                 WorkLogToDeleteId : props.WorklogId,
                 ParentId : props.ParentId
@@ -39,7 +48,7 @@ const WorkLogDropDown: React.FC<TWorklogDropDownProps> = (props) => {
         }
     }
     const OnAddToFavorites = () =>{
-        if(!props.PlayingWorklog.id && props.ComponentToDraw === "Worklogs"){
+        if(!props.PlayingWorklog?.id && props.ComponentToDraw === "Worklogs"){
             if(props.ParentId)  props.AddToFavorite(props.WorklogId,props.ParentId)
             else props.AddToFavorite(props.WorklogId)
         }
@@ -47,7 +56,7 @@ const WorkLogDropDown: React.FC<TWorklogDropDownProps> = (props) => {
     }
 
     const OnDuplicateWorklog = () =>{
-   if(!props.PlayingWorklog.id && props.ComponentToDraw === "Worklogs" ) {
+   if(!props.PlayingWorklog?.id && props.ComponentToDraw === "Worklogs" ) {
             let CurrentWorklog : TWorkLog = {
                 id: randomInteger(0, 10000),
                 TaskField: props.TaskField,
@@ -68,9 +77,7 @@ const WorkLogDropDown: React.FC<TWorklogDropDownProps> = (props) => {
 
     return (<div onMouseLeave={props.onHideMenu} className={WLDD.Container}>
         <div onClick={props.onHideMenu} className={WLDD.ContentContainer}>
-            <div className={WLDD.ContainerFirstEl}>
-                Jira Code
-            </div>
+
             <div onClick={OnDuplicateWorklog} className={WLDD.ContainerEl}>
                 Duplicate
             </div>

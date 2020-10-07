@@ -16,10 +16,10 @@ export type TModalWindowProps = {
     closeWorklogChangeModal: () => void
     WorklogChangeModalIsOpen: boolean
     SetIsPlayingWorklogById: TSetIsPlayingWorklogById
-    PlayingWorklog: TWorkLog
+    PlayingWorklog: TWorkLog | null
     TimerData: TTimerData | undefined
     ChangeWorklog: TChangeWorklog
-    WorklogToChange: TWorkLog | undefined
+    WorklogToChange: TWorkLog | null
     SetTimerData: Dispatch<SetStateAction<TTimerData | undefined>>
     SetWorklogToChange: TSetWorklogToChange
 }
@@ -52,7 +52,7 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
         if (props.TimerData) {
             props.TimerData.TimerTaskField && SetModalNewWorklogName(props.TimerData.TimerTaskField)
             props.TimerData.TimerIssue && SetModalNewIssueName(props.TimerData.TimerIssue)
-            if (props.PlayingWorklog.StartTime && props.PlayingWorklog.EndTime) {
+            if (props.PlayingWorklog && props.PlayingWorklog.StartTime && props.PlayingWorklog.EndTime) {
                 SetModalTimeLineValues({
                     start: props.PlayingWorklog.StartTime,
                     end: props.PlayingWorklog.EndTime
@@ -67,8 +67,7 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
             })
         }
     }, [props.TimerData?.TimerIssue, props.TimerData?.TimerTaskField, props.TimerData?.TimerValue,
-        props.WorklogToChange?.EndTime, props.WorklogToChange?.StartTime,
-        props.WorklogToChange?.Issue, props.WorklogToChange?.TaskField])
+        props.WorklogToChange])
 
     const OnModalSubmit = (e: SyntheticEvent) => {
         {

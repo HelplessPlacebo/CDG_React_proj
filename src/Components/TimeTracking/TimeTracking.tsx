@@ -4,13 +4,13 @@ import StrokeVert from "../../assets/imgs/stroke_vert.svg"
 import StrokeHoriz from "../../assets/imgs/stroke_horiz.svg"
 import NewWorklogButton from "../../assets/imgs/new_worklog_button.svg"
 import NewWorklogButtonShadowed from "../../assets/imgs/new_worklog_button_shadowed.svg"
-import LongMenu from "../DropDownMenu/DropDownMenu";
+//import LongMenu from "../DropDownMenu/DropDownMenu";
 import Timer from "../Timer/Timer";
 import {TAddWorklog, TChangeWorklog, TSetIsPlayingWorklogById, TTimerData, TWorkLog} from "../../Data/WorkLogsReducer";
 
 export type TTimeTrackingProps = {
     AddWorklog : TAddWorklog
-    PlayingWorklog: TWorkLog
+    PlayingWorklog: TWorkLog | null
     SetIsPlayingWorklogById: TSetIsPlayingWorklogById
     ChangeWorklog: TChangeWorklog
     FavoritesIsClicked: boolean
@@ -25,7 +25,7 @@ const TimeTracking: React.FC<TTimeTrackingProps> = (props) => {
     }
 
     return (<div className={TTS.TTLayout}>
-            <div className="stroke-vert">
+            <div className={TTS.strokeVert}>
                 <img src={StrokeVert} alt="stroke-vert"/>
             </div>
             <div className={TTS.TTContent}>
@@ -38,12 +38,12 @@ const TimeTracking: React.FC<TTimeTrackingProps> = (props) => {
                             Time tracking
                         </div>
 
-                        {!props.PlayingWorklog.id && <LongMenu/>}
+                        {/*{!props.PlayingWorklog.id && <LongMenu/>}*/}
 
                     </div>
                 </div>
 
-                {props.PlayingWorklog.id
+                {props.PlayingWorklog
                     ? <Timer SetIsPlayingWorklogById={props.SetIsPlayingWorklogById}
                              PlayingWorklog={props.PlayingWorklog}
                              openWorklogChangeModal={props.openWorklogChangeModal}

@@ -7,9 +7,9 @@ import {
     AddWorklog,
     SetIsPlayingWorklogById,
     DeleteWorklog, SetWorklogToChange, AddToFavorite, SendWorklogBlockThunk,
-    SetWorklogStatus,
+    SetWorklogStatus,DeleteFromFavorites,
     TDeleteWorklog, TAddWorklog, TSetIsPlayingWorklogById, TWorkLog,
-    TSetWorklogToChange, TTimerData, TAddToFavorite, TSendWorklogBlockThunk, TSetWorklogStatus
+    TSetWorklogToChange, TTimerData, TAddToFavorite, TSendWorklogBlockThunk, TSetWorklogStatus, TDeleteFromFavorites
 } from "../../Data/WorkLogsReducer";
 import WorkLogsBlock from "./WorkLogsBlock";
 import {TShowTooltip} from "../../App";
@@ -25,7 +25,7 @@ export type TWorkLogsContainerOwnProps = {
 
 export type T_MSTP_WorkLogsContainer = {
     WorklogsBlocks: Array<TWorklogBlock>
-    PlayingWorklog: TWorkLog
+    PlayingWorklog: TWorkLog | null
 }
 
 export type T_MDTP_WorkLogsContainer = {
@@ -36,6 +36,7 @@ export type T_MDTP_WorkLogsContainer = {
     AddToFavorite: TAddToFavorite
     SendWorklogBlockThunk: TSendWorklogBlockThunk
     SetWorklogStatus: TSetWorklogStatus
+    DeleteFromFavorites : TDeleteFromFavorites
 }
 
 
@@ -63,6 +64,7 @@ class WorkLogsContainer extends React.Component<TDialogsContainerProps> {
                                            SendWorklogBlockThunk={this.props.SendWorklogBlockThunk}
                                            showTooltip={this.props.showTooltip}
                                            SetWorklogStatus={this.props.SetWorklogStatus}
+                                           DeleteFromFavorites={this.props.DeleteFromFavorites}
                             />
                         </div>
                     })
@@ -81,7 +83,8 @@ let StateToProps = (state: GlobalState): T_MSTP_WorkLogsContainer => ({
 export default compose(connect<T_MSTP_WorkLogsContainer, T_MDTP_WorkLogsContainer, TWorkLogsContainerOwnProps, GlobalState>
 (StateToProps, {
     AddWorklog, DeleteWorklog,
-    SetIsPlayingWorklogById, SetWorklogToChange, AddToFavorite, SendWorklogBlockThunk,SetWorklogStatus
+    SetIsPlayingWorklogById, SetWorklogToChange, AddToFavorite,
+    SendWorklogBlockThunk,SetWorklogStatus,DeleteFromFavorites
 }))
     //@ts-ignore
     (WorkLogsContainer)

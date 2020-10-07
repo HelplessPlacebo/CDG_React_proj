@@ -3,24 +3,24 @@ import DS from "./DeleteConfirm.module.css"
 import ConfirmButton from "../../assets/imgs/confirmButton.svg"
 import DeclineButton from "../../assets/imgs/declineButton.svg"
 import MS from "../ModalWindow/ModalWindow.module.css";
-import {TDeleteWorklog} from "../../Data/WorkLogsReducer";
+import {TDeleteFromFavorites, TDeleteWorklog} from "../../Data/WorkLogsReducer";
 import {TDeleteModalParams} from "../WorkLogs/WorkLogsBlock";
 
 
 export type TDeleteWorklogConfirmModalProps = {
-  isOpen : boolean
+    isOpen : boolean
     onClose: ()=> void
     WorkLogToDeleteId : number
-    DeleteWorklog : TDeleteWorklog
+    DeleteWorklog : TDeleteWorklog | TDeleteFromFavorites
     DeleteModalParams : TDeleteModalParams | undefined
 }
 
 const DeleteWorklogConfirmModal : React.FC<TDeleteWorklogConfirmModalProps> = (props) => {
     const OnModalSubmit = (e: React.MouseEvent<HTMLElement>) => {
-        if(props.DeleteModalParams)
-        props.DeleteWorklog(props.DeleteModalParams.WorkLogToDeleteId,props.DeleteModalParams.ParentId)
-        props.onClose()
-        debugger
+        if(props.DeleteModalParams){
+            props.DeleteWorklog(props.DeleteModalParams.WorkLogToDeleteId,props.DeleteModalParams.ParentId)
+            props.onClose()
+        }
     }
         if (!props.isOpen) return null
 

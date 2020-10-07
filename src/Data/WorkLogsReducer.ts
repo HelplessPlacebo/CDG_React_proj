@@ -1,6 +1,7 @@
-import {GlobalState} from "./redux-store";
+import store, {GlobalState} from "./redux-store";
 import {ThunkAction} from "redux-thunk";
 import {API} from "../API/requests"
+import {GetCurrentDate} from "../assets/secondary/GetCurrentDate";
 
 const ADD_WORKLOG = "WORKLOGS/ADD_WORKLOG"
 const DEL_WORKLOG = "WORKLOGS/DEL_WORKLOG"
@@ -9,6 +10,8 @@ const CHANGE_WORKLOG = "WORKLOGS/CHANGE_WORKLOG"
 const SET_WORKLOG_TO_CHANGE = "WORKLOGS/SET_WORKLOG_TO_CHANGE"
 const ADD_TO_FAVORITE = "WORKLOGS/ADD_TO_FAVORITE"
 const SET_WORKLOG_STATUS = "WORKLOGS/SET_WORKLOG_STATUS"
+const DELETE_FROM_FAVORITES = "WORKLOGS/DELETE_FROM_FAVORITES"
+export const CurrentDate = `${GetCurrentDate().DayName+","+ GetCurrentDate().CurrentMonth } ${GetCurrentDate().CurrentDay}`
 
 export const randomInteger = (min: number, max: number): number => {
     let rand = min + Math.random() * (max + 1 - min);
@@ -21,7 +24,7 @@ export type TNestingItem = {
     JiraCode: string | null
     TaskField: string | null
     status: "ok" | "warning" | "danger" | string
-    Issue?: string
+    Issue?: string | null
     id: number
     TimerValue: string | null
     IsFavorites : boolean
@@ -42,9 +45,9 @@ export type TWorkLog = {
     status: "ok" | "warning" | "danger" | string
     TimerValue: string | null
     IsNesting?: boolean
-    NestingItems?: Array<TNestingItem>
+    NestingItems?: Array<TNestingItem> | null
     id: number
-    Issue?: string
+    Issue?: string | null
     ParentId?: number
     IsFavorites : boolean
 }
@@ -78,6 +81,7 @@ let DefaultState = {
             TaskField: "Team standup",
             status: "warning",
             IsNesting: false,
+            NestingItems: null,
             TimerValue: "02:00:00",
             id: 444553452341241,
             IsFavorites : false
@@ -87,6 +91,7 @@ let DefaultState = {
             JiraCode: "JRM-310",
             TaskField: "Meeting with QA",
             status: "ok",
+            NestingItems: null,
             IsNesting: false,
             TimerValue: "01:15:00",
             id: 213124124125122,
@@ -136,6 +141,7 @@ let DefaultState = {
                 TaskField: "Team standup",
                 status: "danger",
                 IsNesting: false,
+                NestingItems: null,
                 TimerValue: "01:00:00",
                 id: 444553452341246,
                 IsFavorites : false
@@ -145,6 +151,7 @@ let DefaultState = {
                 JiraCode: "JRM-310",
                 TaskField: "Meeting with QA",
                 status: "ok",
+                NestingItems: null,
                 IsNesting: false,
                 TimerValue: "01:15:00",
                 id: 213124124125127,
@@ -194,6 +201,7 @@ let DefaultState = {
                 TaskField: "Team standup",
                 status: "danger",
                 IsNesting: false,
+                NestingItems: null,
                 TimerValue: "01:00:00",
                 id: 4445534523412411,
                 IsFavorites : false
@@ -204,6 +212,7 @@ let DefaultState = {
                 TaskField: "Meeting with QA",
                 status: "ok",
                 IsNesting: false,
+                NestingItems: null,
                 TimerValue: "01:15:00",
                 id: 2131241241251212,
                 IsFavorites : false
@@ -252,6 +261,7 @@ let DefaultState = {
                 TaskField: "Team standup",
                 status: "danger",
                 IsNesting: false,
+                NestingItems: null,
                 TimerValue: "01:00:00",
                 id: 4445534523412416,
                 IsFavorites : false
@@ -262,6 +272,7 @@ let DefaultState = {
                 TaskField: "Meeting with QA",
                 status: "ok",
                 IsNesting: false,
+                NestingItems: null,
                 TimerValue: "01:15:00",
                 id: 2131241241251217,
                 IsFavorites : false
@@ -307,6 +318,7 @@ let DefaultState = {
                 EndTime: "10:00",
                 JiraCode: "JRM-310",
                 TaskField: "Team standup",
+                NestingItems: null,
                 status: "ok",
                 IsNesting: false,
                 TimerValue: "01:00:00",
@@ -319,6 +331,7 @@ let DefaultState = {
                     JiraCode: "JRM-310",
                     TaskField: "Meeting with QA",
                     status: "ok",
+                    NestingItems: null,
                     IsNesting: false,
                     TimerValue: "01:15:00",
                     id: 76967845623522,
@@ -330,22 +343,23 @@ let DefaultState = {
                     TaskField: "Company Branding",
                     status: "warning",
                     IsNesting: false,
+                    NestingItems: null,
                     TimerValue: "03:50:00",
                     id: 12312434256623,
                     IsFavorites : false
                 }
             ]
         }] as Array<TWorklogBlock>,
-    PlayingWorklog: {} as TWorkLog,
-    WorklogToChange: undefined as TWorkLog | undefined
+    PlayingWorklog: null as TWorkLog | null,
+    WorklogToChange: null as TWorkLog | null,
+    FavoritesWorklogs : null as Array<TWorkLog> | null
 }
 
 export const SearchWorklogBlock = (MonthName: string, DayNumber: number): Element | null => {
-    let StateCopy: DefaultWorklogsState = JSON.parse(JSON.stringify(DefaultState))
+    let StateCopy: DefaultWorklogsState = JSON.parse(JSON.stringify(store.getState().WorklogsData))
     let WorklogsBlockToBeScrolled: HTMLElement | null = null
     StateCopy.WorkLogsBlocks.map(el => {
         let [Month, Day] = [...el.BlockInfo.BlockCreatedDate?.split(",")[1].split(" ")]
-
         if (Month === MonthName && Number.parseInt(Day) === DayNumber) {
             WorklogsBlockToBeScrolled = document.getElementById(el.BlockInfo.id.toString())
         }
@@ -360,6 +374,7 @@ type  DefaultWorklogsState = typeof DefaultState
 type TWorklogsReducerActions = ReturnType<TAddWorklog> | ReturnType<TDeleteWorklog>
     | ReturnType<TSetIsPlayingWorklogById> | ReturnType<TChangeWorklog>
     | ReturnType<TSetWorklogToChange> | ReturnType<TAddToFavorite> | ReturnType<TSetWorklogStatus>
+    | ReturnType<TDeleteFromFavorites>
 
 type TWorklogsThunks = ThunkAction<Promise<void>, GlobalState, unknown, TWorklogsReducerActions>
 
@@ -387,7 +402,6 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
                                 ...NestingItem,
                                 ParentId
                             }
-                            //@ts-ignore
                             SoughtWorklog = SoughtNestingItem
                             WorklogBlockIndex = Index
                             NestingWorklogIndex = NestingIndex
@@ -410,15 +424,13 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
         case ADD_WORKLOG: {
 
             let WorklogsBlocksCopy: Array<TWorklogBlock> = GetWorklogsBlockCopy()
-
-            let WorklogToCreate: TWorkLog
             let EmptyWorklog: TWorkLog = {
                 StartTime: null,
                 EndTime: null,
                 id: randomInteger(0, 10000),
-                NestingItems: undefined,
+                NestingItems: null,
                 TaskField: null,
-                Issue: undefined,
+                Issue: null,
                 TimerValue: "00:00:00",
                 JiraCode: "JRM-310",
                 status: "danger",
@@ -426,21 +438,27 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
                 ParentId: undefined,
                 IsFavorites : !!action.IsFavorites
             }
+            let WorklogToCreate = {} as TWorkLog
 
             action.NewWorklog
                 ? WorklogToCreate = action.NewWorklog
                 : WorklogToCreate = EmptyWorklog
 
-            if (action.to) {
-                WorklogsBlocksCopy.map(el => {
-                    if (el.BlockInfo.BlockCreatedDate === action.to) {
-                        el.Worklogs.unshift(WorklogToCreate)
-
-                    }
-                })
-            } else {
-                WorklogsBlocksCopy[0].Worklogs.unshift(WorklogToCreate)
-            }
+                if(WorklogsBlocksCopy.some(WBL=>WBL.BlockInfo.BlockCreatedDate === CurrentDate)){
+                       WorklogsBlocksCopy.map(WBL=>{
+                           WBL.BlockInfo.BlockCreatedDate === CurrentDate && WBL.Worklogs.unshift(WorklogToCreate)
+                       })
+                }
+                else{
+                    WorklogsBlocksCopy.unshift({BlockInfo : {
+                            id : randomInteger(0,10000),
+                            BlockCreatedDate : CurrentDate,
+                            SummaryStatus : "danger",
+                            SummaryTime : "00:00:00"
+                        },Worklogs : [
+                            WorklogToCreate
+                        ]})
+                }
 
             return {
                 ...state,
@@ -456,13 +474,17 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
                 //@ts-ignore
                 PlayingWorklog: action.IsPlaying ?
                     SoughtWorklog
-                    : {}
+                    : null
             }
         }
         case CHANGE_WORKLOG: {
             let WorklogsBlocksCopy: Array<TWorklogBlock> = GetWorklogsBlockCopy()
+
             WorklogsBlocksCopy.map(WB => WB.Worklogs.map(Worklog => {
-                if (action.parentId) {
+                if(Worklog.Issue === action.NewWorklog.Issue){
+                    console.log(Worklog)
+                }
+                else if (action.parentId) {
                     if (Worklog.id === action.NewWlParentId) {
                         Worklog.NestingItems?.map(NestingItem => {
                             if (NestingItem.id === action.WorkLogId) {
@@ -497,30 +519,34 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
             let WorklogsBlocksCopy: Array<TWorklogBlock> = GetWorklogsBlockCopy()
             let NewWorklogs: Array<Array<TWorkLog>> = []
             let NewNestingWorklogs: Array<Array<TNestingItem> | undefined> = []
+            let FilteredWorklogBlockCopy = []  as Array<TWorklogBlock>
 
-            WorklogsBlocksCopy.map((el, index) => {
+            WorklogsBlocksCopy.map((WBL, index) => {
+
                 if (action.DelParentId) {
-                    el.Worklogs.map((Worklog, WLIndex) => {
+                    WBL.Worklogs.map((Worklog, WLIndex) => {
                         if (Worklog.id === action.DelParentId) {
                             NewNestingWorklogs.push(Worklog.NestingItems?.filter(NestingItem => NestingItem.id !== action.DelWorklogId))
                             WorklogsBlocksCopy[index].Worklogs[WLIndex].NestingItems = NewNestingWorklogs[index]
                         }
                     })
                 } else {
-                    NewWorklogs.push(el.Worklogs.filter(WL => WL.id !== action.DelWorklogId))
+                    NewWorklogs.push(WBL.Worklogs.filter(WL => WL.id !== action.DelWorklogId))
                     WorklogsBlocksCopy[index].Worklogs = NewWorklogs[index]
                 }
-
+                if(WBL.Worklogs.length === 0) {
+                    FilteredWorklogBlockCopy = WorklogsBlocksCopy.filter(WBLtrue=>WBLtrue !== WBL)
+                }
             })
             return {
                 ...state,
-                WorkLogsBlocks: WorklogsBlocksCopy
+                WorkLogsBlocks: FilteredWorklogBlockCopy.length > 0 ?  FilteredWorklogBlockCopy : WorklogsBlocksCopy
             }
         }
         case SET_WORKLOG_TO_CHANGE : {
             return {
                 ...state,
-                WorklogToChange: action.WorklogToChange ? action.WorklogToChange : undefined
+                WorklogToChange: action.WorklogToChange ? action.WorklogToChange : null
             }
         }
         case ADD_TO_FAVORITE : {
@@ -560,15 +586,32 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
                 WorkLogsBlocks: WorklogsBlocksCopy
             }
         }
+        case DELETE_FROM_FAVORITES : {
+            let WorklogsBlocksCopy: Array<TWorklogBlock> = GetWorklogsBlockCopy()
+            WorklogsBlocksCopy.map(WBL=>WBL.Worklogs.map(Worklog=>{
+                if(Worklog.NestingItems && Worklog.NestingItems?.length > 0){
+                  Worklog.NestingItems.map(NestingItem=>{
+                      if(NestingItem.id === action.WorklogId) NestingItem.IsFavorites = false
+                    })
+                }
+                else {
+                    if(Worklog.id === action.WorklogId) Worklog.IsFavorites = false
+                }}))
+
+            return {
+                ...state,
+                WorkLogsBlocks: WorklogsBlocksCopy
+
+            }
+        }
 
         default :
             return state
     }
 }
 
-export const AddWorklog = (NewWorklog ?: TWorkLog, to?: string, IsFavorites?: boolean) => {
-
-    return {type: ADD_WORKLOG, NewWorklog, to, IsFavorites} as const
+export const AddWorklog = (NewWorklog ?: TWorkLog, IsFavorites?: boolean) => {
+    return {type: ADD_WORKLOG, NewWorklog, IsFavorites} as const
 }
 export type TAddWorklog = typeof AddWorklog
 
@@ -617,5 +660,10 @@ export const SetWorklogStatus = (options: {
 }
 export type TSetWorklogStatus = typeof SetWorklogStatus
 
+export const DeleteFromFavorites = (WorklogId : number,ParentId? : number) => {
+    return {type : DELETE_FROM_FAVORITES,WorklogId,ParentId} as const
+}
+
+export type TDeleteFromFavorites = typeof DeleteFromFavorites
 
 export default WorklogsReducer

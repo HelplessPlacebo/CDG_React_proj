@@ -1,26 +1,8 @@
 import {randomInteger} from "./WorkLogsReducer";
+import {GetCurrentDate} from "../assets/secondary/GetCurrentDate";
 
 
 const SET_CLICKED_MONTH_DAYS = 'CALENDAR/SET_CLICKED_MONTH_DAYS'
-const months = ['January', 'February', 'March', 'April', 'May',
-    'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-const GetCurrentDate = (): TCurrentDate => {
-    let date = new Date()
-    let currentyear = date.getFullYear()
-    let currentmonth = months[date.getMonth()]
-    let currentday = date.getDate()
-
-    let CurrentDate: TCurrentDate = {
-        CurrentYear: currentyear,
-        //@ts-ignore
-        CurrentMonth: currentmonth,
-        CurrentDay: currentday
-    }
-    return CurrentDate
-
-}
-
 
 const RandomStatus = (arr: Array<any>) => {
     if (arr.length <= 0) {
@@ -104,6 +86,7 @@ export type TClickedDay = {
 } | null
 
 export type TCurrentDate = {
+    DayName : string
     CurrentYear: number | string
     CurrentMonth: keyof typeof DefaultState.Calendars
     CurrentDay: number | string

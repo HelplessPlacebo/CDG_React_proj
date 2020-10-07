@@ -20,8 +20,8 @@ export type TModalWindowContainerOwnProps = {
 }
 
 export type T_MSTP_ModalWindowContainer = {
-    PlayingWorklog: TWorkLog
-    WorklogToChange: TWorkLog | undefined
+    PlayingWorklog: TWorkLog | null
+    WorklogToChange: TWorkLog | null
 }
 
 export type T_MDTP_ModalWindowContainer = {

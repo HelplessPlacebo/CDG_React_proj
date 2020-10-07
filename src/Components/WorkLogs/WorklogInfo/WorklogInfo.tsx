@@ -1,9 +1,10 @@
 import React from "react";
 import FS from "./WorklogInfo.module.css"
-import DownloadIcon from "../../../assets/imgs/download.svg"
+//import DownloadIcon from "../../../assets/imgs/download.svg"
 import ProgressBar from "../../ProgressBar/ProgressBar";
 import LineStroke from "../../LineStroke/LineStroke";
 import {
+    CurrentDate,
     TBlockInfo,
     TSendWorklogBlockThunk,
     TSendWorklogsData,
@@ -11,6 +12,8 @@ import {
     TWorkLog
 } from "../../../Data/WorkLogsReducer";
 import {TShowTooltip} from "../../../App";
+import BackupIcon from '@material-ui/icons/Backup';
+
 
 export type TWorklogInfoProps = {
     DateOfCreation: string | null
@@ -84,9 +87,18 @@ const WorklogInfo: React.FC<TWorklogInfoProps> = (props) => {
                         <ProgressBar status={props.SummaryStatus}/>
                     </div>
                 </div>
-                <div  onClick={OnSendWorklogData} className={FS.DownloadIcon}>
-                    <img  src={DownloadIcon} alt="download-icon"/>
-                </div>
+                {props.BlockInfo.BlockCreatedDate === CurrentDate
+                    ? <BackupIcon color={"primary"} fontSize={"large"}
+                                onClick={OnSendWorklogData}
+                                className={FS.DownloadIcon}>
+                    </BackupIcon>
+
+                    : <BackupIcon color={"disabled"} fontSize={"large"}
+                                         className={FS.DownloadIcon}>
+                     </BackupIcon>
+
+                }
+
             </div>
             <div className={FS.WLlineStrokeContainer}>
                 <LineStroke/>

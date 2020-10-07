@@ -26,7 +26,7 @@ export type TAppOwnProps = {
 }
 
 export type T_MSTP_App = {
-    PlayingWorklog: TWorkLog
+    PlayingWorklog: TWorkLog | null
     CurrentDate: TCurrentDate
     WorklogsBlocks: Array<TWorklogBlock>
 }
@@ -125,6 +125,7 @@ const App: React.FC<TAppProps> = (props) => {
                                                                     openWorklogChangeModal={openWorklogChangeModal}
                                                                     TimerData={TimerData}
                                                                     AddWorklog={props.AddWorklog}
+                                                                    PlayingWorklog={props.PlayingWorklog}
                                        />}/>
 
                             </div>

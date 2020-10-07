@@ -6,7 +6,7 @@ import {
 } from "../../Data/CalendarReducer";
 import CS from "./Calendar.module.css"
 import CalendarDay from "./CalendarDay";
-import {randomInteger} from "../../Data/WorkLogsReducer";
+import {randomInteger, TWorklogBlock} from "../../Data/WorkLogsReducer";
 import DropDownCalendarFooterElement from "./DropDownCalendarFooterElement";
 
 export type TDropDownCalendarProps = {
@@ -14,6 +14,7 @@ export type TDropDownCalendarProps = {
     ClickedMonthDay: TClickedDay
     SetClickedMonthDay: TSetClickedMonthDay
     CurrentDate: TCurrentDate
+    WorklogsBlocks: Array<TWorklogBlock>
 }
 
 const DropDownCalendar: React.FC<TDropDownCalendarProps> = (props) => {
@@ -26,17 +27,24 @@ const DropDownCalendar: React.FC<TDropDownCalendarProps> = (props) => {
         </div>
         <div className={CS.DropDOwnCalendarContentContainer}>
             <div className={CS.DropDownCalendarContent}>
+
                 {DaysNamesArr.map(el => {
-                    return <div key={randomInteger(0, 10000)} className={CS.DropDownCalendarDayNames}>
+                    return <div key={randomInteger(0, 10000)}
+                                className={CS.DropDownCalendarDayNames}>
                         {el}
+
                     </div>
                 })}
+
                 {props.Calendars[props.CurrentDate.CurrentMonth].map(day => {
                     return <CalendarDay ClickedMonthDay={props.ClickedMonthDay}
                                         CurrentDay={props.CurrentDate.CurrentDay}
                                         MonthName={props.CurrentDate.CurrentMonth}
                                         key={day.id}
-                                        SetClickedMonthDay={props.SetClickedMonthDay}  {...day}/>
+                                        SetClickedMonthDay={props.SetClickedMonthDay}
+                                        {...day}
+                                        WorklogsBlocks={props.WorklogsBlocks}
+                    />
                 })}
 
             </div>
@@ -47,6 +55,7 @@ const DropDownCalendar: React.FC<TDropDownCalendarProps> = (props) => {
                 <DropDownCalendarFooterElement status={"ok"} text={"Done"}/>
                 <DropDownCalendarFooterElement status={"warning"} text={"In progress"}/>
                 <DropDownCalendarFooterElement status={"danger"} text={"Missed"}/>
+                <DropDownCalendarFooterElement status={"empty"} text={"no activity"}/>
             </div>
         </div>
     </div>)

@@ -24,7 +24,7 @@ const NavBar: React.FC<TNavBarProps> = (props) => {
                             Issues
                         </NavLink>
                     </div>
-                    <div className={HS.item}>
+                  {/*  <div className={HS.item}>
                         <NavLink to="/Filter/">
                             Filter
                         </NavLink>
@@ -33,7 +33,7 @@ const NavBar: React.FC<TNavBarProps> = (props) => {
                         <NavLink to="/Projects/">
                             Projects
                         </NavLink>
-                    </div>
+                    </div>*/}
                 </div>
             </div>
         </div>
@@ -43,9 +43,9 @@ const NavBar: React.FC<TNavBarProps> = (props) => {
                 <div className={HS.SmallIcons}>
                     <img src={settings} alt="settings"/>
                 </div>
-                <div className={HS.SmallIcons}>
+             {/*   <div className={HS.SmallIcons}>
                     <img src={FAQ} alt="info"/>
-                </div>
+                </div>*/}
                 <div className={HS.SmallIcons}>
                     <img src={LogOutIcon} alt="door1"/>
                 </div>
