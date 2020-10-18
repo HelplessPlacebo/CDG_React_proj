@@ -18,7 +18,7 @@ const All: React.FC<TAllProps> = (props) => {
                 ? AllS.item
                 : AllS.ActiveItem}>
 
-                <NavLink onClick={props.OnAllClicked}  to={"/Home/All"}> All </NavLink>
+                <NavLink onClick={props.OnAllClicked}   to={"/Home/All"}> All </NavLink>
             </div>
         </div>
     )

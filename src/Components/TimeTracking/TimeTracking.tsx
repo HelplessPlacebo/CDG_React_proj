@@ -7,6 +7,7 @@ import NewWorklogButtonShadowed from "../../assets/imgs/new_worklog_button_shado
 //import LongMenu from "../DropDownMenu/DropDownMenu";
 import Timer from "../Timer/Timer";
 import {TAddWorklog, TChangeWorklog, TSetIsPlayingWorklogById, TTimerData, TWorkLog} from "../../Data/WorkLogsReducer";
+import IssuesSelectInput from "../Issues/IssuesSelectInput";
 
 export type TTimeTrackingProps = {
     AddWorklog : TAddWorklog
@@ -16,6 +17,7 @@ export type TTimeTrackingProps = {
     FavoritesIsClicked: boolean
     openWorklogChangeModal : ()=> void
     SetTimerData : (TimerData : TTimerData) => void
+    Issues : string[]
 }
 
 const TimeTracking: React.FC<TTimeTrackingProps> = (props) => {
@@ -26,7 +28,7 @@ const TimeTracking: React.FC<TTimeTrackingProps> = (props) => {
 
     return (<div className={TTS.TTLayout}>
             <div className={TTS.strokeVert}>
-                <img src={StrokeVert} alt="stroke-vert"/>
+                {/*<img src={StrokeVert} alt="stroke-vert"/>*/}
             </div>
             <div className={TTS.TTContent}>
 
@@ -49,6 +51,7 @@ const TimeTracking: React.FC<TTimeTrackingProps> = (props) => {
                              openWorklogChangeModal={props.openWorklogChangeModal}
                              SetTimerData={props.SetTimerData}
                              ChangeWorklog={props.ChangeWorklog}
+                             Issues={props.Issues}
                     />
                     : <div className={TTS.TTMainContentRoot}>
                             <div className={TTS.NewWorklogContainer}>
@@ -80,7 +83,7 @@ const TimeTracking: React.FC<TTimeTrackingProps> = (props) => {
                             </div>
 
                         <div className={TTS.TTHorizStrokePose}>
-                            <img src={StrokeHoriz} alt=""/>
+                            {/*<img src={StrokeHoriz} alt=""/>*/}
                         </div>
 
                     </div>

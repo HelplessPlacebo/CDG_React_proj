@@ -28,7 +28,7 @@ export type TWorklogInfoProps = {
 
 const WorklogInfo: React.FC<TWorklogInfoProps> = (props) => {
 
-    const OnSendWorklogData = () => {
+    const OnSendWorklogData = () : void => {
         props.Worklogs.map(Worklog => {
             if (!Worklog.Issue || Worklog.Issue.length <= 0) {
                 props.showTooltip({
@@ -48,7 +48,6 @@ const WorklogInfo: React.FC<TWorklogInfoProps> = (props) => {
                 props.SetWorklogStatus({target: "worklog", status: "ok", id: Worklog.id})
                 props.showTooltip({text: "your worklog successfully logged.", status: "ok"})
             }
-
         })
 
         if (props.Worklogs.every(Worklog => Worklog.EndTime && Worklog.StartTime && Worklog.TimerValue
@@ -88,7 +87,7 @@ const WorklogInfo: React.FC<TWorklogInfoProps> = (props) => {
                     </div>
                 </div>
                 {props.BlockInfo.BlockCreatedDate === CurrentDate
-                    ? <BackupIcon color={"primary"} fontSize={"large"}
+                    ? <BackupIcon style={{cursor : "pointer"}} color={"primary"} fontSize={"large"}
                                 onClick={OnSendWorklogData}
                                 className={FS.DownloadIcon}>
                     </BackupIcon>

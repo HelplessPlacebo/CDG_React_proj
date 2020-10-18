@@ -55,18 +55,9 @@ const TimeSlider: React.FC<TTimeSliderProps> = (props) => {
     SetRightPose(RightMargin)
 }
 
-
-    const UpdateLabelsValue = () =>{
-        let LeftLabel = document.getElementById("LeftSliderLabel")
-        let RightLabel = document.getElementById("RightSliderLabel")
-        if(LeftLabel)   LeftLabel.innerHTML = `<div>${value.start}</div>`
-        if(RightLabel)  RightLabel.innerHTML = `<div>${value.end}</div>`
-    }
-
     useEffect(() => {
             props.value && SetValue(props.value)
              TimerButtonsInit()
-        // UpdateLabelsValue()
         }, [props.value && props.value]
     );
 
@@ -78,8 +69,6 @@ const TimeSlider: React.FC<TTimeSliderProps> = (props) => {
     const timeChangeHandler = (time: any) => {
         TimerButtonsInit()
         SetValue(time)
-        UpdateLabelsValue()
-
     }
 
     const changeCompleteHandler = (time : any) => {
@@ -93,8 +82,8 @@ const TimeSlider: React.FC<TTimeSliderProps> = (props) => {
         <TimeRangeSlider
             disabled={props.disabled}
             format={props.format ? props.format : 24}
-            maxValue={props.maxValue ? props.maxValue : "18:59"}
-            minValue={props.minValue ? props.minValue : "7:00"}
+            maxValue={props.maxValue ? props.maxValue : "23:59"}
+            minValue={props.minValue ? props.minValue : "00:01"}
             name={"time_range"}
             onChangeStart={changeStartHandler}
             onChangeComplete={changeCompleteHandler}

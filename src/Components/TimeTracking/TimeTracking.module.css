@@ -78,13 +78,17 @@
     line-height: 144.2%;
     text-align: center;
     font-variant: small-caps;
-    color: #C4CACB;
+    color: #5b5b5b;
 }
 .TTHorizStrokePose {
-    height: 1px;
-    padding-top: 110px;
+    margin-top: 120px;
+    height: 2px;
+    width: 95%;
+    background-color: #a6a6a6;
 }
 
 .strokeVert{
-
+    height: 800px;
+    width: 2px;
+    background-color: #a6a6a6;
 }

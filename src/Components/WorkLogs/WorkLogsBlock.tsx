@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {Dispatch, SetStateAction, useState} from "react";
 import {DifferenceInTime} from "../../assets/secondary/DifferenceInTime";
 import WorkLog from "./WorkLog";
 import WorklogInfo from "./WorklogInfo/WorklogInfo";
@@ -15,10 +15,9 @@ import {
     TTimerData,
     TWorkLog
 } from "../../Data/WorkLogsReducer";
-//import WorkLogTimeLine from "./TimePicker/WorkLogTimeLine";
 import {TComponentToDraw} from "./WorkLogsContainer";
 import {TShowTooltip} from "../../App";
-
+//import WorkLogTimeLine from "./TimePicker/WorkLogTimeLine";
 
 export type TWorklogsBlockProps = {
     BlockInfo?: TBlockInfo
@@ -28,7 +27,6 @@ export type TWorklogsBlockProps = {
     DeleteWorklog: TDeleteWorklog
     SetWorklogToChange: TSetWorklogToChange
     openWorklogChangeModal: () => void
-    TimerData: TTimerData | undefined
     ComponentToDraw: TComponentToDraw
     AddToFavorite: TAddToFavorite
     AddWorklog: TAddWorklog
@@ -36,6 +34,12 @@ export type TWorklogsBlockProps = {
     showTooltip: TShowTooltip
     SetWorklogStatus: TSetWorklogStatus
     DeleteFromFavorites : TDeleteFromFavorites
+    FavoritesWorklogs : Array<TWorkLog>
+
+    closeWorklogChangeModal: () => void
+    WorklogChangeModalIsOpen: boolean
+    TimerData: TTimerData | undefined
+    SetTimerData: Dispatch<SetStateAction<TTimerData | undefined>>
 }
 
 export type TDeleteModalParams = {
@@ -44,7 +48,6 @@ export type TDeleteModalParams = {
 }
 
 const WorkLogsBlock: React.FC<TWorklogsBlockProps> = (props) => {
-
     let [DeleteModalIsOpen, SetDeleteModalIsOpen] = useState(false)
     let [DeleteModalParams, SetDeleteModalParams] = useState<TDeleteModalParams>()
 
@@ -71,8 +74,7 @@ const WorkLogsBlock: React.FC<TWorklogsBlockProps> = (props) => {
         }
 
         {
-            props.ComponentToDraw === "Worklogs" ?
-                props.Worklogs.map(el => {
+                props[props.ComponentToDraw].map(el => {
                     return <div key={el.id} className="worklog">
                         <WorkLog
                             {...el}
@@ -88,41 +90,12 @@ const WorkLogsBlock: React.FC<TWorklogsBlockProps> = (props) => {
                             SetDeleteModalParams={SetDeleteModalParams}
                             DeleteModalParams={DeleteModalParams}
                             AddWorklog={props.AddWorklog}
+                            DeleteWorklog={props.DeleteWorklog }
+                            DeleteFromFavorites={props.DeleteFromFavorites}
                         />
                     </div>
                 })
-                : <div style={{paddingTop: "50px"}} className="FavoritesWorklogContainer">
-                    {
-                        props.Worklogs.map(Worklog => {
-                             if(Worklog.IsFavorites) {
-                               return <div key={Worklog.id} className="FavoritesWorklog">
-                                    <WorkLog
-                                        {...Worklog}
-                                        {...props}
-                                        TimerValue={Worklog.TimerValue
-                                            ? Worklog.TimerValue
-                                            : Worklog.StartTime && Worklog.EndTime
-                                                ? DifferenceInTime([Worklog.StartTime, Worklog.EndTime])
-                                                : null}
-                                        DeleteModalIsOpen={DeleteModalIsOpen}
-                                        OnDeleteModalClose={OnDeleteModalClose}
-                                        OnDeleteModalOpen={OnDeleteModalOpen}
-                                        SetDeleteModalParams={SetDeleteModalParams}
-                                        DeleteModalParams={DeleteModalParams}
-                                        AddWorklog={props.AddWorklog}
-                                        DeleteWorklog={props.DeleteFromFavorites}
-                                    />
-                                </div>
-                            }
-                        })
-                    }
-                </div>
         }
-        {/*{props.ComponentToDraw === "Worklogs" &&*/}
-        {/*<div className={WLS.WorkLogSliderPose}>*/}
-        {/*    <WorkLogTimeLine/>*/}
-        {/*</div>*/}
-        {/*}*/}
 
     </>)
 }

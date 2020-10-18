@@ -1,9 +1,8 @@
 import React, {SyntheticEvent, useState, useEffect, Dispatch, SetStateAction} from "react";
 import MS from "./ModalWindow.module.css"
-import ConfirmButton from "../../assets/imgs/confirmButton.svg"
-import DeclineButton from "../../assets/imgs/declineButton.svg"
 import TimeSlider from "./TimeSlider/TimeSlider";
 import {
+    TChangeFavoritesWorklog,
     TChangeWorklog,
     TSetIsPlayingWorklogById,
     TSetWorklogToChange,
@@ -11,6 +10,11 @@ import {
     TWorkLog
 } from "../../Data/WorkLogsReducer";
 import {CalculateNewStartTime, ToFullTime} from "../../assets/secondary/CalculateTime";
+import ClearIcon from '@material-ui/icons/Clear';
+import {green} from '@material-ui/core/colors';
+import CheckOutlinedIcon from '@material-ui/icons/CheckOutlined';
+import IssuesSelectInput from "../Issues/IssuesSelectInput";
+import CustomInput from "./CustomInput";
 
 export type TModalWindowProps = {
     closeWorklogChangeModal: () => void
@@ -22,6 +26,8 @@ export type TModalWindowProps = {
     WorklogToChange: TWorkLog | null
     SetTimerData: Dispatch<SetStateAction<TTimerData | undefined>>
     SetWorklogToChange: TSetWorklogToChange
+    ChangeFavoritesWorklog: TChangeFavoritesWorklog
+    Issues: string[]
 }
 type TTimerValue = {
     start: string | null
@@ -31,7 +37,7 @@ type TTimerValue = {
 const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
 
     let [ModalNewWorklogName, SetModalNewWorklogName] = useState("")
-    let [ModalNewIssueName, SetModalNewIssueName] = useState("")
+    let [ModalNewIssueName, SetModalNewIssueName] = useState<string>("")
     let [ModalTimeLineValues, SetModalTimeLineValues] = useState<TTimerValue>()
     let [NewWorklogNameIsFilled, SetNewWorklogNameIsFilled] = useState<boolean>(false)
     let [NewIssueNameIsFilled, SetNewIssueNameIsFilled] = useState<boolean>(false)
@@ -45,8 +51,7 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
         start: CalculateNewStartTime(CurrentTime, EmptyWorklogTimerEndHours, EmptyWorklogTimerMinutes) as string | null,
         end: CurrentTime as string | null
     }
-
-
+    
     useEffect(() => {
 
         if (props.TimerData) {
@@ -103,15 +108,14 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
                     : props[Obj].TimerValue ? props[Obj].TimerValue : "00:00:00"
             }
 
-            //@ts-ignore
-            if (props[Obj].ParentId) {
+            if (NewWL.IsFavorites) {
                 //@ts-ignore
-                props.ChangeWorklog(props[Obj].id, props[Obj].ParentId ,NewWL,  props[Obj].ParentId)
+                props.ChangeFavoritesWorklog(props[Obj].id, NewWL)
                 //@ts-ignore
                 props.SetIsPlayingWorklogById(false, props[Obj].id)
             } else {
                 //@ts-ignore
-                props.ChangeWorklog(props[Obj].id, undefined,NewWL)
+                props.ChangeWorklog(props[Obj].id, NewWL)
                 //@ts-ignore
                 props.SetIsPlayingWorklogById(false, props[Obj].id)
             }
@@ -126,8 +130,9 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
     const OnNewWorklogNameType = (e: React.FormEvent<HTMLInputElement>) => {
         SetModalNewWorklogName(e.currentTarget.value)
     }
-    const OnNewIssueNameType = (e: React.FormEvent<HTMLInputElement>) => {
-        SetModalNewIssueName(e.currentTarget.value)
+    const OnNewIssueNameType = (event: React.ChangeEvent<{ value: unknown }>) => {
+        //@ts-ignore
+        SetModalNewIssueName(event.target.value)
     }
 
 
@@ -164,34 +169,28 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
                     <div className={MS.ModalTextFields}>
                         <div className={MS.NewWorklogContentContainer}>
 
-                            <div className={MS.NewWorklogContentTitle}>Worklog name</div>
+                            <CustomInput value={ModalNewWorklogName}
+                                         handleChange={OnNewWorklogNameType}
+                                         label={"Task Field"}
+                                         placeholder={"Please, enter the task"}
+                                         width={500}
+                            />
 
-                            <div className={MS.marginCheck}>
-                                <input
-                                    onChange={OnNewWorklogNameType}
-                                    value={ModalNewWorklogName}
-                                    className={MS.NewWorklogContentInput}
-                                    placeholder="Enter the worklog name"
-                                    type="text"/>
-                            </div>
-
-                            {NewWorklogNameIsFilled &&
-                            <div id="new-issue-err" className={MS.ModalInputError}> Please, enter worklog name</div>
+                            {
+                                NewWorklogNameIsFilled &&
+                                <div id="new-issue-err" className={MS.ModalInputError}> Please, enter worklog name</div>
                             }
-
-                            <div style={{marginTop: "37px"}}>
-                                <div className={MS.NewWorklogContentTitle}>Issue</div>
-                                <div className={MS.marginCheck}>
-                                    <input
-                                        onChange={OnNewIssueNameType}
-                                        value={ModalNewIssueName}
-                                        className={MS.NewWorklogContentInput}
-                                        placeholder="Enter the issue name"
-                                        type="text"/>
-                                </div>
+                            <div style={{marginTop : "20px"}} className="issue-select-input">
+                                <IssuesSelectInput Issues={props.Issues}
+                                                   handleChange={OnNewIssueNameType}
+                                                   value={ModalNewIssueName}
+                                                   width={500}
+                                />
                             </div>
-                            {NewIssueNameIsFilled &&
-                            <div id="new-issue-err" className={MS.ModalInputError}> Please, enter issue name</div>
+
+                            {
+                                NewIssueNameIsFilled &&
+                                <div id="new-issue-err" className={MS.ModalInputError}> Please, enter issue name</div>
                             }
 
                         </div>
@@ -199,18 +198,16 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
                     <div className={MS.NewWorklogControlButtonsContainer}>
                         <div className={MS.NewWorklogControlButtons}>
                             <div onClick={OnModalSubmit} className="modal-open">
-                                <img className={MS.NewWorklogSubmitButtonSize}
-                                     src={ConfirmButton} alt={"submit"}/>
+                                <CheckOutlinedIcon style={{color: green[500], cursor: "pointer"}} fontSize="large"/>
                             </div>
-                            <div className="modal-close">
-                                <img onClick={close} className={MS.NewWorklogControlButton}
-                                     src={DeclineButton} alt={"decline"}/>
+                            <div className={MS.CloseButtonMargin}>
+                                <ClearIcon style={{cursor: "pointer"}} fontSize="large" onClick={close} color="action"/>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
-            <div className={MS.bg} />
+            <div className={MS.bg}/>
         </div>
     );
 }

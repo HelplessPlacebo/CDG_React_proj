@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Dispatch, SetStateAction} from "react";
 import {
     TAddToFavorite,
     TAddWorklog, TDeleteFromFavorites, TDeleteWorklog, TNestingItem,
@@ -16,6 +16,7 @@ export type TNestingWorkLogProps = {
     SetIsPlayingWorklogById: TSetIsPlayingWorklogById
     PlayingWorklog: TWorkLog | null
     ParentId?: number
+    id : number
     SetDeleteModalParams: any
     OnDeleteModalOpen: (e: React.MouseEvent<HTMLElement>) => void
     SetWorklogToChange: TSetWorklogToChange
@@ -27,9 +28,13 @@ export type TNestingWorkLogProps = {
     DeleteModalIsOpen: boolean
     DeleteWorklog: TDeleteWorklog | TDeleteFromFavorites
     DeleteModalParams: TDeleteModalParams | undefined
+    DeleteFromFavorites : TDeleteFromFavorites
+
+
+    closeWorklogChangeModal: () => void
+    WorklogChangeModalIsOpen: boolean
     TimerData: TTimerData | undefined
-    id : number
-    IsFavorites : boolean
+    SetTimerData: Dispatch<SetStateAction<TTimerData | undefined>>
 }
 
 const NestingWorkLog: React.FC<TNestingWorkLogProps> = (props) => {
@@ -41,15 +46,14 @@ const NestingWorkLog: React.FC<TNestingWorkLogProps> = (props) => {
                         key={NestingItem.id}
                          StartTime={NestingItem.StartTime}
                          EndTime={NestingItem.EndTime}
-                         JiraCode={NestingItem.JiraCode}
                          TaskField={NestingItem.TaskField}
                          TimerValue={NestingItem.TimerValue}
                          status={NestingItem.status}
                          id={NestingItem.id}
-                         IsNesting={false}
                          ParentId={props.id}
-                         IsFavorites={NestingItem.IsFavorites}
+                         NestingItems={null}
                          Issue={NestingItem.Issue}
+                         DeleteFromFavorites={props.DeleteFromFavorites}
                         />
             )})
         }

@@ -4,6 +4,8 @@ import TTStopButton from "../../assets/imgs/TT-stop-button.svg"
 import TTPauseButton from "../../assets/imgs/TT-pause-button.svg"
 import PlayButton from "@material-ui/icons/PlayCircleFilled"
 import {ToFullTime} from "../../assets/secondary/CalculateTime"
+import CustomInput from "../ChangeWorklogModal/CustomInput";
+import IssuesSelectInput from "../Issues/IssuesSelectInput";
 
 
 const Timer = (props) => {
@@ -11,26 +13,26 @@ const Timer = (props) => {
     const [minutes, setMinutes] = useState(Number.parseInt(props.PlayingWorklog.TimerValue.substr(3, props.PlayingWorklog.TimerValue.length - 6)))
     const [hours, setHours] = useState(Number.parseInt(props.PlayingWorklog.TimerValue.substr(0, props.PlayingWorklog.TimerValue.length - 6)))
     const [isActive, setIsActive] = useState(false);
-    const [WorklogInputValue,SetWorklogInputValue] = useState()
-    const [IssueInputValue,SetIssueInputValue] = useState()
+    const [WorklogInputValue, SetWorklogInputValue] = useState()
+    const [IssueInputValue, SetIssueInputValue] = useState()
 
-    const OnWorklogInputValueChange = (e) =>{
+    const OnWorklogInputValueChange = (e) => {
         SetWorklogInputValue(e.target.value)
     }
-    const OnIssueInputValueChange = (e) =>{
+    const OnIssueInputValueChange = (e) => {
         SetIssueInputValue(e.target.value)
     }
 
 
-    const  toggle = () => {
+    const toggle = () => {
         setIsActive(!isActive);
     }
-    const OnStopTimer =() =>{
+    const OnStopTimer = () => {
         props.openWorklogChangeModal()
         setIsActive(!isActive)
         let TimerData = {
-            TimerValue : ToFullTime(hours) + ":"+ ToFullTime(minutes) + ":" +ToFullTime(seconds),
-            TimerIssue  : IssueInputValue ? IssueInputValue : props.PlayingWorklog?.Issue,
+            TimerValue: ToFullTime(hours) + ":" + ToFullTime(minutes) + ":" + ToFullTime(seconds),
+            TimerIssue: IssueInputValue ? IssueInputValue : props.PlayingWorklog?.Issue,
             TimerTaskField: WorklogInputValue ? WorklogInputValue : props.PlayingWorklog?.TaskField,
         }
         props.SetTimerData(TimerData)
@@ -63,19 +65,17 @@ const Timer = (props) => {
     return (
 
         <div className={TS.TimeRContainer}>
-            <input className={TS.TimerWorklogName}
-                   placeholder={"add worklog"}
-                   //defaultValue={props.PlayingWorklog.TaskField}
-                   value={WorklogInputValue}
-                   onChange={OnWorklogInputValueChange}
-                   type="text"/>
-
-            <input className={TS.TimerIssueName}
-                   placeholder={"add issue"}
-                 //  defaultValue={props.PlayingWorklog.Issue && props.PlayingWorklog.Issue}
-                   value={IssueInputValue}
-                   onChange={OnIssueInputValueChange}
-                   type="text"/>
+            <CustomInput value={WorklogInputValue}
+                         handleChange={OnWorklogInputValueChange}
+                         label={"Task Field"}
+                         placeholder={"Please, enter the task"}
+                         width={250}
+            />
+            <IssuesSelectInput Issues={props.Issues}
+                               handleChange={OnIssueInputValueChange}
+                               value={IssueInputValue}
+                               width={250}
+            />
 
             <div className={TS.Timer}>
                 {ToFullTime(hours)}:{ToFullTime(minutes)}:{ToFullTime(seconds)}

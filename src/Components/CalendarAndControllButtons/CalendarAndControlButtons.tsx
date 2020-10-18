@@ -11,11 +11,9 @@ export type TCalendarAndControlButtonsProps = {
     FavoritesIsClicked: boolean
     OnFavoritesClick: () => void
     OnAllClicked: () => void
-
 }
 
 const CalendarAndControlButtons: React.FC<TCalendarAndControlButtonsProps> = (props) => {
-
     return (<div className={AS.CalendarAndButtons}>
         <Calendar CurrentDate={props.CurrentDate}/>
         <All FavoritesIsClicked={props.FavoritesIsClicked} OnAllClicked={props.OnAllClicked}/>

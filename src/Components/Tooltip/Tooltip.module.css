@@ -7,7 +7,7 @@
     background-color: #FFFFFF;
     bottom: 48px;
     right: 61px;
-
+    box-shadow: 0 3px 11px -.5px rgba(0, 0, 0, .2);
 }
 
 .TooltipContent{

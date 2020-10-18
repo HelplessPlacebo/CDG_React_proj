@@ -17,6 +17,7 @@
     border: none;
     background-color: #F9FAFC;
     width: 217px;
+    border-radius: 30px;
 }
 
 .TimerIssueName {
@@ -32,6 +33,7 @@
     margin-bottom: 11px;
     background-color: #F9FAFC;
     width: 217px;
+    border-radius: 30px;
 }
 
 .TimerControlButtonsContainer {
@@ -53,4 +55,5 @@
     line-height: 144.2%;
     text-align: center;
     color: #1E1E1E;
+    margin-top: 15px;
 }

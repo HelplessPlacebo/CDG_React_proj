@@ -3,11 +3,13 @@ import CalendarReducer from "./CalendarReducer";
 import WorkLogsReducer from "./WorkLogsReducer"
 import {reducer as formReducer} from "redux-form"
 import  thunkMiddleWare from "redux-thunk"
+import IssuesReducer from "./IssuesReducer";
 
 let reducers = combineReducers({
  form : formReducer,
  CalendarData : CalendarReducer,
  WorklogsData  : WorkLogsReducer,
+ IssuesData : IssuesReducer
 })
 
 type Treducers = typeof reducers

@@ -3,6 +3,7 @@
     height: 58px;
     border-radius: 30px;
     background-color: #F0F3F5;
+    cursor: pointer;
 }
 
 .CalendarContent {
@@ -31,13 +32,14 @@
 }
 /**************************** DropDown Calendar ********************************/
 .DropDownCalendar {
-    padding-top: 6px;
+    margin-top:  10px;
     z-index: 10000;
     position: absolute;
     width: 462px;
     height: 472px;
     border-radius: 10px;
-    background: #f0f0f0;
+    background: #FFFFFF;
+    box-shadow: 0px 14px 30px rgba(0, 0, 0, 0.08);
 }
 
 .DropDownCalendarHeader {
@@ -48,7 +50,7 @@
     color: #000000;
     text-align: center;
     padding-top: 37px;
-    padding-left: 62px;
+    padding-left: 92px;
     width: 338px;
     height: 19px;
 }

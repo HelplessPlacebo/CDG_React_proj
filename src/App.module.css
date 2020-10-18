@@ -1,7 +1,6 @@
 
 
 @font-face {
-
     font-family: 'Roboto', serif;
     src: url(./assets/roboto/Roboto-Regular.woff2) format("woff2");
     font-weight: normal;
@@ -34,13 +33,18 @@
 }
 .AppContainer{
     font-family: 'Roboto', serif;
-    background-color: #F9FAFC;
     overflow: hidden;
+    background-color: #E5E5E5;
+    /*background: url(assets/imgs/bgc/clock4_gupsy_test.jpg) no-repeat center center fixed ;*/
+    /*-webkit-background-size: cover;*/
+    /*-moz-background-size: cover;*/
+    /*-o-background-size: cover;*/
+    /*background-size: cover;*/
 }
 @media (max-width: 1500px) {
     .AppContainer {
         font-family: 'Roboto', serif;
-        background-color: #F9FAFC;
+    /*    width: 1920px;*/
         overflow: initial;
     }
 }

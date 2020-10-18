@@ -7,6 +7,7 @@ export type TProgressBarProps = {
 }
 
 const ProgressBar: React.FC<TProgressBarProps> = (props) => {
+
     return (
         <React.Fragment>
             <Progress  style={{ width: "100px", height: "8px", borderRadius : "20px"}} >
@@ -24,4 +25,4 @@ const ProgressBar: React.FC<TProgressBarProps> = (props) => {
     )
 }
 
-export default ProgressBar
+export default React.memo(ProgressBar)

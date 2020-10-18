@@ -1,6 +1,6 @@
 
 
-export const ToFullTime = (value) =>{
+export const ToFullTime = (value,hours) =>{
     if(typeof value === "string"){
         let Numbered =  Number.parseInt(value)
         if(Numbered < 10){
@@ -29,8 +29,8 @@ export const CalculateNewStartTime = (CurrentTime,hours,minutes)=>{
             CurrentMinutes = CurrentMinutes + 60
             CurrentHours = CurrentHours -1
          }
-        let StartTime = ToFullTime(CurrentHours - hours) + ":" + ToFullTime(CurrentMinutes - minutes)
-         return StartTime
+
+         return  `${ToFullTime(CurrentHours - hours) === 24? "00" : ToFullTime(CurrentHours - hours)}:${ToFullTime(CurrentMinutes - minutes)}`
     }
 }
 

@@ -12,6 +12,7 @@ export type TFavoritesPageProps = {
     openWorklogChangeModal: () => void
     AddWorklog : TAddWorklog
     PlayingWorklog : TWorkLog | null
+    FavoritesWorklog : Array<TWorkLog>
 }
 
 const FavoritesPage: React.FC<TFavoritesPageProps> = (props) => {
@@ -19,10 +20,9 @@ const FavoritesPage: React.FC<TFavoritesPageProps> = (props) => {
        !props.PlayingWorklog &&  props.AddWorklog(undefined,true)
     }
     return (<div>
-
         {
-            props.WorklogsBlocks.map(WBL=> WBL.Worklogs.some(Worklog => Worklog.IsFavorites)).includes(true)
-                    ? <div className="Worklogs">
+            props.FavoritesWorklog.length > 0
+                    ? <div className="Favorites-Worklogs">
                         <WorkLogsContainer TimerData={props.TimerData}
                                            openWorklogChangeModal={props.openWorklogChangeModal}
                                            ComponentToDraw={"FavoritesWorklogs"}/>
@@ -51,7 +51,6 @@ const FavoritesPage: React.FC<TFavoritesPageProps> = (props) => {
                         </div>
                     </div>
             }
-        }
     </div>)
 }
 

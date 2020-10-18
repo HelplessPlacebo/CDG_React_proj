@@ -139,6 +139,8 @@
     grid-template-columns: 50px 17px 51px;
     grid-template-rows: 27px;
     z-index: 30;
+    transition-timing-function: ease-out ;
+    transition-duration: .3s;
 }
 
 
@@ -155,7 +157,7 @@
     font-weight: 500;
     font-size: 18px;
     line-height: 144.2%;
-    color: #BBBBBB;
+    color: #424242;
 }
 
 .Minus {
@@ -164,7 +166,7 @@
     font-weight: 500;
     line-height: 144.2%;
     font-size: 18px;
-    color: #BBBBBB;
+    color: #424242;
 }
 
 /*Color Point*/
@@ -176,13 +178,13 @@
     z-index: 30;
 }
 
-.JiraCode {
+.Issue {
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
     line-height: 144.2%;
     font-variant: small-caps;
-    color: #828282;
+    color: #424242;
 }
 
 .TaskField {
@@ -217,21 +219,24 @@
     font-weight: 500;
     font-size: 18px;
     line-height: 144.2%;
-    color: #BBBBBB;
+    color: #7d7d7d;
 }
 
 .ControlButtonsContainer {
     margin-top: 21px;
     margin-left: 37px;
     z-index: 30;
+
 }
 
 .PlayButton {
     cursor: pointer;
+
 }
 
 .StopButton {
     cursor: pointer;
+
 }
 
 .ProgressBarContainer {
@@ -251,6 +256,8 @@
     margin-left: 64px;
     margin-top: 19px;
     z-index: 30;
+    transition-timing-function: ease-out ;
+    transition-duration: .2s;
 }
 
 .NestingBG {

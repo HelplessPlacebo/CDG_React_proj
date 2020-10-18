@@ -1,34 +1,28 @@
 
-.navContainer   {
-    font-family: 'Roboto', serif;
-    background: #3744BD;
-    width: 1920px;
-    display: grid;
-    grid-template-columns: 1603px 258px;
-    grid-template-rows: 91px;
-}
+/*.navContainer   {*/
+/*    font-family: 'Roboto', serif;*/
+/*    background: #3744BD;*/
+/*    width: 1920px;*/
+/*    display: grid;*/
+/*    grid-template-columns: 1603px 258px;*/
+/*    grid-template-rows: 91px;*/
+/*}*/
 
-/************************ Nav links **********************  */
+/*!************************ Nav links **********************  *!*/
 
-.navLinksContainer{
-    width: 452px;
-    margin-top: 36px;
-    margin-left: 78px;
-}
+/*.navLinksContainer{*/
+/*    width: 452px;*/
+/*    margin-top: 36px;*/
+/*    margin-left: 78px;*/
+/*}*/
 
-.NavLinksPosition{
-    margin-left: 14px;
-}
+/*.NavLinksPosition{*/
+/*    margin-left: 14px;*/
+/*}
 
-.NavLinks {
-
-    display: grid;
-    grid-template-rows: 26px;
-    grid-template-columns: 49px 53px 42px 67px;
-    column-gap: 73px;
-}
-
+*/
 /*Nav links*/
+/*
 .NavLinksItem {
     font-style: normal;
     font-weight: 500;
@@ -45,9 +39,9 @@
     margin-top: 24px;
 }
 
-/***********************************************/
+!***********************************************!
 
-/************************ Nav Icons************************  */
+!************************ Nav Icons************************  *!
 .NavIconsContainer {
 
     width: 256px;
@@ -74,7 +68,19 @@
     margin-left: 11px;
     align-self: center;
 }
+*/
+
+
+
+.NavLinks {
+    padding-left: 92px;
+    display: grid;
+    grid-template-columns: 80px 60px;
+    column-gap: 81px;
+}
+
 .item a {
+    font-family: 'Roboto', serif;
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
@@ -92,8 +98,9 @@ a {
     position:relative;
 }
 a:after {
-    margin-top: 26px;
+    margin-top: 15px;
     background-color: #FFFFFF;
+    border-radius: 5px;
     display: block;
     content: "";
     height: 3px;

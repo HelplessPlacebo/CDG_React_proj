@@ -3,9 +3,9 @@
     left : 1100px;
     position: absolute;
     width: 169px;
-    height: 192px;
+    height: 165px;
     background: #FFFFFF;
-    box-shadow: 0px 15px 30px rgba(216, 226, 232, 0.12);
+    box-shadow: 0 3px 33px -.5px rgba(0, 0, 0, .2);
     border-radius: 10px;
     transition: .3s ease-in-out linear;
     z-index: 200;
@@ -16,8 +16,9 @@
 }
 .ContainerEl{
     cursor: pointer;
-    padding-top: 20px ;
     padding-left:32px;
+    margin-top: 10px;
+    padding-top: 10px;
     font-family: Roboto,serif;
     font-style: normal;
     font-weight: normal;
@@ -26,7 +27,6 @@
     color: #4F4F4F;
 }
 .ContainerEl:hover{
-
     background: #E3F3FF;
 }
 .ContainerFirstEl{

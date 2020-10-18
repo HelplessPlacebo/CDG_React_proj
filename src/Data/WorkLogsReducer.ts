@@ -11,7 +11,8 @@ const SET_WORKLOG_TO_CHANGE = "WORKLOGS/SET_WORKLOG_TO_CHANGE"
 const ADD_TO_FAVORITE = "WORKLOGS/ADD_TO_FAVORITE"
 const SET_WORKLOG_STATUS = "WORKLOGS/SET_WORKLOG_STATUS"
 const DELETE_FROM_FAVORITES = "WORKLOGS/DELETE_FROM_FAVORITES"
-export const CurrentDate = `${GetCurrentDate().DayName+","+ GetCurrentDate().CurrentMonth } ${GetCurrentDate().CurrentDay}`
+const CHANGE_FAVORITES_WORKLOG = "WORKLOGS/CHANGE_FAVORITES_WORKLOG"
+export const CurrentDate = `${GetCurrentDate().DayName + "," + GetCurrentDate().CurrentMonth} ${GetCurrentDate().CurrentDay}`
 
 export const randomInteger = (min: number, max: number): number => {
     let rand = min + Math.random() * (max + 1 - min);
@@ -21,13 +22,11 @@ export const randomInteger = (min: number, max: number): number => {
 export type TNestingItem = {
     StartTime: string | null
     EndTime: string | null
-    JiraCode: string | null
     TaskField: string | null
     status: "ok" | "warning" | "danger" | string
     Issue?: string | null
     id: number
     TimerValue: string | null
-    IsFavorites : boolean
 }
 
 export type TBlockInfo = {
@@ -40,16 +39,14 @@ export type TBlockInfo = {
 export type TWorkLog = {
     StartTime: string | null
     EndTime: string | null
-    JiraCode: string | null
     TaskField: string | null
     status: "ok" | "warning" | "danger" | string
     TimerValue: string | null
-    IsNesting?: boolean
     NestingItems?: Array<TNestingItem> | null
     id: number
     Issue?: string | null
     ParentId?: number
-    IsFavorites : boolean
+    IsFavorites?: boolean
 }
 
 export type  TWorklogBlock = {
@@ -69,7 +66,7 @@ export type TSendWorklogsData = {
 let DefaultState = {
     WorkLogsBlocks: [{
         BlockInfo: {
-            BlockCreatedDate: "Wed,September 28",
+            BlockCreatedDate: "Wed,October 7",
             SummaryStatus: "ok",
             SummaryTime: "07:05:00",
             id: 1
@@ -77,59 +74,60 @@ let DefaultState = {
         Worklogs: [{
             StartTime: "09:00",
             EndTime: "11:00",
-            JiraCode: "JRM-310",
             TaskField: "Team standup",
             status: "warning",
-            IsNesting: false,
             NestingItems: null,
             TimerValue: "02:00:00",
             id: 444553452341241,
-            IsFavorites : false
+            Issue: "Meeting",
+            IsFavorites: false
         }, {
             StartTime: "10:00",
             EndTime: "11:15",
-            JiraCode: "JRM-310",
             TaskField: "Meeting with QA",
             status: "ok",
             NestingItems: null,
-            IsNesting: false,
             TimerValue: "01:15:00",
             id: 213124124125122,
-            IsFavorites : false
+            Issue: "QA",
+            IsFavorites: false
         }, {
             StartTime: "09:00",
             EndTime: "10:00",
-            JiraCode: "JRM-310",
             TaskField: "Company Branding",
             status: "warning",
-            IsNesting: true,
             TimerValue: "03:50:00",
             id: 2131241255143,
-            IsFavorites : false,
-            NestingItems: [{
+            NestingItems: null,
+            Issue: "Branding",
+            IsFavorites: false
+        },
+            {
                 StartTime: "11:30",
                 EndTime: "13:00",
-                JiraCode: "JRM-310",
                 TaskField: "Marketing strategy",
                 status: "warning",
                 id: 123213213244,
                 TimerValue: "01:30:00",
-                IsFavorites : false,
-            }, {
+                NestingItems: null,
+                Issue: "Profit increase",
+                IsFavorites: false
+            },
+            {
                 StartTime: "13:20",
                 EndTime: "16:00",
-                JiraCode: "JRM-310",
                 TaskField: "Moodboarding",
                 status: "ok",
                 id: 1232312351245,
                 TimerValue: "03:20:00",
-                IsFavorites : false
+                NestingItems: null,
+                Issue: "Project Design",
+                IsFavorites: false
             }]
-        }]
     },
         {
             BlockInfo: {
-                BlockCreatedDate: "Wed,September 27",
+                BlockCreatedDate: "Tue,October 6",
                 SummaryStatus: "warning",
                 SummaryTime: "06:05:00",
                 id: 2
@@ -137,59 +135,56 @@ let DefaultState = {
             Worklogs: [{
                 StartTime: "09:00",
                 EndTime: "10:00",
-                JiraCode: "JRM-310",
                 TaskField: "Team standup",
                 status: "danger",
-                IsNesting: false,
                 NestingItems: null,
                 TimerValue: "01:00:00",
                 id: 444553452341246,
-                IsFavorites : false
+                Issue: "Meeting",
+                IsFavorites: false
             }, {
                 StartTime: "10:00",
                 EndTime: "11:15",
-                JiraCode: "JRM-310",
-                TaskField: "Meeting with QA",
+                TaskField: "Design Meeting",
                 status: "ok",
                 NestingItems: null,
-                IsNesting: false,
                 TimerValue: "01:15:00",
                 id: 213124124125127,
-                IsFavorites : false
+                Issue: "Project Design",
+                IsFavorites: false
             }, {
                 StartTime: "09:00",
                 EndTime: "10:00",
-                JiraCode: "JRM-310",
                 TaskField: "Company Branding",
                 status: "warning",
-                IsNesting: true,
-                TimerValue: "03:50:00",
+                TimerValue: "04:50:00",
                 id: 2131241255148,
-                IsFavorites : false,
+                Issue: "Profit increase",
+                IsFavorites: false,
                 NestingItems: [{
                     StartTime: "11:30",
                     EndTime: "13:00",
-                    JiraCode: "JRM-310",
                     TaskField: "Marketing strategy",
                     status: "warning",
                     id: 123213213249,
                     TimerValue: "01:30:00",
-                    IsFavorites : false
+                    Issue: "Profit increase",
+                    IsFavorites: false
                 }, {
                     StartTime: "13:20",
                     EndTime: "16:00",
-                    JiraCode: "JRM-310",
                     TaskField: "Moodboarding",
                     status: "ok",
                     id: 12323123512410,
                     TimerValue: "03:20:00",
-                    IsFavorites : false
+                    Issue: "Profit increase",
+                    IsFavorites: false
                 }]
             }]
         },
         {
             BlockInfo: {
-                BlockCreatedDate: "Wed,September 26",
+                BlockCreatedDate: "Mon,October 5",
                 SummaryStatus: "warning",
                 SummaryTime: "06:05:00",
                 id: 3
@@ -197,118 +192,118 @@ let DefaultState = {
             Worklogs: [{
                 StartTime: "09:00",
                 EndTime: "10:00",
-                JiraCode: "JRM-310",
                 TaskField: "Team standup",
-                status: "danger",
-                IsNesting: false,
+                status: "ok",
                 NestingItems: null,
                 TimerValue: "01:00:00",
                 id: 4445534523412411,
-                IsFavorites : false
+                Issue: "Meeting",
+                IsFavorites: false
             }, {
                 StartTime: "10:00",
                 EndTime: "11:15",
-                JiraCode: "JRM-310",
-                TaskField: "Meeting with QA",
+                TaskField: "Fixing control buttons on navigation bar",
                 status: "ok",
-                IsNesting: false,
                 NestingItems: null,
-                TimerValue: "01:15:00",
+                TimerValue: "02:45:00",
                 id: 2131241241251212,
-                IsFavorites : false
+                Issue: "Amendment",
+                IsFavorites: false
             }, {
                 StartTime: "09:00",
                 EndTime: "10:00",
-                JiraCode: "JRM-310",
                 TaskField: "Company Branding",
                 status: "warning",
-                IsNesting: true,
                 TimerValue: "03:50:00",
                 id: 21312412551413,
-                IsFavorites : false,
-                NestingItems: [{
-                    StartTime: "11:30",
+                NestingItems: null,
+                Issue: "Profit increase",
+                IsFavorites: false
+            },
+                {
+                    StartTime: "12:00",
                     EndTime: "13:00",
-                    JiraCode: "JRM-310",
-                    TaskField: "Marketing strategy",
-                    status: "warning",
+                    TaskField: "Create layout for main menu",
+                    status: "danger",
                     id: 1232132132414,
-                    TimerValue: "01:30:00",
-                    IsFavorites : false
+                    TimerValue: "01:00:00",
+                    NestingItems: null,
+                    Issue: "Project Design",
+                    IsFavorites: false
                 }, {
                     StartTime: "13:20",
                     EndTime: "16:00",
-                    JiraCode: "JRM-310",
-                    TaskField: "Moodboarding",
+                    TaskField: "Create layout for inputs",
                     status: "ok",
                     id: 12323123512415,
                     TimerValue: "03:20:00",
-                    IsFavorites : false
+                    NestingItems: null,
+                    Issue: "Project Design",
+                    IsFavorites: false
                 }]
-            }]
         },
         {
             BlockInfo: {
-                BlockCreatedDate: "Wed,September 25",
-                SummaryStatus: "warning",
+                BlockCreatedDate: "Sun,October 4",
+                SummaryStatus: "danger",
                 SummaryTime: "06:05:00",
                 id: 4
             },
             Worklogs: [{
                 StartTime: "09:00",
                 EndTime: "10:00",
-                JiraCode: "JRM-310",
                 TaskField: "Team standup",
-                status: "danger",
-                IsNesting: false,
+                status: "ok",
                 NestingItems: null,
                 TimerValue: "01:00:00",
                 id: 4445534523412416,
-                IsFavorites : false
+                Issue: "Meeting",
+                IsFavorites: false
             }, {
                 StartTime: "10:00",
-                EndTime: "11:15",
-                JiraCode: "JRM-310",
-                TaskField: "Meeting with QA",
+                EndTime: "12:30",
+                TaskField: "Create request by API",
                 status: "ok",
-                IsNesting: false,
                 NestingItems: null,
-                TimerValue: "01:15:00",
+                TimerValue: "02:30:00",
                 id: 2131241241251217,
-                IsFavorites : false
+                Issue: "API Middleware",
+                IsFavorites: false
             }, {
-                StartTime: "09:00",
-                EndTime: "10:00",
-                JiraCode: "JRM-310",
-                TaskField: "Company Branding",
+                StartTime: "12:20",
+                EndTime: "13:40",
+                TaskField: "Fixed buttons positions",
                 status: "warning",
-                IsNesting: true,
-                TimerValue: "03:50:00",
+                TimerValue: "01:20:00",
                 id: 21312412551418,
-                IsFavorites : false,
-                NestingItems: [{
+                NestingItems: null,
+                Issue: "Amendment",
+                IsFavorites: false
+            },
+                {
                     StartTime: "11:30",
                     EndTime: "13:00",
-                    JiraCode: "JRM-310",
                     TaskField: "Marketing strategy",
                     status: "warning",
                     id: 1232132132419,
                     TimerValue: "01:30:00",
-                    IsFavorites : false
+                    NestingItems: null,
+                    Issue: "Profit increase",
+                    IsFavorites: false
                 }, {
                     StartTime: "13:20",
                     EndTime: "16:00",
-                    JiraCode: "JRM-310",
                     TaskField: "Moodboarding",
                     status: "ok",
                     id: 12323123512420,
                     TimerValue: "03:20:00",
-                    IsFavorites : false
+                    NestingItems: null,
+                    Issue: "Branding",
+                    IsFavorites: false
                 }]
-            }]
         }, {
             BlockInfo: {
-                BlockCreatedDate: "Tue,September 24",
+                BlockCreatedDate: "Set,October 3",
                 SummaryStatus: "ok",
                 SummaryTime: "08:00:00",
                 id: 5
@@ -316,43 +311,40 @@ let DefaultState = {
             Worklogs: [{
                 StartTime: "09:00",
                 EndTime: "10:00",
-                JiraCode: "JRM-310",
                 TaskField: "Team standup",
                 NestingItems: null,
                 status: "ok",
-                IsNesting: false,
                 TimerValue: "01:00:00",
                 id: 31232175895321,
-                IsFavorites : false
+                Issue: "Meeting",
+                IsFavorites: false
             },
                 {
-                    StartTime: "10:00",
-                    EndTime: "11:15",
-                    JiraCode: "JRM-310",
+                    StartTime: "10:30",
+                    EndTime: "11:30",
                     TaskField: "Meeting with QA",
                     status: "ok",
                     NestingItems: null,
-                    IsNesting: false,
-                    TimerValue: "01:15:00",
+                    TimerValue: "01:00:00",
                     id: 76967845623522,
-                    IsFavorites : false
+                    Issue: "QA",
+                    IsFavorites: false
                 }, {
-                    StartTime: "11:00",
-                    EndTime: "13:15",
-                    JiraCode: "JRM-310",
-                    TaskField: "Company Branding",
-                    status: "warning",
-                    IsNesting: false,
+                    StartTime: "12:00",
+                    EndTime: "13:55",
+                    TaskField: "Meeting with costumer",
+                    status: "danger",
                     NestingItems: null,
-                    TimerValue: "03:50:00",
+                    TimerValue: "01:55:00",
                     id: 12312434256623,
-                    IsFavorites : false
+                    Issue: "Customer",
+                    IsFavorites: false
                 }
             ]
         }] as Array<TWorklogBlock>,
     PlayingWorklog: null as TWorkLog | null,
     WorklogToChange: null as TWorkLog | null,
-    FavoritesWorklogs : null as Array<TWorkLog> | null
+    FavoritesWorklogs: [] as Array<TWorkLog>
 }
 
 export const SearchWorklogBlock = (MonthName: string, DayNumber: number): Element | null => {
@@ -374,18 +366,23 @@ type  DefaultWorklogsState = typeof DefaultState
 type TWorklogsReducerActions = ReturnType<TAddWorklog> | ReturnType<TDeleteWorklog>
     | ReturnType<TSetIsPlayingWorklogById> | ReturnType<TChangeWorklog>
     | ReturnType<TSetWorklogToChange> | ReturnType<TAddToFavorite> | ReturnType<TSetWorklogStatus>
-    | ReturnType<TDeleteFromFavorites>
+    | ReturnType<TDeleteFromFavorites> | ReturnType<TChangeFavoritesWorklog>
 
 type TWorklogsThunks = ThunkAction<Promise<void>, GlobalState, unknown, TWorklogsReducerActions>
 
 const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions): DefaultWorklogsState => {
 
-    const GetWorklogsBlockCopy = () => {
+    const GetWorklogsBlockCopy = (): Array<TWorklogBlock> => {
         return JSON.parse(JSON.stringify(state.WorkLogsBlocks))
     }
 
 
-    const FindWorklogById = (id: number | undefined, ParentId?: number | null) => {
+    const FindWorklogById = (id: number | undefined): {
+        SoughtWorklog: TWorkLog
+        WorklogBlockIndex: number | undefined
+        WorklogIndex: number | undefined
+        NestingWorklogIndex: number | undefined
+    } => {
         let WorklogsBlocksCopy: Array<TWorklogBlock> = GetWorklogsBlockCopy()
         let SoughtWorklog = {} as TWorkLog
         let WorklogBlockIndex = undefined as number | undefined
@@ -395,14 +392,13 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
         WorklogsBlocksCopy.map((WorklogBlock, Index) => {
             WorklogBlock.Worklogs.map((Worklog, WLIndex) => {
 
-                if (ParentId) {
+                if (Worklog.NestingItems && Worklog.NestingItems.length > 0 && Worklog.id !== id) {
                     Worklog.NestingItems?.map((NestingItem, NestingIndex) => {
                         if (NestingItem.id === id) {
-                            let SoughtNestingItem = {
-                                ...NestingItem,
-                                ParentId
+
+                            SoughtWorklog = {
+                                ...NestingItem
                             }
-                            SoughtWorklog = SoughtNestingItem
                             WorklogBlockIndex = Index
                             NestingWorklogIndex = NestingIndex
                             WorklogIndex = WLIndex
@@ -432,11 +428,9 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
                 TaskField: null,
                 Issue: null,
                 TimerValue: "00:00:00",
-                JiraCode: "JRM-310",
                 status: "danger",
-                IsNesting: false,
                 ParentId: undefined,
-                IsFavorites : !!action.IsFavorites
+                IsFavorites: action.IsFavorites
             }
             let WorklogToCreate = {} as TWorkLog
 
@@ -444,34 +438,36 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
                 ? WorklogToCreate = action.NewWorklog
                 : WorklogToCreate = EmptyWorklog
 
-                if(WorklogsBlocksCopy.some(WBL=>WBL.BlockInfo.BlockCreatedDate === CurrentDate)){
-                       WorklogsBlocksCopy.map(WBL=>{
-                           WBL.BlockInfo.BlockCreatedDate === CurrentDate && WBL.Worklogs.unshift(WorklogToCreate)
-                       })
-                }
-                else{
-                    WorklogsBlocksCopy.unshift({BlockInfo : {
-                            id : randomInteger(0,10000),
-                            BlockCreatedDate : CurrentDate,
-                            SummaryStatus : "danger",
-                            SummaryTime : "00:00:00"
-                        },Worklogs : [
-                            WorklogToCreate
-                        ]})
-                }
+            if (WorklogsBlocksCopy.some(WBL => WBL.BlockInfo.BlockCreatedDate === CurrentDate)) {
+                WorklogsBlocksCopy.map(WBL => {
+                    WBL.BlockInfo.BlockCreatedDate === CurrentDate && WBL.Worklogs.unshift(WorklogToCreate)
+                })
+            } else {
+                WorklogsBlocksCopy.unshift({
+                    BlockInfo: {
+                        id: randomInteger(0, 10000),
+                        BlockCreatedDate: CurrentDate,
+                        SummaryStatus: "danger",
+                        SummaryTime: "00:00:00"
+                    }, Worklogs: [
+                        WorklogToCreate
+                    ]
+                })
+            }
 
             return {
                 ...state,
                 WorkLogsBlocks: WorklogsBlocksCopy,
-                PlayingWorklog: WorklogToCreate
+                PlayingWorklog: WorklogToCreate,
+                FavoritesWorklogs: action.IsFavorites ? [...state.FavoritesWorklogs, EmptyWorklog] : []
             }
         }
 
         case SET_IS_PLAYING_WORKLOG_BY_ID: {
-            let SoughtWorklog = FindWorklogById(action.ElementId, action.ParentId).SoughtWorklog
+            let SoughtWorklog = FindWorklogById(action.ElementId).SoughtWorklog
+            action.IsFavorites ? SoughtWorklog.IsFavorites = true : SoughtWorklog.IsFavorites = false
             return {
                 ...state,
-                //@ts-ignore
                 PlayingWorklog: action.IsPlaying ?
                     SoughtWorklog
                     : null
@@ -481,34 +477,58 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
             let WorklogsBlocksCopy: Array<TWorklogBlock> = GetWorklogsBlockCopy()
 
             WorklogsBlocksCopy.map(WB => WB.Worklogs.map(Worklog => {
-                if(Worklog.Issue === action.NewWorklog.Issue){
-                    console.log(Worklog)
-                }
-                else if (action.parentId) {
-                    if (Worklog.id === action.NewWlParentId) {
-                        Worklog.NestingItems?.map(NestingItem => {
-                            if (NestingItem.id === action.WorkLogId) {
-                                NestingItem.TimerValue = action.NewWorklog.TimerValue
-                                NestingItem.Issue = action.NewWorklog.Issue
-                                NestingItem.TaskField = action.NewWorklog.TaskField
-                                NestingItem.EndTime = action.NewWorklog.EndTime
-                                NestingItem.StartTime = action.NewWorklog.StartTime
-                                //  NestingItem.EndTime = action.NewWorklog.EndTime
-                            }
-                        })
-                    }
-                } else {
-                    if (Worklog.id === action.WorkLogId) {
-                        Worklog.TimerValue = action.NewWorklog.TimerValue
-                        Worklog.Issue = action.NewWorklog.Issue
-                        Worklog.TaskField = action.NewWorklog.TaskField
-                        Worklog.StartTime = action.NewWorklog.StartTime
-                        Worklog.EndTime = action.NewWorklog.EndTime
-                        Worklog.status = action.NewWorklog.status
 
-                        // Worklog.EndTime = action.NewWorklog.EndTime
+                if (WB.BlockInfo.BlockCreatedDate === CurrentDate) {
+
+                    if(Worklog.Issue === action.NewWorklog.Issue){
+
+                        if(Worklog.id !== action.NewWorklog.id){
+                            WB.Worklogs = WB.Worklogs.filter(FWorklog=>FWorklog.id !== action.NewWorklog.id)
+                            if(Worklog.NestingItems && Worklog.NestingItems?.length > 0){
+                                Worklog.NestingItems.map(NestingItem=>{
+                                    if(NestingItem.id === action.NewWorklog.id){
+                                        if(NestingItem.Issue === action.NewWorklog.Issue){
+                                            debugger
+                                            NestingItem.TimerValue = action.NewWorklog.TimerValue
+                                            NestingItem.Issue = action.NewWorklog.Issue
+                                            NestingItem.TaskField = action.NewWorklog.TaskField
+                                            NestingItem.EndTime = action.NewWorklog.EndTime
+                                            NestingItem.StartTime = action.NewWorklog.StartTime
+                                        }
+                                    } else Worklog.NestingItems?.push(action.NewWorklog)
+                                })
+                            } else {
+                                Worklog.NestingItems = [action.NewWorklog]
+                            }
+
+                        }else{
+                                Worklog.TimerValue = action.NewWorklog.TimerValue
+                                Worklog.Issue = action.NewWorklog.Issue
+                                Worklog.TaskField = action.NewWorklog.TaskField
+                                Worklog.StartTime = action.NewWorklog.StartTime
+                                Worklog.EndTime = action.NewWorklog.EndTime
+                                Worklog.status = action.NewWorklog.status
+                        }
+                    }else {
+                        if(Worklog.id === action.NewWorklog.id){
+                            Worklog.TimerValue = action.NewWorklog.TimerValue
+                            Worklog.Issue = action.NewWorklog.Issue
+                            Worklog.TaskField = action.NewWorklog.TaskField
+                            Worklog.StartTime = action.NewWorklog.StartTime
+                            Worklog.EndTime = action.NewWorklog.EndTime
+                            Worklog.status = action.NewWorklog.status
+                        }
+                        else if(Worklog.NestingItems && Worklog.NestingItems?.length > 0){
+                            Worklog.NestingItems.map(CNestingItem => {
+                                if(CNestingItem.id === action.NewWorklog.id && CNestingItem.Issue !== action.NewWorklog.Issue){
+                                    Worklog.NestingItems = Worklog.NestingItems?.filter(FNestingItem=>FNestingItem.id !== action.NewWorklog.id)
+                                    WB.Worklogs.push(action.NewWorklog)
+                                }
+                            })
+                        }
                     }
                 }
+
             }))
             return {
                 ...state,
@@ -519,7 +539,7 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
             let WorklogsBlocksCopy: Array<TWorklogBlock> = GetWorklogsBlockCopy()
             let NewWorklogs: Array<Array<TWorkLog>> = []
             let NewNestingWorklogs: Array<Array<TNestingItem> | undefined> = []
-            let FilteredWorklogBlockCopy = []  as Array<TWorklogBlock>
+            let FilteredWorklogBlockCopy = [] as Array<TWorklogBlock>
 
             WorklogsBlocksCopy.map((WBL, index) => {
 
@@ -534,13 +554,13 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
                     NewWorklogs.push(WBL.Worklogs.filter(WL => WL.id !== action.DelWorklogId))
                     WorklogsBlocksCopy[index].Worklogs = NewWorklogs[index]
                 }
-                if(WBL.Worklogs.length === 0) {
-                    FilteredWorklogBlockCopy = WorklogsBlocksCopy.filter(WBLtrue=>WBLtrue !== WBL)
+                if (WBL.Worklogs.length === 0) {
+                    FilteredWorklogBlockCopy = WorklogsBlocksCopy.filter(WBLtrue => WBLtrue !== WBL)
                 }
             })
             return {
                 ...state,
-                WorkLogsBlocks: FilteredWorklogBlockCopy.length > 0 ?  FilteredWorklogBlockCopy : WorklogsBlocksCopy
+                WorkLogsBlocks: FilteredWorklogBlockCopy.length > 0 ? FilteredWorklogBlockCopy : WorklogsBlocksCopy
             }
         }
         case SET_WORKLOG_TO_CHANGE : {
@@ -550,34 +570,21 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
             }
         }
         case ADD_TO_FAVORITE : {
-            let WorklogsBlocksCopy: Array<TWorklogBlock> = GetWorklogsBlockCopy()
-            let {SoughtWorklog, ...Indexes} = FindWorklogById(action.WorklogId, action.ParentId)
-            if(action.ParentId){
-                if(Indexes.WorklogBlockIndex !== undefined && Indexes.WorklogIndex !== undefined && Indexes.NestingWorklogIndex !== undefined){
-                    //@ts-ignore
-                  WorklogsBlocksCopy[Indexes.WorklogBlockIndex].Worklogs[Indexes.WorklogIndex].NestingItems[Indexes.NestingWorklogIndex].IsFavorites = true
-                }
-            }else {
-                if (Indexes.WorklogBlockIndex !== undefined && Indexes.WorklogIndex !== undefined) {
-                    WorklogsBlocksCopy[Indexes.WorklogBlockIndex].Worklogs[Indexes.WorklogIndex].IsFavorites = true
-                }
-            }
-
+            let {SoughtWorklog, ...Indexes} = FindWorklogById(action.WorklogId)
             return {
                 ...state,
-                WorkLogsBlocks: WorklogsBlocksCopy
+                FavoritesWorklogs: [...state.FavoritesWorklogs, SoughtWorklog]
             }
         }
         case SET_WORKLOG_STATUS: {
-
             let WorklogsBlocksCopy: Array<TWorklogBlock> = GetWorklogsBlockCopy()
-            if(action.options.target === "worklog"){
+            if (action.options.target === "worklog") {
                 WorklogsBlocksCopy.map(WB => WB.Worklogs.map(Worklog => {
                     if (Worklog.id === action.options.id) Worklog.status = action.options.status
                 }))
             } else {
-                WorklogsBlocksCopy.map(WB=>{
-                    if(WB.BlockInfo.id === action.options.id) WB.BlockInfo.SummaryStatus = action.options.status
+                WorklogsBlocksCopy.map(WB => {
+                    if (WB.BlockInfo.id === action.options.id) WB.BlockInfo.SummaryStatus = action.options.status
                 })
             }
 
@@ -587,21 +594,78 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
             }
         }
         case DELETE_FROM_FAVORITES : {
-            let WorklogsBlocksCopy: Array<TWorklogBlock> = GetWorklogsBlockCopy()
-            WorklogsBlocksCopy.map(WBL=>WBL.Worklogs.map(Worklog=>{
-                if(Worklog.NestingItems && Worklog.NestingItems?.length > 0){
-                  Worklog.NestingItems.map(NestingItem=>{
-                      if(NestingItem.id === action.WorklogId) NestingItem.IsFavorites = false
-                    })
-                }
-                else {
-                    if(Worklog.id === action.WorklogId) Worklog.IsFavorites = false
-                }}))
-
             return {
                 ...state,
-                WorkLogsBlocks: WorklogsBlocksCopy
+                FavoritesWorklogs: state.FavoritesWorklogs.filter(FavoritesWorklog => FavoritesWorklog.id !== action.WorklogId)
+            }
+        }
+        case CHANGE_FAVORITES_WORKLOG : {
+            let WorklogsBlocksCopy: Array<TWorklogBlock> = GetWorklogsBlockCopy()
+            let FavoritesWorklogsCopy: Array<TWorkLog> = JSON.parse(JSON.stringify(state.FavoritesWorklogs))
+            FavoritesWorklogsCopy.map(FavoritesWorklog => {
+                if (FavoritesWorklog.NestingItems && FavoritesWorklog.NestingItems?.length > 0) {
+                    FavoritesWorklog.NestingItems.map(NestingItem => {
+                        if (NestingItem.id === action.WorklogId) {
+                            NestingItem.TaskField = action.NewWorklog.TaskField
+                            NestingItem.Issue = action.NewWorklog.Issue
+                            NestingItem.StartTime = action.NewWorklog.StartTime
+                            NestingItem.EndTime = action.NewWorklog.EndTime
+                            NestingItem.TimerValue = action.NewWorklog.TimerValue
+                        }
+                    })
+                } else {
+                    FavoritesWorklog.TaskField = action.NewWorklog.TaskField
+                    FavoritesWorklog.Issue = action.NewWorklog.Issue
+                    FavoritesWorklog.StartTime = action.NewWorklog.StartTime
+                    FavoritesWorklog.EndTime = action.NewWorklog.EndTime
+                    FavoritesWorklog.TimerValue = action.NewWorklog.TimerValue
+                }
+            })
 
+            WorklogsBlocksCopy.some(WBL => WBL.BlockInfo.BlockCreatedDate === CurrentDate)
+                ? WorklogsBlocksCopy.map(WBL => {
+
+                    WBL.Worklogs.some(Worklog => Worklog.id === action.WorklogId
+                        || Worklog.NestingItems?.some(Nest => Nest.id === action.WorklogId))
+
+                        ? WBL.Worklogs.some(Worklog => Worklog.NestingItems && Worklog.NestingItems.length > 0)
+                        ? WBL.Worklogs.map(Worklog => {
+                            Worklog.NestingItems?.map(NestingItem => {
+                                if (NestingItem.id === action.WorklogId) {
+                                    NestingItem.TimerValue = action.NewWorklog.TimerValue
+                                    NestingItem.StartTime = action.NewWorklog.StartTime
+                                    NestingItem.EndTime = action.NewWorklog.EndTime
+                                    NestingItem.TaskField = action.NewWorklog.TaskField
+                                    NestingItem.Issue = action.NewWorklog.Issue
+                                }
+                            })
+                        })
+                        : WBL.Worklogs.map(Worklog => {
+                            if (Worklog.id === action.WorklogId) {
+                                Worklog.TimerValue = action.NewWorklog.TimerValue
+                                Worklog.StartTime = action.NewWorklog.StartTime
+                                Worklog.EndTime = action.NewWorklog.EndTime
+                                Worklog.TaskField = action.NewWorklog.TaskField
+                                Worklog.Issue = action.NewWorklog.Issue
+                            }
+                        })
+                        : WBL.Worklogs.unshift(action.NewWorklog)
+                })
+                : WorklogsBlocksCopy.unshift({
+                    BlockInfo: {
+                        BlockCreatedDate: CurrentDate,
+                        SummaryStatus: "danger",
+                        id: randomInteger(0, 10000),
+                        SummaryTime: "00:00:00"
+                    },
+                    Worklogs: [
+                        action.NewWorklog
+                    ]
+                })
+            return {
+                ...state,
+                WorkLogsBlocks: WorklogsBlocksCopy,
+                FavoritesWorklogs: FavoritesWorklogsCopy
             }
         }
 
@@ -620,14 +684,13 @@ export const DeleteWorklog = (DelWorklogId: number, DelParentId: number | null =
 }
 export type TDeleteWorklog = typeof DeleteWorklog
 
-export const SetIsPlayingWorklogById = (IsPlaying: boolean, ElementId?: number,  ParentId: number | null = null) => {
-    return {type: SET_IS_PLAYING_WORKLOG_BY_ID, IsPlaying, ElementId, ParentId} as const
+export const SetIsPlayingWorklogById = (IsPlaying: boolean, ElementId?: number, IsFavorites ?: boolean) => {
+    return {type: SET_IS_PLAYING_WORKLOG_BY_ID, IsPlaying, ElementId, IsFavorites} as const
 }
 export type TSetIsPlayingWorklogById = typeof SetIsPlayingWorklogById
 
-export const ChangeWorklog = (WorkLogId: number,parentId : number, NewWorklog: TWorkLog, NewWlParentId: number | null = null) => {
-
-    return {type: CHANGE_WORKLOG, WorkLogId, NewWorklog, parentId, NewWlParentId} as const
+export const ChangeWorklog = (WorkLogId: number, NewWorklog: TWorkLog) => {
+    return {type: CHANGE_WORKLOG, WorkLogId, NewWorklog} as const
 }
 export type TChangeWorklog = typeof ChangeWorklog
 
@@ -636,14 +699,14 @@ export const SetWorklogToChange = (WorklogToChange: TWorkLog | undefined = undef
 }
 export type TSetWorklogToChange = typeof SetWorklogToChange
 
-export const AddToFavorite = (WorklogId: number,  ParentId: number | null = null) => {
-    return {type: ADD_TO_FAVORITE, WorklogId, ParentId} as const
+export const AddToFavorite = (WorklogId: number) => {
+    return {type: ADD_TO_FAVORITE, WorklogId} as const
 }
 export type TAddToFavorite = typeof AddToFavorite
 
 
 export const SendWorklogBlockThunk = (WorklogBlockData: TSendWorklogsData): TWorklogsThunks => async (dispatch) => {
-    console.log(WorklogBlockData)
+
     const SendNewMessageResult = await API.SendWorklogBlock(WorklogBlockData)
     // if (SendNewMessageResult.resultCode === 0) {
     //     dispatch(GetWorklogs(WorklogBlockId))
@@ -660,10 +723,16 @@ export const SetWorklogStatus = (options: {
 }
 export type TSetWorklogStatus = typeof SetWorklogStatus
 
-export const DeleteFromFavorites = (WorklogId : number,ParentId? : number) => {
-    return {type : DELETE_FROM_FAVORITES,WorklogId,ParentId} as const
+export const DeleteFromFavorites = (WorklogId: number) => {
+    return {type: DELETE_FROM_FAVORITES, WorklogId} as const
 }
 
 export type TDeleteFromFavorites = typeof DeleteFromFavorites
+
+export const ChangeFavoritesWorklog = (WorklogId: number, NewWorklog: TWorkLog) => {
+    return {type: CHANGE_FAVORITES_WORKLOG, WorklogId, NewWorklog} as const
+}
+
+export type TChangeFavoritesWorklog = typeof ChangeFavoritesWorklog
 
 export default WorklogsReducer

@@ -43,6 +43,7 @@
     width: 117px;
     height: 46px;
     display: inline-flex;
+    cursor: pointer;
 }
 
 .NewWorklogSubmitButtonSize {

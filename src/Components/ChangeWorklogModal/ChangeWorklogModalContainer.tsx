@@ -7,7 +7,7 @@ import {GlobalState} from "../../Data/redux-store";
 import {
     TAddWorklog, TChangeWorklog, TSetIsPlayingWorklogById,
     TTimerData, TWorkLog, ChangeWorklog, TSetWorklogToChange,
-    SetWorklogToChange
+    SetWorklogToChange,ChangeFavoritesWorklog, TChangeFavoritesWorklog
 }
     from "../../Data/WorkLogsReducer";
 import {AddWorklog, SetIsPlayingWorklogById} from "../../Data/WorkLogsReducer";
@@ -17,11 +17,14 @@ export type TModalWindowContainerOwnProps = {
     WorklogChangeModalIsOpen: boolean
     TimerData: TTimerData | undefined
     SetTimerData: Dispatch<SetStateAction<TTimerData | undefined>>
+    Issue : string[]
+
 }
 
 export type T_MSTP_ModalWindowContainer = {
     PlayingWorklog: TWorkLog | null
     WorklogToChange: TWorkLog | null
+
 }
 
 export type T_MDTP_ModalWindowContainer = {
@@ -29,6 +32,7 @@ export type T_MDTP_ModalWindowContainer = {
     SetIsPlayingWorklogById: TSetIsPlayingWorklogById
     ChangeWorklog: TChangeWorklog
     SetWorklogToChange: TSetWorklogToChange
+    ChangeFavoritesWorklog : TChangeFavoritesWorklog
 }
 type TModalWindowContainerProps =
     T_MDTP_ModalWindowContainer
@@ -49,8 +53,11 @@ class ChangeWorklogModalContainer extends React.Component<TModalWindowContainerP
                                 ChangeWorklog={this.props.ChangeWorklog}
                                 SetTimerData={this.props.SetTimerData}
                                 SetWorklogToChange={this.props.SetWorklogToChange}
+                                ChangeFavoritesWorklog={this.props.ChangeFavoritesWorklog}
+                                Issues={this.props.Issue}
+
             />
-        )
+            )
     }
 
 }
@@ -63,5 +70,5 @@ let StateToProps = (state: GlobalState): T_MSTP_ModalWindowContainer => ({
 export default compose(connect<T_MSTP_ModalWindowContainer, T_MDTP_ModalWindowContainer, TModalWindowContainerOwnProps, GlobalState>
 (StateToProps, {
     AddWorklog, SetIsPlayingWorklogById, SetWorklogToChange,
-    ChangeWorklog
+    ChangeWorklog,ChangeFavoritesWorklog
 }))(ChangeWorklogModalContainer)

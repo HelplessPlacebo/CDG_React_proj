@@ -7,10 +7,7 @@ import {Provider} from "react-redux";
 import store from "./Data/redux-store";
 import App from "./App";
 
-{!localStorage.getItem("IsAuth") &&  localStorage.setItem("IsAuth", "false") }
-
 ReactDOM.render(
-
     <HashRouter  basename={process.env.PUBLIC_URL}>
         <Provider store={store}>
             <div className={AS.AppContainer}>

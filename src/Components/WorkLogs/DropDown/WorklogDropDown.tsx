@@ -23,22 +23,20 @@ export type TWorklogDropDownProps = {
     AddWorklog : TAddWorklog
     StartTime: string | null
     EndTime: string | null
-    JiraCode: string | null
     TaskField: string | null
     TimerValue: string | null
-    IsNesting?: boolean
     Issue?: string | null
     NestingItems?: Array<TNestingItem> | null
     status: "ok" | "warning" | "danger" | string
     NestingIsShowing: boolean
-    IsFavorites : boolean
     BlockInfo?: TBlockInfo
 }
 
 const WorkLogDropDown: React.FC<TWorklogDropDownProps> = (props) => {
 
     const OnDeleteModalOpenContainer = (e : React.MouseEvent<HTMLElement>)=>{
-        if(props.BlockInfo?.BlockCreatedDate === CurrentDate && !props.PlayingWorklog){
+        if((props.ComponentToDraw === "FavoritesWorklogs" && !props.PlayingWorklog )
+            || (props.BlockInfo?.BlockCreatedDate === CurrentDate && !props.PlayingWorklog)){
             props.SetDeleteModalParams({
                 WorkLogToDeleteId : props.WorklogId,
                 ParentId : props.ParentId
@@ -49,7 +47,7 @@ const WorkLogDropDown: React.FC<TWorklogDropDownProps> = (props) => {
     }
     const OnAddToFavorites = () =>{
         if(!props.PlayingWorklog?.id && props.ComponentToDraw === "Worklogs"){
-            if(props.ParentId)  props.AddToFavorite(props.WorklogId,props.ParentId)
+            if(props.ParentId)  props.AddToFavorite(props.WorklogId)
             else props.AddToFavorite(props.WorklogId)
         }
 
@@ -64,11 +62,8 @@ const WorkLogDropDown: React.FC<TWorklogDropDownProps> = (props) => {
                 StartTime: props.StartTime,
                 EndTime: props.EndTime,
                 NestingItems: props.NestingItems,
-                JiraCode: props.JiraCode,
-                IsNesting: props.IsNesting,
                 status: props.status,
                 TimerValue: "00:00:00",
-                IsFavorites : props.IsFavorites
             }
             props.AddWorklog(CurrentWorklog)
         }
