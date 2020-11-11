@@ -15,6 +15,7 @@ import {green} from '@material-ui/core/colors';
 import CheckOutlinedIcon from '@material-ui/icons/CheckOutlined';
 import IssuesSelectInput from "../Issues/IssuesSelectInput";
 import CustomInput from "./CustomInput";
+import {useInput} from "../hooks/useInput";
 
 export type TModalWindowProps = {
     closeWorklogChangeModal: () => void
@@ -36,8 +37,9 @@ type TTimerValue = {
 
 const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
 
-    let [ModalNewWorklogName, SetModalNewWorklogName] = useState("")
-    let [ModalNewIssueName, SetModalNewIssueName] = useState<string>("")
+    let ModalWorklogInput = useInput(props.WorklogToChange && props.WorklogToChange.TaskField ? props.WorklogToChange.TaskField : "")
+    let ModalIssueInput = useInput(props.WorklogToChange && props.WorklogToChange.Issue ? props.WorklogToChange.Issue : "")
+
     let [ModalTimeLineValues, SetModalTimeLineValues] = useState<TTimerValue>()
     let [NewWorklogNameIsFilled, SetNewWorklogNameIsFilled] = useState<boolean>(false)
     let [NewIssueNameIsFilled, SetNewIssueNameIsFilled] = useState<boolean>(false)
@@ -51,12 +53,12 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
         start: CalculateNewStartTime(CurrentTime, EmptyWorklogTimerEndHours, EmptyWorklogTimerMinutes) as string | null,
         end: CurrentTime as string | null
     }
-    
+
     useEffect(() => {
 
         if (props.TimerData) {
-            props.TimerData.TimerTaskField && SetModalNewWorklogName(props.TimerData.TimerTaskField)
-            props.TimerData.TimerIssue && SetModalNewIssueName(props.TimerData.TimerIssue)
+            props.TimerData.TimerTaskField && ModalWorklogInput.forceUpdate(props.TimerData.TimerTaskField)
+            props.TimerData.TimerIssue && ModalIssueInput.forceUpdate(props.TimerData.TimerIssue)
             if (props.PlayingWorklog && props.PlayingWorklog.StartTime && props.PlayingWorklog.EndTime) {
                 SetModalTimeLineValues({
                     start: props.PlayingWorklog.StartTime,
@@ -64,8 +66,8 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
                 })
             } else SetModalTimeLineValues(EmptyWorklogTimeValues)
         } else if (props.WorklogToChange) {
-            props.WorklogToChange.TaskField && SetModalNewWorklogName(props.WorklogToChange.TaskField)
-            props.WorklogToChange.Issue && SetModalNewIssueName(props.WorklogToChange.Issue)
+            props.WorklogToChange.TaskField && ModalWorklogInput.forceUpdate(props.WorklogToChange.TaskField)
+            props.WorklogToChange.Issue && ModalIssueInput.forceUpdate(props.WorklogToChange.Issue)
             SetModalTimeLineValues({
                 start: props.WorklogToChange.StartTime,
                 end: props.WorklogToChange.EndTime
@@ -76,19 +78,18 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
 
     const OnModalSubmit = (e: SyntheticEvent) => {
         {
-            ModalNewWorklogName.length > 0
+            ModalWorklogInput.value.length > 0
                 ? SetNewWorklogNameIsFilled(false)
                 : SetNewWorklogNameIsFilled(true)
         }
         {
-            ModalNewIssueName.length > 0
+            ModalIssueInput.value.length > 0
                 ? SetNewIssueNameIsFilled(false)
                 : SetNewIssueNameIsFilled(true)
         }
 
-        if (ModalNewWorklogName && ModalNewWorklogName.length > 0
-            && ModalNewIssueName
-            && ModalNewIssueName.length > 0
+        if (ModalWorklogInput.value.length > 0
+            && ModalIssueInput.value.length > 0
             && ModalTimeLineValues) {
 
             let Obj: string
@@ -98,8 +99,8 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
                 ...props[Obj],
                 StartTime: ModalTimeLineValues.start,
                 EndTime: ModalTimeLineValues.end,
-                TaskField: ModalNewWorklogName,
-                Issue: ModalNewIssueName,
+                TaskField: ModalWorklogInput.value,
+                Issue: ModalIssueInput.value,
                 //@ts-ignore
                 status: props[Obj].status ? props[Obj].status : "warning",
                 //@ts-ignore
@@ -119,20 +120,12 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
                 //@ts-ignore
                 props.SetIsPlayingWorklogById(false, props[Obj].id)
             }
-            SetModalNewWorklogName("")
-            SetModalNewIssueName("")
+            ModalWorklogInput.clear()
+            ModalIssueInput.clear()
             SetNewWorklogNameIsFilled(false)
             SetNewIssueNameIsFilled(false)
             close(e)
         }
-    }
-
-    const OnNewWorklogNameType = (e: React.FormEvent<HTMLInputElement>) => {
-        SetModalNewWorklogName(e.currentTarget.value)
-    }
-    const OnNewIssueNameType = (event: React.ChangeEvent<{ value: unknown }>) => {
-        //@ts-ignore
-        SetModalNewIssueName(event.target.value)
     }
 
 
@@ -144,9 +137,12 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
         props.SetTimerData(undefined)
         props.SetWorklogToChange(undefined)
         props.SetIsPlayingWorklogById(false)
+        ModalWorklogInput.clear()
+        ModalIssueInput.clear()
     }
-    if (!props.WorklogChangeModalIsOpen) return null;
 
+
+    if (!props.WorklogChangeModalIsOpen) return null;
 
     return (
         <div className="timer-modal">
@@ -169,8 +165,7 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
                     <div className={MS.ModalTextFields}>
                         <div className={MS.NewWorklogContentContainer}>
 
-                            <CustomInput value={ModalNewWorklogName}
-                                         handleChange={OnNewWorklogNameType}
+                            <CustomInput {...ModalWorklogInput.bind}
                                          label={"Task Field"}
                                          placeholder={"Please, enter the task"}
                                          width={500}
@@ -181,11 +176,14 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
                                 <div id="new-issue-err" className={MS.ModalInputError}> Please, enter worklog name</div>
                             }
                             <div style={{marginTop : "20px"}} className="issue-select-input">
-                                <IssuesSelectInput Issues={props.Issues}
-                                                   handleChange={OnNewIssueNameType}
-                                                   value={ModalNewIssueName}
-                                                   width={500}
-                                />
+                                {
+                                    //@ts-ignore
+                                    <IssuesSelectInput Issues={props.Issues}
+                                        {...ModalIssueInput.bind}
+                                                       width={500}
+                                    />
+                                }
+
                             </div>
 
                             {
@@ -213,4 +211,3 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
 }
 
 export default ChangeWorklogModal
-

@@ -5,7 +5,7 @@ import Warn from "../../assets/imgs/CalendarDayStatusWarning.svg"
 import OK from "../../assets/imgs/CalendarDayStatusOK.svg"
 import {TClickedDay, TSetClickedMonthDay} from "../../Data/CalendarReducer";
 import {randomInteger, SearchWorklogBlock, TWorklogBlock} from "../../Data/WorkLogsReducer";
-import WorkLogsBlock from "../WorkLogs/WorkLogsBlock";
+
 
 
 export type TCalendarDayProps = {

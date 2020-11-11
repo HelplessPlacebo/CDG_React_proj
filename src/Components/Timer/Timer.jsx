@@ -1,27 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import TS from "./Timer.module.css"
-import TTStopButton from "../../assets/imgs/TT-stop-button.svg"
-import TTPauseButton from "../../assets/imgs/TT-pause-button.svg"
 import PlayButton from "@material-ui/icons/PlayCircleFilled"
 import {ToFullTime} from "../../assets/secondary/CalculateTime"
 import CustomInput from "../ChangeWorklogModal/CustomInput";
 import IssuesSelectInput from "../Issues/IssuesSelectInput";
-
+import {useInput} from "../hooks/useInput";
+import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
+import StopIcon from '@material-ui/icons/Stop';
+import {red} from "@material-ui/core/colors"
 
 const Timer = (props) => {
     const [seconds, setSeconds] = useState(Number.parseInt(props.PlayingWorklog.TimerValue.substr(6, props.PlayingWorklog.TimerValue.length)))
     const [minutes, setMinutes] = useState(Number.parseInt(props.PlayingWorklog.TimerValue.substr(3, props.PlayingWorklog.TimerValue.length - 6)))
     const [hours, setHours] = useState(Number.parseInt(props.PlayingWorklog.TimerValue.substr(0, props.PlayingWorklog.TimerValue.length - 6)))
     const [isActive, setIsActive] = useState(false);
-    const [WorklogInputValue, SetWorklogInputValue] = useState()
-    const [IssueInputValue, SetIssueInputValue] = useState()
+    const WorklogInput= useInput("")
+    const IssueInput = useInput(props.Issues ? props.Issues : "")
 
-    const OnWorklogInputValueChange = (e) => {
-        SetWorklogInputValue(e.target.value)
-    }
-    const OnIssueInputValueChange = (e) => {
-        SetIssueInputValue(e.target.value)
-    }
 
 
     const toggle = () => {
@@ -32,8 +27,8 @@ const Timer = (props) => {
         setIsActive(!isActive)
         let TimerData = {
             TimerValue: ToFullTime(hours) + ":" + ToFullTime(minutes) + ":" + ToFullTime(seconds),
-            TimerIssue: IssueInputValue ? IssueInputValue : props.PlayingWorklog?.Issue,
-            TimerTaskField: WorklogInputValue ? WorklogInputValue : props.PlayingWorklog?.TaskField,
+            TimerIssue: IssueInput.value ? IssueInput.value : props.PlayingWorklog?.Issue,
+            TimerTaskField: WorklogInput.value ? WorklogInput.value : props.PlayingWorklog?.TaskField,
         }
         props.SetTimerData(TimerData)
     }
@@ -65,17 +60,18 @@ const Timer = (props) => {
     return (
 
         <div className={TS.TimeRContainer}>
-            <CustomInput value={WorklogInputValue}
-                         handleChange={OnWorklogInputValueChange}
+            <CustomInput {...WorklogInput.bind}
                          label={"Task Field"}
                          placeholder={"Please, enter the task"}
                          width={250}
             />
-            <IssuesSelectInput Issues={props.Issues}
-                               handleChange={OnIssueInputValueChange}
-                               value={IssueInputValue}
-                               width={250}
-            />
+
+            <div style={{marginTop : " 10px"}} className={"IssuesSelectinput"}>
+                <IssuesSelectInput  Issues={props.Issues}
+                                    {...IssueInput.bind}
+                                    width={250}
+                />
+            </div>
 
             <div className={TS.Timer}>
                 {ToFullTime(hours)}:{ToFullTime(minutes)}:{ToFullTime(seconds)}
@@ -84,12 +80,13 @@ const Timer = (props) => {
             <div className={TS.TimerControlButtonsContainer}>
                 <div className={TS.TimerControlButtons}>
                     <div onClick={OnStopTimer}>
-                        <img src={TTStopButton} alt=""/>
+                        <StopIcon style={{marginTop : "5px", width: "50px",
+                            height: "50px",backgroundColor : red[400],borderRadius : "100%",color : red[50]}} />
                     </div>
-                    <div className="controlButtons" onClick={toggle}>
+                    <div style={{paddingLeft : "5px"}} className="controlButtons" onClick={toggle}>
                         {!isActive ?
-                            <img src={TTPauseButton} alt=""/>
-                            : <PlayButton style={{width: "50px", height: "50px"}} color={"primary"}/>
+                            <PauseCircleFilledIcon style={{width: "60px", height: "60px"}} color={"primary"} />
+                            : <PlayButton style={{width: "60px", height: "60px"}} color={"primary"}/>
                         }
                     </div>
                 </div>

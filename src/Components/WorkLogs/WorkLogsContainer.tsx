@@ -12,13 +12,13 @@ import {
     TSetWorklogToChange, TTimerData, TAddToFavorite, TSendWorklogBlockThunk, TSetWorklogStatus, TDeleteFromFavorites
 } from "../../Data/WorkLogsReducer";
 import WorkLogsBlock from "./WorkLogsBlock";
-import {TShowTooltip} from "../../App";
+import {TShowSnackBar} from "../../App";
 
 export type TComponentToDraw = "Worklogs" | "FavoritesWorklogs"
 export type TWorkLogsContainerOwnProps = {
     openWorklogChangeModal: () => void
     ComponentToDraw: TComponentToDraw
-    showTooltip: TShowTooltip
+    ShowSnackBar: TShowSnackBar
 
     closeWorklogChangeModal: () => void
     WorklogChangeModalIsOpen: boolean

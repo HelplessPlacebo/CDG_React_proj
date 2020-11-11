@@ -9,9 +9,8 @@ import EditIcon from "@material-ui/icons/Edit";
 import {blue, blueGrey} from "@material-ui/core/colors";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {TChangeIssue, TDeleteIssue} from "../../Data/IssuesReducer";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import CustomListInput from "./CustomListInput";
+import {useInput} from "../hooks/useInput";
 
 export type TIssueListItemProps = {
     Issue: string
@@ -25,33 +24,33 @@ export type TIssueListItemProps = {
 
 const IssueListItem: React.FC<TIssueListItemProps> = (props) => {
     const [EditInputIsShowing, SetEditInputIsShowing] = useState(false)
-    const [EditInputValue, SetEditInputValue] = useState("")
+    const EditInputValue = useInput('')
 
-    const OnEditInoutValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        SetEditInputValue(event.target.value)
-    }
     const OnSaveNewValue = () => {
-        props.ChangeIssue(props.Issue, EditInputValue)
+        props.ChangeIssue(props.Issue, EditInputValue.value)
         SetEditInputIsShowing(false)
-        SetEditInputValue("")
+        EditInputValue.clear()
     }
     const onCancelInput = () =>{
         SetEditInputIsShowing(false)
     }
+
+
+
     const labelId = `transfer-list-all-item-${props.Issue}-label`
 
     return (<div className="IssueListItem">
             {
                 EditInputIsShowing
-                    ? <CustomListInput classes={props.classes} value={EditInputValue} onSubmit={OnSaveNewValue}
-                                        handler={OnEditInoutValueChange} onCancel={onCancelInput} SubmitButtonText={"Save"}
+                    ? <CustomListInput classes={props.classes} onSubmit={OnSaveNewValue}
+                             {...EditInputValue.bind} onCancel={onCancelInput} SubmitButtonText={"Save"}
                                        CancelButtonText={"cancel"}
                                              />
                     : <Grid key={props.Issue} container>
 
                         <Grid item  sm={10}>
                             <ListItem role="listitem" button
-                                //@ts-ignore
+                                        //@ts-ignore
                                       onClick={props.handleToggle(props.Issue)}>
                                 <ListItemIcon>
                                     <Checkbox

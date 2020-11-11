@@ -16,8 +16,8 @@ import {
     TWorkLog
 } from "../../Data/WorkLogsReducer";
 import {TComponentToDraw} from "./WorkLogsContainer";
-import {TShowTooltip} from "../../App";
-//import WorkLogTimeLine from "./TimePicker/WorkLogTimeLine";
+import {TShowSnackBar} from "../../App";
+
 
 export type TWorklogsBlockProps = {
     BlockInfo?: TBlockInfo
@@ -31,7 +31,7 @@ export type TWorklogsBlockProps = {
     AddToFavorite: TAddToFavorite
     AddWorklog: TAddWorklog
     SendWorklogBlockThunk: TSendWorklogBlockThunk
-    showTooltip: TShowTooltip
+    ShowSnackBar: TShowSnackBar
     SetWorklogStatus: TSetWorklogStatus
     DeleteFromFavorites : TDeleteFromFavorites
     FavoritesWorklogs : Array<TWorkLog>
@@ -67,7 +67,7 @@ const WorkLogsBlock: React.FC<TWorklogsBlockProps> = (props) => {
                          Worklogs={props.Worklogs}
                          SendWorklogBlockThunk={props.SendWorklogBlockThunk}
                          BlockInfo={props.BlockInfo}
-                         showTooltip={props.showTooltip}
+                         ShowSnackBar={props.ShowSnackBar}
                          SetWorklogStatus={props.SetWorklogStatus}
             />
         </div>

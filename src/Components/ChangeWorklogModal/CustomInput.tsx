@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 
 export type TCustomInputProps = {
     value : string
-    handleChange : (event: React.ChangeEvent<HTMLInputElement>) =>void
+    onChange : (event: React.ChangeEvent<HTMLInputElement>) =>void
     placeholder : string
     label : string
     width : number
@@ -26,7 +26,7 @@ const CustomInput: React.FC<TCustomInputProps> = (props) => {
     return <div className={classes.root}>
         <TextField
             value={props.value}
-            onChange={props.handleChange}
+            onChange={props.onChange}
             id="standard-textarea"
             label={props.label}
             placeholder={props.placeholder}

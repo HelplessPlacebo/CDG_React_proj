@@ -1,5 +1,5 @@
 .TimeRContainer {
-    margin-top: 56px;
+    margin-top: 34px;
     margin-left: 200px;
     width: 217px;
     height: 238px;
@@ -44,16 +44,18 @@
 .TimerControlButtons {
     display: grid;
     grid-template-columns: 48px 48px;
-    grid-template-rows: 48px;
     grid-column-gap: 22px;
 }
 
 .Timer {
+
     font-style: normal;
     font-weight: bold;
     font-size: 54px;
     line-height: 144.2%;
     text-align: center;
     color: #1E1E1E;
-    margin-top: 15px;
+    margin-top: 30px;
+    margin-left: 7px;
 }
+

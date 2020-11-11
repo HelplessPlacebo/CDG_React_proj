@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 export  type TCustonListInputProps = {
     value : string
     classes : {AddIssueInput : string}
-    handler : (event: React.ChangeEvent<HTMLInputElement>)=>void
+    onChange : (event: React.ChangeEvent<HTMLInputElement>)=>void
     onSubmit : ()=> void
     onCancel : () => void
     SubmitButtonText : string
@@ -20,7 +20,7 @@ const CustomListInput : React.FC<TCustonListInputProps> = (props) =>{
             label="New issue"
             multiline
             value={props.value}
-            onChange={props.handler}
+            onChange={props.onChange}
             placeholder="Please enter the new issue"
         />
         <Grid style={window.innerWidth > 1400 ? {paddingTop : "10px",paddingLeft :"15%"}: {paddingTop : "10px"}} container>

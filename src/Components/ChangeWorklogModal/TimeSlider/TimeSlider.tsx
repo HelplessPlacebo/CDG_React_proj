@@ -93,7 +93,6 @@ const TimeSlider: React.FC<TTimeSliderProps> = (props) => {
 
         <LeftLabel Position={LeftPose} offsetLeft={LeftOffset} value={value}/>
         <RightLabel Position={RightPose} value={value} offsetRight={RightOffset}/>
-       {/* <SliderLabels  value={value}  SetValue={SetValue} UpdateLabelsValue={UpdateLabelsValue}/>*/}
     </>);
 
 }

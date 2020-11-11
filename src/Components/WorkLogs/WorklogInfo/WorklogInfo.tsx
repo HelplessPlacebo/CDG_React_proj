@@ -1,6 +1,5 @@
 import React from "react";
 import FS from "./WorklogInfo.module.css"
-//import DownloadIcon from "../../../assets/imgs/download.svg"
 import ProgressBar from "../../ProgressBar/ProgressBar";
 import LineStroke from "../../LineStroke/LineStroke";
 import {
@@ -11,8 +10,9 @@ import {
     TSetWorklogStatus,
     TWorkLog
 } from "../../../Data/WorkLogsReducer";
-import {TShowTooltip} from "../../../App";
+import {TShowSnackBar} from "../../../App";
 import BackupIcon from '@material-ui/icons/Backup';
+import {TSnackBarOptions} from "../../SnackBar/SnackBar";
 
 
 export type TWorklogInfoProps = {
@@ -22,31 +22,34 @@ export type TWorklogInfoProps = {
     BlockInfo: TBlockInfo
     Worklogs: Array<TWorkLog>
     SendWorklogBlockThunk: TSendWorklogBlockThunk
-    showTooltip: TShowTooltip
+    ShowSnackBar: TShowSnackBar
     SetWorklogStatus: TSetWorklogStatus
 }
 
 const WorklogInfo: React.FC<TWorklogInfoProps> = (props) => {
-
+    const CreateSnackBarOptions =(severity : "error" | "info" | "warning" | "success",message : string)=>{
+        return {
+               message,
+               severity,
+                position : {
+                    vertical : "bottom",
+                    horizontal : "right"
+                }
+        } as TSnackBarOptions
+    }
     const OnSendWorklogData = () : void => {
         props.Worklogs.map(Worklog => {
             if (!Worklog.Issue || Worklog.Issue.length <= 0) {
-                props.showTooltip({
-                    text: "Issue does not exist.",
-                    status: "danger"
-                })
+                props.ShowSnackBar(CreateSnackBarOptions("error","Issue does not exist"))
                 props.SetWorklogStatus({target: "worklog", status: "danger", id: Worklog.id})
             } else if (!Worklog.TaskField || Worklog.TaskField.length <= 0) {
-                props.showTooltip({
-                    text: "Please, enter the worklog name.",
-                    status: "warning"
-                })
+                props.ShowSnackBar(CreateSnackBarOptions("warning","Please, enter the worklog name"))
                 props.SetWorklogStatus({target: "worklog", status: "warning", id: Worklog.id})
             } else if (!Worklog.TimerValue || !Worklog.StartTime || !Worklog.EndTime) {
-                props.showTooltip({text: "Something goes wrong", status: "danger"})
+                props.ShowSnackBar(CreateSnackBarOptions("error","something goes wrong"))
             } else {
                 props.SetWorklogStatus({target: "worklog", status: "ok", id: Worklog.id})
-                props.showTooltip({text: "your worklog successfully logged.", status: "ok"})
+                props.ShowSnackBar(CreateSnackBarOptions("success","your worklog successfully logged"))
             }
         })
 
@@ -60,10 +63,10 @@ const WorklogInfo: React.FC<TWorklogInfoProps> = (props) => {
             }
             props.SendWorklogBlockThunk(ObjToSend)
             props.SetWorklogStatus({target: "worklogblock", status: "ok", id: props.BlockInfo.id})
-            props.showTooltip({text: "your worklog successfully logged.", status: "ok"})
+            props.ShowSnackBar(CreateSnackBarOptions("success","your worklog successfully logged"))
         }
         else {
-            props.showTooltip({text: "Issue does not exist.", status: "danger"})
+            props.ShowSnackBar(CreateSnackBarOptions("error","Issue does not exist"))
             props.SetWorklogStatus({target: "worklogblock", status: "danger", id: props.BlockInfo.id})
         }
     }

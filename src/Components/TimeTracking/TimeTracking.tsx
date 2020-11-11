@@ -1,13 +1,9 @@
 import React from "react";
 import TTS from "./TimeTracking.module.css"
-import StrokeVert from "../../assets/imgs/stroke_vert.svg"
-import StrokeHoriz from "../../assets/imgs/stroke_horiz.svg"
 import NewWorklogButton from "../../assets/imgs/new_worklog_button.svg"
 import NewWorklogButtonShadowed from "../../assets/imgs/new_worklog_button_shadowed.svg"
-//import LongMenu from "../DropDownMenu/DropDownMenu";
 import Timer from "../Timer/Timer";
 import {TAddWorklog, TChangeWorklog, TSetIsPlayingWorklogById, TTimerData, TWorkLog} from "../../Data/WorkLogsReducer";
-import IssuesSelectInput from "../Issues/IssuesSelectInput";
 
 export type TTimeTrackingProps = {
     AddWorklog : TAddWorklog

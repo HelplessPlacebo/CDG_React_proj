@@ -13,6 +13,7 @@ import ListItem from "@material-ui/core/ListItem";
 import {TAddIssue, TChangeIssue, TDeleteIssue} from "../../Data/IssuesReducer";
 import IssueListItem from "./IssueListItem";
 import CustomListInput from "./CustomListInput";
+import {useInput} from "../hooks/useInput";
 
 
 
@@ -32,8 +33,7 @@ export type TIssuesListProps = {
 const IssuesList : React.FC<TIssuesListProps> = (props) =>{
 
     const [AddIssueOpened, SetAddIssueOpened] = useState(false)
-    const [AddNewIssueInputValue, SetAddNewIssueInputValue] = useState<string>("")
-
+    const AddNewIssueInput = useInput('')
 
 
      const not = (a: string[], b: string[]) => {
@@ -76,17 +76,14 @@ const IssuesList : React.FC<TIssuesListProps> = (props) =>{
         SetAddIssueOpened(true)
     }
 
-    const onAddNewIssueInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        SetAddNewIssueInputValue(event.target.value)
-    }
 
     const OnConfirmAddNewIssue = () => {
-        SetAddNewIssueInputValue("")
+        props.AddIssue(AddNewIssueInput.value)
+        AddNewIssueInput.clear()
         SetAddIssueOpened(false)
-        props.AddIssue(AddNewIssueInputValue)
     }
     const OnCancelAddNewIssue = () => {
-        SetAddNewIssueInputValue("")
+        AddNewIssueInput.clear()
         SetAddIssueOpened(false)
     }
 
@@ -126,8 +123,8 @@ const IssuesList : React.FC<TIssuesListProps> = (props) =>{
 
         </Grid>
         {
-            AddIssueOpened && props.el === "Issue" && <CustomListInput value={AddNewIssueInputValue} classes={props.classes}
-                                                                       handler={onAddNewIssueInputChange} onSubmit={OnConfirmAddNewIssue}
+            AddIssueOpened && props.el === "Issue" && <CustomListInput {...AddNewIssueInput.bind} classes={props.classes}
+                                                                       onSubmit={OnConfirmAddNewIssue}
                                                                        onCancel={OnCancelAddNewIssue} SubmitButtonText={"Add"}
                                                                        CancelButtonText={"cancel"}/>
         }
