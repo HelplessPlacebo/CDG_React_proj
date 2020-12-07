@@ -1,9 +1,9 @@
 import React from "react";
-import TTS from "../TimeTracking/TimeTracking.module.css";
+import TTS from "../../TimeTracking/TimeTracking.module.css";
 import FS from "./Favorites.module.css"
-import NewWorklogButton from "../../assets/imgs/new_worklog_button.svg";
-import {TAddWorklog, TTimerData, TWorkLog, TWorklogBlock} from "../../Data/WorkLogsReducer";
-import WorkLogsContainer from "../WorkLogs/WorkLogsContainer";
+import NewWorklogButton from "../../../assets/imgs/new_worklog_button.svg";
+import {TAddWorklog, TTimerData, TWorkLog, TWorklogBlock} from "../../../Data/WorkLogsReducer";
+import WorkLogsContainer from "../../WorkLogs/WorkLogsContainer";
 
 export type TFavoritesPageProps = {
     FavoritesIsClicked: boolean

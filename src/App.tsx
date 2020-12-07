@@ -12,7 +12,7 @@ import {
     TWorkLog, TSetIsPlayingWorklogById, TChangeWorklog, TAddWorklog,
     AddWorklog, TTimerData, TAddToFavorite, AddToFavorite, TWorklogBlock
 } from "./Data/WorkLogsReducer";
-import FavoritesPage from "./Components/Favorites/FavoritesPage";
+import FavoritesPage from "./Components/CalendarAndControllButtons/Favorites/FavoritesPage";
 import CalendarAndControlButtons from "./Components/CalendarAndControllButtons/CalendarAndControlButtons";
 import {TCurrentDate} from "./Data/CalendarReducer";
 import ChangeWorklogModalContainer from "./Components/ChangeWorklogModal/ChangeWorklogModalContainer";
@@ -32,6 +32,8 @@ import Issues from "./Components/Issues/Issues";
 import {useBooleanState} from "./Components/hooks/useBooleanState";
 import AuthPage from "./Components/Auth/AuthPage";
 import SnackBar, {TSnackBarOptions} from "./Components/SnackBar/SnackBar";
+import ModalUserProfile from "./Components/UserProfile/ModalUserProfile";
+import User from "../../my-app/src/components/Users/User";
 
 export type TAppOwnProps = {}
 
@@ -63,8 +65,9 @@ export type TShowSnackBar = (SnackBarOptions: TSnackBarOptions) => void
 
 const App: React.FC<TAppProps> = (props) => {
 
-    const WorklogChangeModalIsOpen = useBooleanState(false)
+    let WorklogChangeModalIsOpen = useBooleanState(false)
     let FavoritesIsClicked = useBooleanState(false)
+    let UserProfileIsShowing = useBooleanState(false)
     let [TimerData, SetTimerData] = useState<TTimerData | undefined>(undefined)
     let [SnackBarIsShowing, SetSnackBarIsShowing] = useState(false)
     let [SnackBarOptions, SetSnackBarOptions] = useState<TSnackBarOptions>({
@@ -99,7 +102,7 @@ const App: React.FC<TAppProps> = (props) => {
                            render={() => <Redirect to={"/Home/All"}/>}/>
 
                     <div className="MainAppWrapper">
-                        <MaterialNav/>
+                        <MaterialNav OpenUserProfile={UserProfileIsShowing.Show}/>
 
                         <Route exact path='/Issues'
                                render={() => <Issues Issues={props.Issues}
@@ -120,10 +123,8 @@ const App: React.FC<TAppProps> = (props) => {
                                    />
                                </div>}/>
 
-
                         <div className={AS.MainWrapper}>
                             <div className="WorklogsLayout">
-
                                 <Route exact path='/Home/All'
                                        render={() => <div className="WorkLogBlock">
                                            <div className="Worklogs">
@@ -138,7 +139,6 @@ const App: React.FC<TAppProps> = (props) => {
                                            </div>
                                        </div>
                                        }/>
-
                                 <Route exact path='/Home/Favorites'
                                        render={() => <FavoritesPage FavoritesIsClicked={FavoritesIsClicked.isDisplayed}
                                                                     WorklogsBlocks={props.WorklogsBlocks}
@@ -170,13 +170,10 @@ const App: React.FC<TAppProps> = (props) => {
                             TimerData={TimerData}
                             Issue={props.Issues}
                         />
-
+                        <ModalUserProfile IsOpen={UserProfileIsShowing.isDisplayed} Hide={UserProfileIsShowing.Hide}/>
                     </div>
-
                 </>
-
                 : <AuthPage ShowSnackBar={ShowSnackBar}/>
-
             }
             <SnackBar isShowing={SnackBarIsShowing} onHide={HideSnackBar} options={SnackBarOptions}/>
         </div>

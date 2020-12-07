@@ -8,12 +8,12 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SettingsIcon from '@material-ui/icons/Settings';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import HS from "./NavBar.module.css";
 import {NavLink} from "react-router-dom";
 import Tooltip from "@material-ui/core/Tooltip";
-
+import Avatar from '@material-ui/core/Avatar';
+import avatar from "../../assets/imgs/avatar.jpg"
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -46,27 +46,20 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }),
 );
-
-export default React.memo(function MaterialNav(){
+type TMaterialNavProps = {
+    OpenUserProfile : ()=> void
+}
+ const MaterialNav : React.FC<TMaterialNavProps> = (props) =>{
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
 
-    const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-    const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
 
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
     };
 
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-        handleMobileMenuClose();
-    };
 
     const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setMobileMoreAnchorEl(event.currentTarget);
@@ -76,21 +69,6 @@ export default React.memo(function MaterialNav(){
         window.location.reload()
     }
 
-    const menuId = 'primary-search-account-menu';
-    const renderMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-            id={menuId}
-            keepMounted
-            transformOrigin={{vertical: 'top', horizontal: 'right'}}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-        >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-        </Menu>
-    );
 
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
@@ -104,32 +82,32 @@ export default React.memo(function MaterialNav(){
             onClose={handleMobileMenuClose}
         >
             <MenuItem>
-                <IconButton color="inherit">
+                <IconButton color="primary">
                     <SettingsIcon/>
                 </IconButton>
 
                 Settings
             </MenuItem>
             <MenuItem>
-                <IconButton color="inherit">
+                <IconButton color="primary">
                     <InfoIcon/>
                 </IconButton>
                 Info
             </MenuItem>
             <MenuItem>
-                <IconButton onClick={LogOut} color="inherit">
+                <IconButton onClick={LogOut} color="primary">
                     <ExitToAppIcon/>
                 </IconButton>
                 Logout
             </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
+            <MenuItem     onClick={props.OpenUserProfile} >
                 <IconButton
                     aria-label="account of current user"
                     aria-controls="primary-search-account-menu"
                     aria-haspopup="true"
-                    color="inherit"
+                    color="primary"
                 >
-                    <AccountCircle/>
+                    <Avatar alt={"user avatar"} src={avatar}/>
                 </IconButton>
                 Profile
             </MenuItem>
@@ -159,7 +137,7 @@ export default React.memo(function MaterialNav(){
                     <div className={classes.grow}/>
                     <div className={classes.sectionDesktop}>
                         <Tooltip title="Settings" arrow placement="bottom">
-                            <IconButton color="inherit">
+                            <IconButton  color="inherit">
                                 <SettingsIcon/>
                             </IconButton>
                         </Tooltip>
@@ -180,12 +158,11 @@ export default React.memo(function MaterialNav(){
                             <IconButton
                                 edge="end"
                                 aria-label="account of current user"
-                                aria-controls={menuId}
                                 aria-haspopup="true"
-                                onClick={handleProfileMenuOpen}
                                 color="inherit"
+                                onClick={props.OpenUserProfile}
                             >
-                                <AccountCircle/>
+                                <Avatar alt={"user avatar"} src={avatar}/>
                             </IconButton>
                         </Tooltip>
                     </div>
@@ -203,7 +180,7 @@ export default React.memo(function MaterialNav(){
                 </Toolbar>
             </AppBar>
             {renderMobileMenu}
-            {renderMenu}
         </div>
     );
-})
+}
+export default  React.memo(MaterialNav)

@@ -14,11 +14,8 @@ const Timer = (props) => {
     const [minutes, setMinutes] = useState(Number.parseInt(props.PlayingWorklog.TimerValue.substr(3, props.PlayingWorklog.TimerValue.length - 6)))
     const [hours, setHours] = useState(Number.parseInt(props.PlayingWorklog.TimerValue.substr(0, props.PlayingWorklog.TimerValue.length - 6)))
     const [isActive, setIsActive] = useState(false);
-    const WorklogInput= useInput("")
-    const IssueInput = useInput(props.Issues ? props.Issues : "")
-
-
-
+    const WorklogInput= useInput(props.PlayingWorklog.TaskField ? props.PlayingWorklog.TaskField : "")
+    const IssueInput = useInput(props.PlayingWorklog.Issue ? props.PlayingWorklog.Issue : "")
     const toggle = () => {
         setIsActive(!isActive);
     }

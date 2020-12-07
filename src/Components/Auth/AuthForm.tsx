@@ -6,17 +6,17 @@ import Button from "@material-ui/core/Button";
 import {makeStyles} from "@material-ui/core/styles";
 
 type TRegistrationProps = {
-    ConfirmButtonHandler: (EmailInputValue : string, PasswordInputValue : string) => void
+    ConfirmButtonHandler: (EmailInputValue: string, PasswordInputValue: string) => void
     GoBackButtonHandler: () => void
     ConfirmButtonText: string
     GoBackButtonText: string
-    CustomErr : string | null
-    ConfirmButtonStyles :{
-        variant: "contained" | "outlined"  | "text"
+    CustomErr: string | null
+    ConfirmButtonStyles: {
+        variant: "contained" | "outlined" | "text"
         color: "primary" | "secondary" | "default" | "inherit"
     }
-    GoBackButtonStyles :{
-        variant: "contained" | "outlined"  | "text"
+    GoBackButtonStyles: {
+        variant: "contained" | "outlined" | "text"
         color: "primary" | "secondary" | "default" | "inherit"
     }
 }
@@ -39,18 +39,17 @@ const AuthForm: React.FC<TRegistrationProps> = (props) => {
     const OnPasswordFieldChange = (e: any) => SetPasswordInputValue(e.target.value)
     const onConfirm = () => {
         // this handler create for create validations to inputs and call prop confirm handler
-        if(EmailInputValue.length <1 || PasswordInputValue.length <1){
-            if(EmailInputValue.length < 1) SetEmailErrText("this field is required")
+        if (EmailInputValue.length < 1 || PasswordInputValue.length < 1) {
+            if (EmailInputValue.length < 1) SetEmailErrText("this field is required")
             else SetEmailErrText(null)
-            if(PasswordInputValue.length < 1) SetPasswordErrText("this field is required")
+            if (PasswordInputValue.length < 1) SetPasswordErrText("this field is required")
             else SetPasswordErrText(null)
-        }else{
-            if(props.CustomErr){
+        } else {
+            if (props.CustomErr) {
                 SetEmailErrText(props.CustomErr)
                 SetPasswordErrText(props.CustomErr)
-            }
-            else{
-                props.ConfirmButtonHandler(EmailInputValue,PasswordInputValue)
+            } else {
+                props.ConfirmButtonHandler(EmailInputValue, PasswordInputValue)
                 SetEmailInputValue("")
                 SetPasswordInputValue("")
                 SetEmailErrText(null)
@@ -63,7 +62,6 @@ const AuthForm: React.FC<TRegistrationProps> = (props) => {
         <form className={classes.root} autoComplete="off">
             <div className={LS.InputsContainer}>
                 <div className="LoginInput">
-
                     <TextField
                         onChange={OnEmailFieldChange}
                         error={!!EmailErrText}
@@ -73,11 +71,10 @@ const AuthForm: React.FC<TRegistrationProps> = (props) => {
                         placeholder="Please, enter the login"
                         helperText={EmailErrText}
                     />
-
+                    <div className={LS.descr}> (test  - for testing)</div>
                 </div>
 
                 <div className={LS.PasswordContainer}>
-
                     <TextField
                         onChange={OnPasswordFieldChange}
                         error={!!PasswordErrText}
@@ -88,7 +85,7 @@ const AuthForm: React.FC<TRegistrationProps> = (props) => {
                         placeholder="Please, enter the password"
                         helperText={PasswordErrText}
                     />
-
+                    <div className={LS.descr}> (test  - for testing)</div>
                 </div>
 
                 <Grid container style={{paddingTop: "50px", paddingLeft: "10px"}}>
@@ -105,7 +102,6 @@ const AuthForm: React.FC<TRegistrationProps> = (props) => {
                         </Button>
                     </Grid>
                 </Grid>
-
             </div>
         </form>
     </div>

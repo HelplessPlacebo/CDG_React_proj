@@ -35,13 +35,10 @@
 
 .NewWorklogControlButtonsContainer {
     padding-top: 64px;
-    padding-left: 145px;
-    width: 117px;
+    padding-left: 120px;
 }
 
 .NewWorklogControlButtons {
-    width: 117px;
-    height: 46px;
     display: inline-flex;
     cursor: pointer;
 }

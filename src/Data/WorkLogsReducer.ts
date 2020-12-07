@@ -350,7 +350,7 @@ let DefaultState = {
 export const SearchWorklogBlock = (MonthName: string, DayNumber: number): Element | null => {
     let StateCopy: DefaultWorklogsState = JSON.parse(JSON.stringify(store.getState().WorklogsData))
     let WorklogsBlockToBeScrolled: HTMLElement | null = null
-    StateCopy.WorkLogsBlocks.map(el => {
+    StateCopy.WorkLogsBlocks.map(el =>  {
         let [Month, Day] = [...el.BlockInfo.BlockCreatedDate?.split(",")[1].split(" ")]
         if (Month === MonthName && Number.parseInt(Day) === DayNumber) {
             WorklogsBlockToBeScrolled = document.getElementById(el.BlockInfo.id.toString())
@@ -570,7 +570,7 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
             }
         }
         case ADD_TO_FAVORITE : {
-            let {SoughtWorklog, ...Indexes} = FindWorklogById(action.WorklogId)
+            let {SoughtWorklog} = FindWorklogById(action.WorklogId)
             return {
                 ...state,
                 FavoritesWorklogs: [...state.FavoritesWorklogs, SoughtWorklog]

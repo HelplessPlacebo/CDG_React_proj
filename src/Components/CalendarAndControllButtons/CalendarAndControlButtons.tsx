@@ -1,8 +1,8 @@
 import React from "react";
 import AS from "../../App.module.css";
 import Calendar from "../Calendar/Calendar";
-import All from "../All/All";
-import FavoritesButton from "../Favorites/FavoritesButton";
+import All from "./All/All";
+import FavoritesButton from "./Favorites/FavoritesButton";
 import {TCurrentDate} from "../../Data/CalendarReducer";
 
 

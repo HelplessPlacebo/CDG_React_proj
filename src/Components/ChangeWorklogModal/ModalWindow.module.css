@@ -79,8 +79,8 @@
 }
 
 .NewWorklogControlButtonsContainer {
-    margin-top: 68px;
-    margin-left: 240px;
+    padding-top: 68px;
+    padding-left: 220px;
 }
 
 .NewWorklogControlButtons {
@@ -93,8 +93,7 @@
     margin-left: 27px;
 }
 .CloseButtonMargin{
-    padding-top: 2px;
-    padding-left: 50px;
+    padding-left: 20px;
 }
 
 .NewWorklogSubmitButton {

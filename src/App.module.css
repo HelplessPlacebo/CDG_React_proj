@@ -9,13 +9,13 @@
 }
 
 .MainWrapper {
-    font-family: 'Roboto', serif;
+    font-family: "Roboto",serif;
     display: grid;
     grid-template-columns: 1296px 624px;
 }
 
 .CalendarAndButtonsContainer {
-    font-family: 'Roboto', serif;
+    font-family: "Roboto",serif;
     padding-top: 52px;
     padding-left: 96px;
 }
@@ -32,10 +32,9 @@
     grid-template-rows: 363px 497px;
 }
 .AppContainer{
-    font-family: 'Roboto', serif;
     overflow: hidden;
     background-color: #E5E5E5;
-    /*background: url(assets/imgs/bgc/clock4_gupsy_test.jpg) no-repeat center center fixed ;*/
+    /*background: url(assets/images/bgc/clock4_gupsy_test.jpg) no-repeat center center fixed ;*/
     /*-webkit-background-size: cover;*/
     /*-moz-background-size: cover;*/
     /*-o-background-size: cover;*/

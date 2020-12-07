@@ -25,7 +25,6 @@ export const useInput = (initialValue: string): {
     const forceUpdate = (val: string) => {
         setValue(val)
     }
-
     return {
         bind: {value, onChange},
         value,
