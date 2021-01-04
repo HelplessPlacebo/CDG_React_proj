@@ -1,6 +1,5 @@
 import store, {GlobalState} from "./redux-store";
 import {ThunkAction} from "redux-thunk";
-import {API} from "../API/requests"
 import {GetCurrentDate} from "../assets/secondary/GetCurrentDate";
 
 const ADD_WORKLOG = "WORKLOGS/ADD_WORKLOG"
@@ -241,106 +240,6 @@ let DefaultState = {
                     Issue: "Project Design",
                     IsFavorites: false
                 }]
-        },
-        {
-            BlockInfo: {
-                BlockCreatedDate: "Sun,October 4",
-                SummaryStatus: "danger",
-                SummaryTime: "06:05:00",
-                id: 4
-            },
-            Worklogs: [{
-                StartTime: "09:00",
-                EndTime: "10:00",
-                TaskField: "Team standup",
-                status: "ok",
-                NestingItems: null,
-                TimerValue: "01:00:00",
-                id: 4445534523412416,
-                Issue: "Meeting",
-                IsFavorites: false
-            }, {
-                StartTime: "10:00",
-                EndTime: "12:30",
-                TaskField: "Create request by API",
-                status: "ok",
-                NestingItems: null,
-                TimerValue: "02:30:00",
-                id: 2131241241251217,
-                Issue: "API Middleware",
-                IsFavorites: false
-            }, {
-                StartTime: "12:20",
-                EndTime: "13:40",
-                TaskField: "Fixed buttons positions",
-                status: "warning",
-                TimerValue: "01:20:00",
-                id: 21312412551418,
-                NestingItems: null,
-                Issue: "Amendment",
-                IsFavorites: false
-            },
-                {
-                    StartTime: "11:30",
-                    EndTime: "13:00",
-                    TaskField: "Marketing strategy",
-                    status: "warning",
-                    id: 1232132132419,
-                    TimerValue: "01:30:00",
-                    NestingItems: null,
-                    Issue: "Profit increase",
-                    IsFavorites: false
-                }, {
-                    StartTime: "13:20",
-                    EndTime: "16:00",
-                    TaskField: "Moodboarding",
-                    status: "ok",
-                    id: 12323123512420,
-                    TimerValue: "03:20:00",
-                    NestingItems: null,
-                    Issue: "Branding",
-                    IsFavorites: false
-                }]
-        }, {
-            BlockInfo: {
-                BlockCreatedDate: "Set,October 3",
-                SummaryStatus: "ok",
-                SummaryTime: "08:00:00",
-                id: 5
-            },
-            Worklogs: [{
-                StartTime: "09:00",
-                EndTime: "10:00",
-                TaskField: "Team standup",
-                NestingItems: null,
-                status: "ok",
-                TimerValue: "01:00:00",
-                id: 31232175895321,
-                Issue: "Meeting",
-                IsFavorites: false
-            },
-                {
-                    StartTime: "10:30",
-                    EndTime: "11:30",
-                    TaskField: "Meeting with QA",
-                    status: "ok",
-                    NestingItems: null,
-                    TimerValue: "01:00:00",
-                    id: 76967845623522,
-                    Issue: "QA",
-                    IsFavorites: false
-                }, {
-                    StartTime: "12:00",
-                    EndTime: "13:55",
-                    TaskField: "Meeting with costumer",
-                    status: "danger",
-                    NestingItems: null,
-                    TimerValue: "01:55:00",
-                    id: 12312434256623,
-                    Issue: "Customer",
-                    IsFavorites: false
-                }
-            ]
         }] as Array<TWorklogBlock>,
     PlayingWorklog: null as TWorkLog | null,
     WorklogToChange: null as TWorkLog | null,
@@ -350,7 +249,7 @@ let DefaultState = {
 export const SearchWorklogBlock = (MonthName: string, DayNumber: number): Element | null => {
     let StateCopy: DefaultWorklogsState = JSON.parse(JSON.stringify(store.getState().WorklogsData))
     let WorklogsBlockToBeScrolled: HTMLElement | null = null
-    StateCopy.WorkLogsBlocks.map(el =>  {
+    StateCopy.WorkLogsBlocks.map(el => {
         let [Month, Day] = [...el.BlockInfo.BlockCreatedDate?.split(",")[1].split(" ")]
         if (Month === MonthName && Number.parseInt(Day) === DayNumber) {
             WorklogsBlockToBeScrolled = document.getElementById(el.BlockInfo.id.toString())
@@ -487,37 +386,19 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
                             if(Worklog.NestingItems && Worklog.NestingItems?.length > 0){
                                 Worklog.NestingItems.map(NestingItem=>{
                                     if(NestingItem.id === action.NewWorklog.id){
-                                        if(NestingItem.Issue === action.NewWorklog.Issue){
-                                            debugger
-                                            NestingItem.TimerValue = action.NewWorklog.TimerValue
-                                            NestingItem.Issue = action.NewWorklog.Issue
-                                            NestingItem.TaskField = action.NewWorklog.TaskField
-                                            NestingItem.EndTime = action.NewWorklog.EndTime
-                                            NestingItem.StartTime = action.NewWorklog.StartTime
-                                        }
+                                        if(NestingItem.Issue === action.NewWorklog.Issue)
+                                            Object.assign(NestingItem,action.NewWorklog)
+
                                     } else Worklog.NestingItems?.push(action.NewWorklog)
                                 })
-                            } else {
-                                Worklog.NestingItems = [action.NewWorklog]
-                            }
+                            } else Worklog.NestingItems = [action.NewWorklog]
 
-                        }else{
-                                Worklog.TimerValue = action.NewWorklog.TimerValue
-                                Worklog.Issue = action.NewWorklog.Issue
-                                Worklog.TaskField = action.NewWorklog.TaskField
-                                Worklog.StartTime = action.NewWorklog.StartTime
-                                Worklog.EndTime = action.NewWorklog.EndTime
-                                Worklog.status = action.NewWorklog.status
-                        }
+
+                        }else Object.assign(Worklog,action.NewWorklog)
+
                     }else {
-                        if(Worklog.id === action.NewWorklog.id){
-                            Worklog.TimerValue = action.NewWorklog.TimerValue
-                            Worklog.Issue = action.NewWorklog.Issue
-                            Worklog.TaskField = action.NewWorklog.TaskField
-                            Worklog.StartTime = action.NewWorklog.StartTime
-                            Worklog.EndTime = action.NewWorklog.EndTime
-                            Worklog.status = action.NewWorklog.status
-                        }
+                        if(Worklog.id === action.NewWorklog.id) Object.assign(Worklog,action.NewWorklog)
+
                         else if(Worklog.NestingItems && Worklog.NestingItems?.length > 0){
                             Worklog.NestingItems.map(CNestingItem => {
                                 if(CNestingItem.id === action.NewWorklog.id && CNestingItem.Issue !== action.NewWorklog.Issue){
@@ -605,21 +486,10 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
             FavoritesWorklogsCopy.map(FavoritesWorklog => {
                 if (FavoritesWorklog.NestingItems && FavoritesWorklog.NestingItems?.length > 0) {
                     FavoritesWorklog.NestingItems.map(NestingItem => {
-                        if (NestingItem.id === action.WorklogId) {
-                            NestingItem.TaskField = action.NewWorklog.TaskField
-                            NestingItem.Issue = action.NewWorklog.Issue
-                            NestingItem.StartTime = action.NewWorklog.StartTime
-                            NestingItem.EndTime = action.NewWorklog.EndTime
-                            NestingItem.TimerValue = action.NewWorklog.TimerValue
-                        }
+                        if (NestingItem.id === action.WorklogId)
+                            Object.assign(NestingItem, action.NewWorklog)
                     })
-                } else {
-                    FavoritesWorklog.TaskField = action.NewWorklog.TaskField
-                    FavoritesWorklog.Issue = action.NewWorklog.Issue
-                    FavoritesWorklog.StartTime = action.NewWorklog.StartTime
-                    FavoritesWorklog.EndTime = action.NewWorklog.EndTime
-                    FavoritesWorklog.TimerValue = action.NewWorklog.TimerValue
-                }
+                } else Object.assign(FavoritesWorklog, action.NewWorklog)
             })
 
             WorklogsBlocksCopy.some(WBL => WBL.BlockInfo.BlockCreatedDate === CurrentDate)
@@ -631,23 +501,13 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
                         ? WBL.Worklogs.some(Worklog => Worklog.NestingItems && Worklog.NestingItems.length > 0)
                         ? WBL.Worklogs.map(Worklog => {
                             Worklog.NestingItems?.map(NestingItem => {
-                                if (NestingItem.id === action.WorklogId) {
-                                    NestingItem.TimerValue = action.NewWorklog.TimerValue
-                                    NestingItem.StartTime = action.NewWorklog.StartTime
-                                    NestingItem.EndTime = action.NewWorklog.EndTime
-                                    NestingItem.TaskField = action.NewWorklog.TaskField
-                                    NestingItem.Issue = action.NewWorklog.Issue
-                                }
+                                if (NestingItem.id === action.WorklogId)
+                                    Object.assign(NestingItem, action.NewWorklog)
                             })
                         })
                         : WBL.Worklogs.map(Worklog => {
-                            if (Worklog.id === action.WorklogId) {
-                                Worklog.TimerValue = action.NewWorklog.TimerValue
-                                Worklog.StartTime = action.NewWorklog.StartTime
-                                Worklog.EndTime = action.NewWorklog.EndTime
-                                Worklog.TaskField = action.NewWorklog.TaskField
-                                Worklog.Issue = action.NewWorklog.Issue
-                            }
+                            if (Worklog.id === action.WorklogId)
+                                Object.assign(Worklog, action.NewWorklog)
                         })
                         : WBL.Worklogs.unshift(action.NewWorklog)
                 })
@@ -689,8 +549,8 @@ export const SetIsPlayingWorklogById = (IsPlaying: boolean, ElementId?: number, 
 }
 export type TSetIsPlayingWorklogById = typeof SetIsPlayingWorklogById
 
-export const ChangeWorklog = (WorkLogId: number, NewWorklog: TWorkLog) => {
-    return {type: CHANGE_WORKLOG, WorkLogId, NewWorklog} as const
+export const ChangeWorklog = (NewWorklog: TWorkLog) => {
+    return {type: CHANGE_WORKLOG,  NewWorklog} as const
 }
 export type TChangeWorklog = typeof ChangeWorklog
 
@@ -705,14 +565,14 @@ export const AddToFavorite = (WorklogId: number) => {
 export type TAddToFavorite = typeof AddToFavorite
 
 
-export const SendWorklogBlockThunk = (WorklogBlockData: TSendWorklogsData): TWorklogsThunks => async (dispatch) => {
-
-    const SendNewMessageResult = await API.SendWorklogBlock(WorklogBlockData)
-    // if (SendNewMessageResult.resultCode === 0) {
-    //     dispatch(GetWorklogs(WorklogBlockId))
-    // }
-}
-export type TSendWorklogBlockThunk = typeof SendWorklogBlockThunk
+// export const SendWorklogBlockThunk = (WorklogBlockData: TSendWorklogsData): TWorklogsThunks => async (dispatch) => {
+//
+//     const SendNewMessageResult = await API.SendWorklogBlock(WorklogBlockData)
+//     // if (SendNewMessageResult.resultCode === 0) {
+//     //     dispatch(GetWorklogs(WorklogBlockId))
+//     // }
+// }
+// export type TSendWorklogBlockThunk = typeof SendWorklogBlockThunk
 
 export const SetWorklogStatus = (options: {
     target: "worklog" | "worklogblock",

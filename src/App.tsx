@@ -18,22 +18,15 @@ import {TCurrentDate} from "./Data/CalendarReducer";
 import ChangeWorklogModalContainer from "./Components/ChangeWorklogModal/ChangeWorklogModalContainer";
 
 import {
-    ChangeIssue,
-    AddIssue,
-    DeleteIssue,
-    SetIssues,
-    SetCompletedIssues,
-    TAddIssue,
-    TChangeIssue,
-    TDeleteIssue,
-    TSetIssues, TSetCompletedIssues
+    ChangeIssue, AddIssue, DeleteIssue, SetIssues, SetCompletedIssues,
+    TAddIssue, TChangeIssue, TDeleteIssue, TSetIssues, TSetCompletedIssues
 } from "./Data/IssuesReducer";
+
 import Issues from "./Components/Issues/Issues";
 import {useBooleanState} from "./Components/hooks/useBooleanState";
 import AuthPage from "./Components/Auth/AuthPage";
 import SnackBar, {TSnackBarOptions} from "./Components/SnackBar/SnackBar";
 import ModalUserProfile from "./Components/UserProfile/ModalUserProfile";
-import User from "../../my-app/src/components/Users/User";
 
 export type TAppOwnProps = {}
 
@@ -64,36 +57,34 @@ export type TAppProps = T_MSTP_App & T_MDTP_App & TAppOwnProps
 export type TShowSnackBar = (SnackBarOptions: TSnackBarOptions) => void
 
 const App: React.FC<TAppProps> = (props) => {
-
-    let WorklogChangeModalIsOpen = useBooleanState(false)
-    let FavoritesIsClicked = useBooleanState(false)
-    let UserProfileIsShowing = useBooleanState(false)
-    let [TimerData, SetTimerData] = useState<TTimerData | undefined>(undefined)
-    let [SnackBarIsShowing, SetSnackBarIsShowing] = useState(false)
-    let [SnackBarOptions, SetSnackBarOptions] = useState<TSnackBarOptions>({
+    const [isAuth, setIsAuth] = useState<boolean | null>(null)
+    const WorklogChangeModalIsOpen = useBooleanState(false)
+    const FavoritesIsClicked = useBooleanState(false)
+    const UserProfileIsShowing = useBooleanState(false)
+    const [TimerData, SetTimerData] = useState<TTimerData | undefined>(undefined)
+    const [SnackBarIsShowing, SetSnackBarIsShowing] = useState(false)
+    const [SnackBarOptions, SetSnackBarOptions] = useState<TSnackBarOptions>({
         message: "something goes wrong",
         HideDuration: 3000,
         position: {horizontal: "center", vertical: "bottom"},
         severity: "error"
     })
 
-    const OnSetTimerData = (TimerData: TTimerData) => {
-        SetTimerData(TimerData)
-    }
+    const OnSetTimerData = (TimerData: TTimerData | undefined) => SetTimerData(TimerData)
+    const onAuth = () => setIsAuth(true)
+    const onUnAuth = () => setIsAuth(false)
 
     const ShowSnackBar = (SnackBarOptions: TSnackBarOptions) => {
         SnackBarIsShowing && SetSnackBarIsShowing(false)
         SetSnackBarOptions(SnackBarOptions)
         SetSnackBarIsShowing(true)
     }
-
     const HideSnackBar = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
         SetSnackBarIsShowing(false);
-    };
-
+    }
     return (<div className="AppWrapper">
 
             {localStorage.getItem("IsAuth") === "true"
@@ -102,7 +93,7 @@ const App: React.FC<TAppProps> = (props) => {
                            render={() => <Redirect to={"/Home/All"}/>}/>
 
                     <div className="MainAppWrapper">
-                        <MaterialNav OpenUserProfile={UserProfileIsShowing.Show}/>
+                        <MaterialNav OpenUserProfile={UserProfileIsShowing.Show} onUnAuth={onUnAuth}/>
 
                         <Route exact path='/Issues'
                                render={() => <Issues Issues={props.Issues}
@@ -125,6 +116,7 @@ const App: React.FC<TAppProps> = (props) => {
 
                         <div className={AS.MainWrapper}>
                             <div className="WorklogsLayout">
+
                                 <Route exact path='/Home/All'
                                        render={() => <div className="WorkLogBlock">
                                            <div className="Worklogs">
@@ -133,7 +125,7 @@ const App: React.FC<TAppProps> = (props) => {
                                                                   ComponentToDraw={"Worklogs"}
                                                                   ShowSnackBar={ShowSnackBar}
                                                                   closeWorklogChangeModal={WorklogChangeModalIsOpen.Hide}
-                                                                  SetTimerData={SetTimerData}
+                                                                  SetTimerData={OnSetTimerData}
                                                                   WorklogChangeModalIsOpen={WorklogChangeModalIsOpen.isDisplayed}
                                                />
                                            </div>
@@ -147,33 +139,46 @@ const App: React.FC<TAppProps> = (props) => {
                                                                     AddWorklog={props.AddWorklog}
                                                                     PlayingWorklog={props.PlayingWorklog}
                                                                     FavoritesWorklog={props.FavoritesWorklog}
+                                                                    SetTimerData={OnSetTimerData}
+                                                                    ShowSnackBar={ShowSnackBar}
+                                                                    closeWorklogChangeModal={WorklogChangeModalIsOpen.Hide}
+                                                                    WorklogChangeModalIsOpen={WorklogChangeModalIsOpen.isDisplayed}
+                                                                    ComponentToDraw="FavoritesWorklogs"
                                        />}/>
 
                             </div>
-                            <Route path='/Home'
-                                   render={() => <div className={AS.TImeTracking_and_Calendar}>
-                                       <TimeTracking PlayingWorklog={props.PlayingWorklog}
-                                                     FavoritesIsClicked={FavoritesIsClicked.isDisplayed}
-                                                     SetIsPlayingWorklogById={props.SetIsPlayingWorklogById}
-                                                     AddWorklog={props.AddWorklog}
-                                                     SetTimerData={OnSetTimerData}
-                                                     openWorklogChangeModal={WorklogChangeModalIsOpen.Show}
-                                                     ChangeWorklog={props.ChangeWorklog}
-                                                     Issues={props.Issues}
-                                       />
-                                   </div>}/>
+
+                            <div className="TimeTrackingLayout">
+
+                                <Route path='/Home'
+                                       render={() => <div className={AS.TImeTracking_and_Calendar}>
+                                           <TimeTracking PlayingWorklog={props.PlayingWorklog}
+                                                         FavoritesIsClicked={FavoritesIsClicked.isDisplayed}
+                                                         SetIsPlayingWorklogById={props.SetIsPlayingWorklogById}
+                                                         AddWorklog={props.AddWorklog}
+                                                         SetTimerData={OnSetTimerData}
+                                                         openWorklogChangeModal={WorklogChangeModalIsOpen.Show}
+                                                         ChangeWorklog={props.ChangeWorklog}
+                                                         Issues={props.Issues}
+                                           />
+                                       </div>}/>
+                            </div>
+
                         </div>
+
                         <ChangeWorklogModalContainer
-                            SetTimerData={SetTimerData}
+                            SetTimerData={OnSetTimerData}
                             WorklogChangeModalIsOpen={WorklogChangeModalIsOpen.isDisplayed}
                             closeWorklogChangeModal={() => WorklogChangeModalIsOpen.Hide()}
                             TimerData={TimerData}
-                            Issue={props.Issues}
+                            Issues={props.Issues}
                         />
+
                         <ModalUserProfile IsOpen={UserProfileIsShowing.isDisplayed} Hide={UserProfileIsShowing.Hide}/>
+
                     </div>
                 </>
-                : <AuthPage ShowSnackBar={ShowSnackBar}/>
+                : <AuthPage onAuth={onAuth} onUnAuth={onUnAuth} ShowSnackBar={ShowSnackBar}/>
             }
             <SnackBar isShowing={SnackBarIsShowing} onHide={HideSnackBar} options={SnackBarOptions}/>
         </div>
@@ -193,7 +198,6 @@ const MapStateToProps = (state: GlobalState): T_MSTP_App => ({
 
 export default compose(
     connect<T_MSTP_App, T_MDTP_App, TAppOwnProps, GlobalState>(MapStateToProps, {
-        SetIsPlayingWorklogById,
-        ChangeWorklog, AddWorklog, AddToFavorite,
+        SetIsPlayingWorklogById, ChangeWorklog, AddWorklog, AddToFavorite,
         ChangeIssue, AddIssue, DeleteIssue, SetCompletedIssues, SetIssues
     }))(App)

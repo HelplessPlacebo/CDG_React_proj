@@ -20,7 +20,6 @@ export type TDropDownCalendarProps = {
 const DropDownCalendar: React.FC<TDropDownCalendarProps> = (props) => {
     let DaysNamesArr = ["S", "M", "T", "W", "T", "F", "S"]
 
-
     return (<div className={CS.DropDownCalendar}>
         <div className={CS.DropDownCalendarHeader}>
             {props.CurrentDate.CurrentMonth}
@@ -36,7 +35,9 @@ const DropDownCalendar: React.FC<TDropDownCalendarProps> = (props) => {
                     </div>
                 })}
 
-                {props.Calendars[props.CurrentDate.CurrentMonth].map(day => {
+                {
+                    //@ts-ignore
+                    props.Calendars[props.CurrentDate.CurrentMonth].map(day => {
                     return <CalendarDay ClickedMonthDay={props.ClickedMonthDay}
                                         CurrentDay={props.CurrentDate.CurrentDay}
                                         MonthName={props.CurrentDate.CurrentMonth}

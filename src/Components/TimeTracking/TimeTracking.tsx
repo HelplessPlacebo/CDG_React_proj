@@ -18,14 +18,13 @@ export type TTimeTrackingProps = {
 
 const TimeTracking: React.FC<TTimeTrackingProps> = (props) => {
 
-    const OnAddEmptyWorklog = () =>{
-        props.AddWorklog()
-    }
+    const OnAddEmptyWorklog = () =>props.AddWorklog()
+
 
     return (<div className={TTS.TTLayout}>
-            <div className={TTS.strokeVert}>
-                {/*<img src={StrokeVert} alt="stroke-vert"/>*/}
-            </div>
+
+            <div className={TTS.strokeVert}> </div>
+
             <div className={TTS.TTContent}>
 
 
@@ -78,9 +77,7 @@ const TimeTracking: React.FC<TTimeTrackingProps> = (props) => {
                                 </div>
                             </div>
 
-                        <div className={TTS.TTHorizStrokePose}>
-                            {/*<img src={StrokeHoriz} alt=""/>*/}
-                        </div>
+                        <div className={TTS.TTHorizStrokePose}> </div>
 
                     </div>
 

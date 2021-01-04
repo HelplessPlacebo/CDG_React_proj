@@ -48,27 +48,19 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 type TMaterialNavProps = {
     OpenUserProfile : ()=> void
+    onUnAuth : ()=>void
 }
  const MaterialNav : React.FC<TMaterialNavProps> = (props) =>{
     const classes = useStyles();
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
-
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-
-    const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
-    };
-
-
-    const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-        setMobileMoreAnchorEl(event.currentTarget);
-    };
+    const handleMobileMenuClose = () => setMobileMoreAnchorEl(null)
+    const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => setMobileMoreAnchorEl(event.currentTarget)
     const LogOut = ()=>{
         localStorage.setItem("IsAuth","false")
-        window.location.reload()
+        props.onUnAuth()
     }
-
 
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (

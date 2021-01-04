@@ -1,30 +1,20 @@
-import React, {Dispatch, SetStateAction} from 'react'
+import React from 'react'
 import {connect} from "react-redux";
-import {compose} from "redux";
 import {GlobalState} from "../../Data/redux-store"
 import {
     TWorklogBlock,
     AddWorklog,
     SetIsPlayingWorklogById,
-    DeleteWorklog, SetWorklogToChange, AddToFavorite, SendWorklogBlockThunk,
+    DeleteWorklog, SetWorklogToChange, AddToFavorite,
     SetWorklogStatus,DeleteFromFavorites,
     TDeleteWorklog, TAddWorklog, TSetIsPlayingWorklogById, TWorkLog,
-    TSetWorklogToChange, TTimerData, TAddToFavorite, TSendWorklogBlockThunk, TSetWorklogStatus, TDeleteFromFavorites
+    TSetWorklogToChange, TAddToFavorite, TSetWorklogStatus, TDeleteFromFavorites
 } from "../../Data/WorkLogsReducer";
 import WorkLogsBlock from "./WorkLogsBlock";
-import {TShowSnackBar} from "../../App";
+import {TWorklogsContainerOwnProps} from "../../globalTypes/Types";
 
 export type TComponentToDraw = "Worklogs" | "FavoritesWorklogs"
-export type TWorkLogsContainerOwnProps = {
-    openWorklogChangeModal: () => void
-    ComponentToDraw: TComponentToDraw
-    ShowSnackBar: TShowSnackBar
 
-    closeWorklogChangeModal: () => void
-    WorklogChangeModalIsOpen: boolean
-    TimerData: TTimerData | undefined
-    SetTimerData: Dispatch<SetStateAction<TTimerData | undefined>>
-}
 
 export type T_MSTP_WorkLogsContainer = {
     WorklogsBlocks: Array<TWorklogBlock>
@@ -38,33 +28,31 @@ export type T_MDTP_WorkLogsContainer = {
     SetIsPlayingWorklogById: TSetIsPlayingWorklogById
     SetWorklogToChange: TSetWorklogToChange
     AddToFavorite: TAddToFavorite
-    SendWorklogBlockThunk: TSendWorklogBlockThunk
     SetWorklogStatus: TSetWorklogStatus
     DeleteFromFavorites : TDeleteFromFavorites
 }
 
 
-type TDialogsContainerProps = T_MDTP_WorkLogsContainer & T_MSTP_WorkLogsContainer & TWorkLogsContainerOwnProps
+export type TWorklogsContainerProps = T_MDTP_WorkLogsContainer & T_MSTP_WorkLogsContainer & TWorklogsContainerOwnProps
 
-class WorkLogsContainer extends React.Component<TDialogsContainerProps> {
+const WorkLogsContainer:React.FC<TWorklogsContainerProps> =(props)=>{
 
-    render() {
         return (
             <div className="WorklogBlockWrapper">
-                {this.props.ComponentToDraw === "Worklogs"
-                    ? this.props.WorklogsBlocks.map(el => {
+                {props.ComponentToDraw === "Worklogs"
+                    ? props.WorklogsBlocks.map(el => {
                         return <div key={el.BlockInfo.id} className="Worklogs">
                             <WorkLogsBlock BlockInfo={el.BlockInfo}
                                            Worklogs={el.Worklogs}
-                                           {...this.props}
+                                           {...props}
                             />
                         </div>
                     })
                     :
                     <div style={{paddingTop: "52px"}} className="FavoritesWorklogsWrapper">
                         <WorkLogsBlock
-                            {...this.props}
-                            Worklogs={this.props.FavoritesWorklogs}
+                            {...props}
+                            Worklogs={props.FavoritesWorklogs}
                         />
                     </div>
 
@@ -72,19 +60,15 @@ class WorkLogsContainer extends React.Component<TDialogsContainerProps> {
             </div>
         )
     }
-}
 
-let StateToProps = (state: GlobalState): T_MSTP_WorkLogsContainer => ({
+const StateToProps = (state: GlobalState): T_MSTP_WorkLogsContainer => ({
     WorklogsBlocks: state.WorklogsData.WorkLogsBlocks,
     PlayingWorklog: state.WorklogsData.PlayingWorklog,
     FavoritesWorklogs : state.WorklogsData.FavoritesWorklogs
 })
 
-export default compose(connect<T_MSTP_WorkLogsContainer, T_MDTP_WorkLogsContainer, TWorkLogsContainerOwnProps, GlobalState>
+export default connect<T_MSTP_WorkLogsContainer, T_MDTP_WorkLogsContainer, TWorklogsContainerOwnProps, GlobalState>
 (StateToProps, {
-    AddWorklog, DeleteWorklog,
-    SetIsPlayingWorklogById, SetWorklogToChange, AddToFavorite,
-    SendWorklogBlockThunk,SetWorklogStatus,DeleteFromFavorites
-}))
-    //@ts-ignore
-    (WorkLogsContainer)
+    AddWorklog, DeleteWorklog, SetIsPlayingWorklogById, SetWorklogToChange, AddToFavorite,
+    SetWorklogStatus,DeleteFromFavorites
+})(WorkLogsContainer)

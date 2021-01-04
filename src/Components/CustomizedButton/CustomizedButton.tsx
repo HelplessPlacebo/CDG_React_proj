@@ -3,17 +3,29 @@ import {
     createStyles,
     withStyles,
     makeStyles,
-    Theme,
 } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { green, purple,blue,grey,red,common,teal,yellow} from '@material-ui/core/colors'
+import { green, purple,blue,grey,red,common,teal,yellow,deepOrange,orange,blueGrey,cyan,indigo} from '@material-ui/core/colors'
 
 interface ColorType {
     [key : string] : string
 }
-type color = "green" | "purple" | "grey" | "red" | "blue" | "common" | "teal" | "yellow"| "white"
+type color = "green" | "purple" | "grey" | "red" | "blue" | "common"
+    | "teal" | "yellow"| "white" | "indigo" |"cyan" |"blueGrey" | "orange" | "deepOrange"
 
-const findColorObject = (colorName : string) : ColorType =>{
+type TCustomizedButtonProps = {
+    bgColor : color
+    text : string
+    variant  : "outlined" | "contained" | "text"
+    fontSize : number | string
+    fontColor ? : color
+    startIcon ? : JSX.Element
+    width ?: number
+    disabled ?: boolean
+    onClick?: (data : any)=>void
+}
+
+const findColorObject = (colorName:string) : ColorType  =>{
     switch (colorName) {
         case "green" : return green
         case "purple" : return purple
@@ -23,45 +35,47 @@ const findColorObject = (colorName : string) : ColorType =>{
         case "teal" : return teal
         case "common" : return common
         case "yellow" : return yellow
+        case "deepOrange" : return deepOrange
+        case "orange" : return orange
+        case "blueGrey" : return blueGrey
+        case "cyan" : return cyan
+        case "indigo" : return indigo
         default : return common
     }
 
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        margin: {
-            margin: theme.spacing(1),
-        },
-    }),
-);
+const  CustomizedButton : React.FC<TCustomizedButtonProps>  = (props) => {
 
-type TCustomizedButtonProps = {
-    bgColor : color
-    text : string
-    variant  : "outlined" | "contained" | "text"
-    fontSize : number
-    fontColor ? : color
-    startIcon ? : JSX.Element
-}
- const  CustomizedButton : React.FC<TCustomizedButtonProps> = (props) => {
-     const color = findColorObject(props.bgColor)
-     const ColorButton = withStyles((theme: Theme) => ({
-         root: {
-             color: props.fontColor
-                 ? props.fontColor === "white" ? red[50] :findColorObject(props.fontColor)[500]
-                 :theme.palette.getContrastText(color[500]),
-             backgroundColor: color[500],
-             fontSize : props.fontSize,
-             '&:hover': {
-                 backgroundColor: color[700],
-             },
-         },
-     }))(Button);
+    const useStyles = makeStyles((theme) =>
+        createStyles({
+            margin: {
+                margin: theme.spacing(1),
+                width : props.width && props.width
+            },
+        }),
+    )
+
+    const color = findColorObject(props.bgColor)
+    const ColorButton = withStyles((theme) => ({
+        root: {
+            color: props.fontColor
+                ? props.fontColor === "white" ? red[50] :findColorObject(props.fontColor)[500]
+                :theme.palette.getContrastText(color[500]),
+            backgroundColor: color[500],
+            fontSize : props.fontSize,
+            '&:hover': {
+                backgroundColor: color[700],
+            },
+            borderRadius : "0.6rem"
+        },
+    }))(Button)
+
     const classes = useStyles();
-    return <ColorButton startIcon={props.startIcon ? props.startIcon : undefined} variant={props.variant}
-                         color="primary" className={classes.margin} >
-                {props.text}
-            </ColorButton>
+    return <ColorButton  disabled={props.disabled} onClick={props.onClick}
+                         color={"inherit"} startIcon={props.startIcon ? props.startIcon : undefined} variant={props.variant}
+                         className={classes.margin}>
+        {props.text}
+    </ColorButton>
 }
 export default CustomizedButton

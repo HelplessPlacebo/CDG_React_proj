@@ -15,10 +15,14 @@ export type TCalendarAndControlButtonsProps = {
 
 const CalendarAndControlButtons: React.FC<TCalendarAndControlButtonsProps> = (props) => {
     return (<div className={AS.CalendarAndButtons}>
+
         <Calendar CurrentDate={props.CurrentDate}/>
+
         <All FavoritesIsClicked={props.FavoritesIsClicked} OnAllClicked={props.OnAllClicked}/>
+
         <FavoritesButton OnFavoritesClick={props.OnFavoritesClick}
                          FavoritesIsClicked={props.FavoritesIsClicked}/>
+
     </div>)
 }
 

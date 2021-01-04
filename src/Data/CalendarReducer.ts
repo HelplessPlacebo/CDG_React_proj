@@ -65,33 +65,23 @@ export type TDay = {
 
 export  type TCalendar = Array<TDay>
 
-export type TCalendars = {
-    January: TCalendar
-    February: TCalendar
-    March: TCalendar
-    April: TCalendar
-    May: TCalendar
-    June: TCalendar
-    July: TCalendar
-    August: TCalendar
-    September: TCalendar
-    October: TCalendar
-    November: TCalendar
-    December: TCalendar
+export interface TCalendars {
+    [key: string]: TCalendar
 }
+
 export type TClickedDay = {
     id: number,
     DayNumber: string | number
     MonthName: string
 } | null
 
+
 export type TCurrentDate = {
-    DayName : string
+    DayName: string
     CurrentYear: number | string
-    CurrentMonth: keyof typeof DefaultState.Calendars
+    CurrentMonth: string
     CurrentDay: number | string
 }
-
 
 let DefaultState = {
     Calendars: {

@@ -5,11 +5,11 @@ import {TDeleteFromFavorites, TDeleteWorklog} from "../../Data/WorkLogsReducer";
 import {TDeleteModalParams} from "../WorkLogs/WorkLogsBlock";
 import {TComponentToDraw} from "../WorkLogs/WorkLogsContainer";
 import CustomizedButton from "../CustomizedButton/CustomizedButton";
+import DeleteIcon from '@material-ui/icons/Delete';
 
 export type TDeleteWorklogConfirmModalProps = {
     isOpen: boolean
     onClose: () => void
-    WorkLogToDeleteId: number
     DeleteWorklog: TDeleteWorklog | TDeleteFromFavorites
     DeleteModalParams: TDeleteModalParams | undefined
     ComponentToDraw: TComponentToDraw
@@ -17,7 +17,7 @@ export type TDeleteWorklogConfirmModalProps = {
 }
 
 const DeleteWorklogConfirmModal: React.FC<TDeleteWorklogConfirmModalProps> = (props) => {
-    const OnModalSubmit = (e: React.MouseEvent<HTMLElement>) => {
+    const OnModalSubmit = () => {
         if (props.DeleteModalParams) {
             props.ComponentToDraw === "Worklogs"
                 ? props.DeleteWorklog(props.DeleteModalParams.WorkLogToDeleteId, props.DeleteModalParams.ParentId)
@@ -30,23 +30,28 @@ const DeleteWorklogConfirmModal: React.FC<TDeleteWorklogConfirmModalProps> = (pr
     return (
         <div className="DeleteConfirmModal">
             <div className={DS.modal}>
+
                 <div className={DS.ModalTextContainer}>
                     Are you sure you want to delete the worklog?
                 </div>
+
                 <div className={DS.NewWorklogControlButtonsContainer}>
                     <div className={DS.NewWorklogControlButtons}>
+
                         <div onClick={OnModalSubmit} className="modal-open">
-                            <CustomizedButton bgColor={"teal"} text={"delete"}
+                            <CustomizedButton bgColor={"teal"} text={"delete"} startIcon={<DeleteIcon/>}
+                                              variant={"contained"} fontSize={14}/>
+                        </div>
+
+                        <div onClick={props.onClose} className="modal-close">
+                            <CustomizedButton bgColor={"blueGrey"} text={"go back"}
                                               variant={"contained"} fontSize={14} />
                         </div>
-                        <div onClick={props.onClose} className="modal-close">
-                            <CustomizedButton bgColor={"grey"} text={"go back"}
-                                              variant={"contained"} fontSize={14} fontColor={"common"}/>
-                        </div>
+
                     </div>
                 </div>
             </div>
-            <div className={MS.bg} />
+            <div className={MS.bg}/>
         </div>
     )
 }

@@ -33,16 +33,17 @@ export type TSnackBarProps = {
 const  SnackBar : React.FC<TSnackBarProps>= (props)=> {
     const classes = useStyles();
 
-
     return (
         <div className={classes.root}>
             <Snackbar  open={props.isShowing} autoHideDuration={props.options.HideDuration ? props.options.HideDuration : 3000}
                       onClose={props.onHide} anchorOrigin={props.options.position}>
+
                 <Alert onClose={props.onHide} severity={props.options.severity}>
                     {props.options.message}
                 </Alert>
+
             </Snackbar>
         </div>
-    );
+    )
 }
 export default SnackBar

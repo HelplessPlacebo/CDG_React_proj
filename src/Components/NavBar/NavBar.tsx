@@ -25,8 +25,8 @@ const NavBar: React.FC<TNavBarProps> = (props) => {
                         </NavLink>
                     </div>
                   {/*  <div className={HS.item}>
-                        <NavLink to="/Filter/">
-                            Filter
+                        <NavLink to="/Filters/">
+                            Filters
                         </NavLink>
                     </div>
                     <div className={HS.item}>

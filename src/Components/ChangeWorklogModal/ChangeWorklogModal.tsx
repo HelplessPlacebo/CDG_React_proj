@@ -1,39 +1,20 @@
-import React, {SyntheticEvent, useState, useEffect, Dispatch, SetStateAction} from "react";
+import React, {SyntheticEvent, useState, useEffect,} from "react";
 import MS from "./ModalWindow.module.css"
 import TimeSlider from "./TimeSlider/TimeSlider";
-import {
-    TChangeFavoritesWorklog,
-    TChangeWorklog,
-    TSetIsPlayingWorklogById,
-    TSetWorklogToChange,
-    TTimerData,
-    TWorkLog
-} from "../../Data/WorkLogsReducer";
 import {CalculateNewStartTime, ToFullTime} from "../../assets/secondary/CalculateTime";
 import IssuesSelectInput from "../Issues/IssuesSelectInput";
 import CustomInput from "./CustomInput";
 import {useInput} from "../hooks/useInput";
 import CustomizedButton from "../CustomizedButton/CustomizedButton";
-
-export type TModalWindowProps = {
-    closeWorklogChangeModal: () => void
-    WorklogChangeModalIsOpen: boolean
-    SetIsPlayingWorklogById: TSetIsPlayingWorklogById
-    PlayingWorklog: TWorkLog | null
-    TimerData: TTimerData | undefined
-    ChangeWorklog: TChangeWorklog
-    WorklogToChange: TWorkLog | null
-    SetTimerData: Dispatch<SetStateAction<TTimerData | undefined>>
-    SetWorklogToChange: TSetWorklogToChange
-    ChangeFavoritesWorklog: TChangeFavoritesWorklog
-    Issues: string[]
-}
+import {TModalWindowContainerProps} from "./ChangeWorklogModalContainer";
+import SaveIcon from '@material-ui/icons/Save';
 type TTimerValue = {
     start: string | null
     end: string | null
 }
 
-const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
+const ChangeWorklogModal: React.FC<TModalWindowContainerProps> = (props) => {
+
     let ModalWorklogInput = useInput(props.WorklogToChange && props.WorklogToChange.TaskField ? props.WorklogToChange.TaskField : "")
     let ModalIssueInput = useInput(props.WorklogToChange && props.WorklogToChange.Issue ? props.WorklogToChange.Issue : "")
     let [ModalTimeLineValues, SetModalTimeLineValues] = useState<TTimerValue>()
@@ -41,8 +22,7 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
     let [NewIssueNameIsFilled, SetNewIssueNameIsFilled] = useState<boolean>(false)
     let EmptyWorklogTimerMinutes = props.TimerData?.TimerValue.substr(3, props.TimerData?.TimerValue.length - 6)
     let EmptyWorklogTimerEndHours = props.TimerData?.TimerValue.substr(0, props.TimerData?.TimerValue.length - 6)
-    let date = new Date()
-    let CurrentTime = ToFullTime(date.getHours()) + ":" + ToFullTime(date.getMinutes())
+    let CurrentTime = ToFullTime(new Date().getHours()) + ":" + ToFullTime(new Date().getMinutes())
     let EmptyWorklogTimeValues = {
         start: CalculateNewStartTime(CurrentTime, EmptyWorklogTimerEndHours, EmptyWorklogTimerMinutes) as string | null,
         end: CurrentTime as string | null
@@ -110,10 +90,11 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
                 props.SetIsPlayingWorklogById(false, props[Obj].id)
             } else {
                 //@ts-ignore
-                props.ChangeWorklog(props[Obj].id, NewWL)
+                props.ChangeWorklog(NewWL)
                 //@ts-ignore
                 props.SetIsPlayingWorklogById(false, props[Obj].id)
             }
+            debugger
             ModalWorklogInput.clear()
             ModalIssueInput.clear()
             SetNewWorklogNameIsFilled(false)
@@ -144,15 +125,15 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
                 <div className={MS.ModalTitle}>New worklog</div>
                 <div className={MS.ModalSlider}>
 
-                    {ModalTimeLineValues?.start && ModalTimeLineValues?.end &&
-                    <TimeSlider value={ModalTimeLineValues}
-                                disabled={false}
-                                step={10}
-                                SetTimerValue={SetModalTimeLineValues}
-                    />
+                    {
+                        ModalTimeLineValues?.start && ModalTimeLineValues?.end &&
+                        <TimeSlider value={ModalTimeLineValues}
+                                    disabled={false}
+                                    step={10}
+                                    SetTimerValue={SetModalTimeLineValues}
+
+                        />
                     }
-
-
                 </div>
 
                 <form name="NewWorklogContent" action="">
@@ -169,11 +150,12 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
                                 NewWorklogNameIsFilled &&
                                 <div id="new-issue-err" className={MS.ModalInputError}> Please, enter worklog name</div>
                             }
-                            <div style={{marginTop : "20px"}} className="issue-select-input">
+
+                            <div style={{marginTop: "20px"}} className="issue-select-input">
                                 {
                                     //@ts-ignore
                                     <IssuesSelectInput Issues={props.Issues}
-                                        {...ModalIssueInput.bind}
+                                                       {...ModalIssueInput.bind}
                                                        width={500}
 
                                     />
@@ -190,21 +172,24 @@ const ChangeWorklogModal: React.FC<TModalWindowProps> = (props) => {
                     </div>
                     <div className={MS.NewWorklogControlButtonsContainer}>
                         <div className={MS.NewWorklogControlButtons}>
+
                             <div onClick={OnModalSubmit} className="modal-open">
-                                <CustomizedButton bgColor={"blue"} text={"save"}
-                                                  variant={"contained"} fontSize={14} />
+                                <CustomizedButton fontColor={"green"} text={"save"} bgColor="white"
+                                                  variant={"outlined"} fontSize={14} startIcon={<SaveIcon/>}/>
                             </div>
-                            <div onClick={ props.closeWorklogChangeModal} className={MS.CloseButtonMargin}>
-                                <CustomizedButton  bgColor={"grey"} text={"go back"}
-                                                  variant={"contained"} fontSize={14} fontColor={"common"}  />
+
+                            <div onClick={props.closeWorklogChangeModal} className={MS.CloseButtonMargin}>
+                                <CustomizedButton  text={"go back"} bgColor="white"
+                                                  variant={"outlined"} fontSize={14} fontColor={"deepOrange"}/>
                             </div>
+
                         </div>
                     </div>
                 </form>
             </div>
             <div className={MS.bg}/>
         </div>
-    );
+    )
 }
 
 export default ChangeWorklogModal
