@@ -11,6 +11,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import {TChangeIssue, TDeleteIssue} from "../../Data/IssuesReducer";
 import CustomListInput from "./CustomListInput";
 import {useInput} from "../hooks/useInput";
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
 export type TIssueListItemProps = {
     Issue: string
@@ -19,7 +20,6 @@ export type TIssueListItemProps = {
     handleToggle: (value: string) => void
     DeleteIssue: TDeleteIssue
     ChangeIssue: TChangeIssue
-    classes :any
 }
 
 const IssueListItem: React.FC<TIssueListItemProps> = (props) => {
@@ -37,20 +37,22 @@ const IssueListItem: React.FC<TIssueListItemProps> = (props) => {
 
 
 
+
     const labelId = `transfer-list-all-item-${props.Issue}-label`
 
     return (<div className="IssueListItem">
             {
                 EditInputIsShowing
-                    ? <CustomListInput classes={props.classes} onSubmit={OnSaveNewValue}
+                    ? <CustomListInput onSubmit={OnSaveNewValue}
                              {...EditInputValue.bind} onCancel={onCancelInput} SubmitButtonText={"Save"}
                                        CancelButtonText={"cancel"}
                                              />
-                    : <Grid key={props.Issue} container>
+                    : <Grid key={props.Issue} container alignItems="center" justify="space-around">
 
-                        <Grid item  sm={10}>
+                        <Grid item  style={{width:"85%"}}>
+
                             <ListItem role="listitem" button
-                                        //@ts-ignore
+                                      //@ts-ignore
                                       onClick={props.handleToggle(props.Issue)}>
                                 <ListItemIcon>
                                     <Checkbox
@@ -64,28 +66,28 @@ const IssueListItem: React.FC<TIssueListItemProps> = (props) => {
                             </ListItem>
                         </Grid>
 
-                        <Grid item  sm={2}>
+                        <Grid item  >
 
-                            <Grid style={{marginTop: "11px"}} container>
+                            <Grid container justify="space-between" alignItems="center" style={{paddingRight : "1rem"}}>
 
                                 {
-                                    props.el === "Issue" && <Grid item sm={4}>
+                                    props.el === "Issue" && <Grid item style={{paddingRight : ".5rem"}}>
                                         <Tooltip title="Edit" arrow placement="top">
                                             <EditIcon onClick={() => SetEditInputIsShowing(true)}
-                                                      style={{color: blue[400], cursor: "pointer", marginLeft: "40%"}}
+                                                      style={{color: blue[400], cursor: "pointer"}}
                                                       fontSize="default"/>
                                         </Tooltip>
                                     </Grid>
                                 }
 
 
-                                <Grid item sm={4}>
+                                <Grid item >
                                     <Tooltip title="Delete" arrow placement="top">
                                         <DeleteIcon
                                             onClick={() => props.DeleteIssue(props.Issue, props.el)}
                                             style={props.el === "Issue"
-                                                ? {color: blueGrey[600], cursor: "pointer", marginLeft: "40%"}
-                                                : {color: blueGrey[600], cursor: "pointer", marginLeft: "90%"}}
+                                                ? {color: blueGrey[600], cursor: "pointer"}
+                                                : {color: blueGrey[600], cursor: "pointer"}}
                                             fontSize="default"/>
                                     </Tooltip>
                                 </Grid>

@@ -5,7 +5,6 @@ import {TDeleteFromFavorites, TDeleteWorklog} from "../../Data/WorkLogsReducer";
 import {TDeleteModalParams} from "../WorkLogs/WorkLogsBlock";
 import {TComponentToDraw} from "../WorkLogs/WorkLogsContainer";
 import CustomizedButton from "../CustomizedButton/CustomizedButton";
-import DeleteIcon from '@material-ui/icons/Delete';
 
 export type TDeleteWorklogConfirmModalProps = {
     isOpen: boolean
@@ -39,13 +38,13 @@ const DeleteWorklogConfirmModal: React.FC<TDeleteWorklogConfirmModalProps> = (pr
                     <div className={DS.NewWorklogControlButtons}>
 
                         <div onClick={OnModalSubmit} className="modal-open">
-                            <CustomizedButton bgColor={"teal"} text={"delete"} startIcon={<DeleteIcon/>}
+                            <CustomizedButton bgColor={"teal"} text={"delete"}
                                               variant={"contained"} fontSize={14}/>
                         </div>
 
                         <div onClick={props.onClose} className="modal-close">
-                            <CustomizedButton bgColor={"blueGrey"} text={"go back"}
-                                              variant={"contained"} fontSize={14} />
+                            <CustomizedButton bgColor={"grey"} text={"go back"}
+                                              variant={"contained"} fontSize={14} fontColor={"common"}/>
                         </div>
 
                     </div>

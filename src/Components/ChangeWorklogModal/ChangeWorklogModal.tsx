@@ -7,7 +7,7 @@ import CustomInput from "./CustomInput";
 import {useInput} from "../hooks/useInput";
 import CustomizedButton from "../CustomizedButton/CustomizedButton";
 import {TModalWindowContainerProps} from "./ChangeWorklogModalContainer";
-import SaveIcon from '@material-ui/icons/Save';
+
 type TTimerValue = {
     start: string | null
     end: string | null
@@ -134,6 +134,8 @@ const ChangeWorklogModal: React.FC<TModalWindowContainerProps> = (props) => {
 
                         />
                     }
+
+
                 </div>
 
                 <form name="NewWorklogContent" action="">
@@ -174,13 +176,13 @@ const ChangeWorklogModal: React.FC<TModalWindowContainerProps> = (props) => {
                         <div className={MS.NewWorklogControlButtons}>
 
                             <div onClick={OnModalSubmit} className="modal-open">
-                                <CustomizedButton fontColor={"green"} text={"save"} bgColor="white"
-                                                  variant={"outlined"} fontSize={14} startIcon={<SaveIcon/>}/>
+                                <CustomizedButton bgColor={"blue"} text={"save"}
+                                                  variant={"contained"} fontSize={14}/>
                             </div>
 
                             <div onClick={props.closeWorklogChangeModal} className={MS.CloseButtonMargin}>
-                                <CustomizedButton  text={"go back"} bgColor="white"
-                                                  variant={"outlined"} fontSize={14} fontColor={"deepOrange"}/>
+                                <CustomizedButton bgColor={"grey"} text={"go back"}
+                                                  variant={"contained"} fontSize={14} fontColor={"common"}/>
                             </div>
 
                         </div>
