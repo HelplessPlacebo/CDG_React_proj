@@ -1,4 +1,4 @@
-#React time tracking projetct
+# React time tracking projetct
 
 libs : 
 1)react
