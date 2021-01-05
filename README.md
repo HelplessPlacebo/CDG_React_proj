@@ -1,6 +1,6 @@
 # a simple time tracking example on the react
 libs :  
-1)rect  
+1)react  
 2)react-redux  
 3)redux  
 4)react-router  
