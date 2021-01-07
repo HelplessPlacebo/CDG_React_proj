@@ -1,0 +1,56 @@
+.FavoritesButtonBg {
+    padding-left: 25px;
+    padding-top: 10px;
+    width: 76px;
+    height: 19px;
+    cursor: pointer;
+}
+
+.FavoritesButtonBgActive {
+    height: 47px;
+    width: 143px;
+    background: #f9f9f9;
+    box-shadow: 0 3px 2px -.2px rgba(0, 0, 0, .2);
+    border-radius: 30px;
+    padding-left: 30px;
+    padding-top: 10px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 144.2%;
+}
+
+.item a {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 144.2%;
+    color: #646767 !important;
+    text-decoration: none  !important;;
+}
+
+.ActiveItem a {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 144.2%;
+    color: #d11371 !important;
+    text-decoration: none  !important;
+}
+
+.FavoritesText{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 144.2%;
+    color: #1E1E1E
+}
+.NoFavoritesIssuesContainer {
+    padding-top: 50px;
+    padding-left: 96px;
+}
+.FavoritesTextContainer{
+    display: grid;
+    grid-template-columns: 80px 40px;
+    grid-template-rows: 30px;
+}

@@ -1,0 +1,287 @@
+
+.WorklogInfoContainer {
+    font-family: 'Roboto', serif;
+    width: 1085px;
+    margin-top: 50px;
+    margin-left: 96px;
+}
+
+.WorklogBG {
+    position: absolute;
+    z-index: 100;
+
+}
+
+/*                                              */
+.WorklogBlockContainer {
+    width: 1200px;
+    margin-top: 5px;
+    margin-left: 73px;
+    z-index: 30;
+
+}
+
+.WorklogActive {
+}
+
+.WorklogBlockContainer:hover .WorklogActive {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    z-index: 200;
+}
+
+.WorklogBlockContainer:hover .WorklogMoreButton {
+    display: block;
+}
+
+.WorklogBlockContainer:hover .WorklogMoreVertical {
+    display: block;
+}
+
+.WorklogBlockContainer :hover .WorklogBG {
+    display: block;
+}
+
+.WorklogBG {
+    display: none;
+    position: absolute;
+    z-index: 20;
+    margin-top: -15px;
+    margin-left: -20px;
+}
+.WorklogActiveBG{
+    display: block;
+    position: absolute;
+    z-index: 20;
+    margin-top: -15px;
+    margin-left: -20px;
+}
+
+.WorklogMoreVertical {
+    display: none;
+    position: relative;
+    top: 32px;
+    left: 50px;
+    z-index: 40;
+}
+
+.WorklogMoreVerticalActive {
+    display: block;
+    position: relative;
+    top: 32px;
+    left: 50px;
+    z-index: 40;
+}
+
+.WorklogMoreButton {
+    display: none;
+    position: absolute;
+    padding-left: 20px;
+}
+
+.WorklogMoreButtonActive {
+    position: absolute;
+    padding-left: 20px;
+    display: block;
+}
+
+/*                                              */
+
+.WorklogBlockContainer:hover {
+    font-family: 'Roboto', serif;
+    width: 1150px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+}
+
+.WorklogBlockContainerActive {
+    font-family: 'Roboto', serif;
+    width: 1150px;
+    margin-top: 5px;
+    margin-left: 73px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+}
+
+.WorklogBlockContainer:hover .WLInfoButton {
+    margin-left: 20px;
+    display: block;
+    transition: 0.6s ease-in-out;
+}
+
+.WorklogBlockContainer:hover .WLlinestroke {
+    padding-top: 15px;
+}
+
+.WLlinestrokeActive {
+    padding-top: 15px;
+}
+
+.WorklogBlockContainer:hover .ColorPointPose {
+    margin-top: 4px;
+}
+
+.ColorPointPoseActive {
+    padding-top: 4px;
+    z-index: 30;
+}
+
+.WorklogBlock {
+    display: grid;
+    grid-template-columns: 185px 4px 761px 83px 75px 80px;
+    grid-template-rows: 76px;
+}
+
+.WorkTime {
+    padding-left: 31px;
+    padding-top: 29px;
+    display: grid;
+    grid-template-columns: 45px 10px 51px;
+    grid-template-rows: 27px;
+    z-index: 30;
+    transition-timing-function: ease-out ;
+    transition-duration: .3s;
+}
+
+
+.StartTime {
+    font-style: normal;
+    line-height: 144.2%;
+    font-weight: 500;
+    font-size: 18px;
+    color: #1E1E1E;
+}
+
+.EndTime {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 144.2%;
+    color: #424242;
+}
+
+.Minus {
+    margin-top:  -3px;
+    font-style: normal;
+    font-size: 18px;
+    color: #424242;
+}
+
+/*Color Point*/
+
+/*****************************************/
+.WorklogContentContainer {
+    margin-top: 8px;
+    margin-left: 27px;
+    z-index: 30;
+}
+
+.Issue {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 144.2%;
+    font-variant: small-caps;
+    color: #424242;
+}
+
+.TaskField {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 144.2%;
+    color: #1E1E1E;
+}
+
+/*progress bar*/
+
+.ProgressBarContainer {
+    margin-top: 38px;
+    width: 108px;
+    height: 4px;
+    border-radius: 4px;
+    background-color: #F0F3F5;
+}
+
+
+/*********** timer value*/
+.TimerValueContainer {
+    width: 83px;
+    height: 19px;
+    margin-top: 27px;
+    z-index: 30;
+}
+
+.TimerValue {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 144.2%;
+    color: #7d7d7d;
+}
+
+.ControlButtonsContainer {
+    margin-top: 21px;
+    margin-left: 37px;
+    z-index: 30;
+
+}
+
+.PlayButton {
+    cursor: pointer;
+
+}
+
+.StopButton {
+    cursor: pointer;
+
+}
+
+.ProgressBarContainer {
+    width: 100px;
+    margin-top: 37px;
+}
+
+.WLlinestroke {
+    margin-left: 23px;
+}
+
+.ColorPointPose {
+    z-index: 30;
+}
+
+.NestingButtonPose {
+    margin-left: 64px;
+    margin-top: 19px;
+    z-index: 30;
+    transition-timing-function: ease-out ;
+    transition-duration: .2s;
+}
+
+.NestingBG {
+    cursor: pointer;
+    width: 38px;
+    height: 38px;
+    border-radius: 30px;
+    background-color: #FFFFFF;
+    z-index: 30;
+}
+
+.TwwContentText {
+
+    margin-left: 14px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 200.2%;
+    font-variant: small-caps;
+    color: #4F4F4F;
+}
+
+.WorkLogSliderPose {
+    margin-top: 40px;
+}
+
+.TwwContentImg {
+    margin-top: 13.6px;
+    margin-left: 13.6px;
+}

@@ -1,0 +1,23 @@
+.LeftLabel{
+    position: absolute;
+}
+.RightLabel{
+    position: absolute;
+}
+.LeftLabelImage{
+    border: 1px solid #FFCC40;
+    width : 10px;
+    transform : rotate(-90deg);
+    margin-top: 14px;
+}
+
+.LabelValue{
+    margin-left: -13px;
+    margin-top: 4px;
+    font-family: "Roboto",serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 144.2%;
+    color: #4F4F4F;
+}

@@ -1,0 +1,49 @@
+
+
+@font-face {
+    font-family: 'Roboto', serif;
+    src: url(./assets/roboto/Roboto-Regular.woff2) format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: fallback;
+}
+
+.MainWrapper {
+    font-family: "Roboto",serif;
+    display: grid;
+    grid-template-columns: 1296px 624px;
+}
+
+.CalendarAndButtonsContainer {
+    font-family: "Roboto",serif;
+    padding-top: 52px;
+    padding-left: 96px;
+}
+
+.CalendarAndButtons {
+    width: 1069px;
+    display: grid;
+    grid-template-columns: 893px 79px 1fr;
+    grid-template-rows: 58px;
+}
+
+.TImeTracking_and_Calendar {
+    display: grid;
+    grid-template-rows: 363px 497px;
+}
+.AppContainer{
+    overflow: hidden;
+    background-color: #E5E5E5;
+    /*background: url(assets/images/bgc/clock4_gupsy_test.jpg) no-repeat center center fixed ;*/
+    /*-webkit-background-size: cover;*/
+    /*-moz-background-size: cover;*/
+    /*-o-background-size: cover;*/
+    /*background-size: cover;*/
+}
+@media (max-width: 1500px) {
+    .AppContainer {
+        font-family: 'Roboto', serif;
+    /*    width: 1920px;*/
+        overflow: initial;
+    }
+}
