@@ -13,7 +13,7 @@ const LeftLabel :React.FC<TLeftLabelProps> = (props) =>{
 
     return <div className={LS.RightLabel}
                 style={{ display : `${!props.value && !props.Position ? "none" : "block" }`,
-                    right : `${props.Position && props.offsetRight &&   props.offsetRight - props.Position +30 +"px" }`}}>
+                    right : `${props.Position && props.offsetRight &&   props.offsetRight - props.Position  +"px" }`}}>
             <div className={LS.LeftLabelImage} > </div>
             <div className={LS.LabelValue}> {props.value && props.value.end && props.value.end } </div>
     </div>

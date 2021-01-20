@@ -46,7 +46,9 @@
     grid-template-columns: 48px 48px;
     grid-column-gap: 22px;
 }
-
+.TimerControlButtons div{
+    cursor: pointer;
+}
 .Timer {
 
     font-style: normal;

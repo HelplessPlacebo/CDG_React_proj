@@ -8,6 +8,7 @@ import {TLoginFormData} from "./SignIn";
 
 export type TOwnProps = {
     ComponentIsSignUp: () => void
+    authErr: string[]
 }
 
 const SignInForm: React.FC<InjectedFormProps<TLoginFormData, TOwnProps> & TOwnProps> = (props) => {
@@ -17,6 +18,16 @@ const SignInForm: React.FC<InjectedFormProps<TLoginFormData, TOwnProps> & TOwnPr
         <div style={{fontSize: "1.512rem", fontWeight: 500}} className="SignInFormHeader">
             Sign in
         </div>
+
+
+        {
+            props.authErr.length > 0 &&
+            <div style={{color: "#ea1f09", fontSize: "1.275rem", padding: "1rem"}} className="SubmitAuthFormErr">
+                <span>
+                    {props.authErr[0]}
+                </span>
+            </div>
+        }
 
         <div className="SignInEmailInput">
             {CreateField("Enter your email", "email", [required, Email],

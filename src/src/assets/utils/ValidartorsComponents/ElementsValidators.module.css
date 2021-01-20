@@ -1,8 +1,0 @@
-.formControl.error textarea,
-.formControl.error  input{
-    border: solid #b21b1c 2px;
-}
-.formControl.error span{
-    color: #b20400;
-    padding-bottom: 2rem;
-}

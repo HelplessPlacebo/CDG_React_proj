@@ -130,10 +130,10 @@ const ChangeWorklogModal: React.FC<TModalWindowContainerProps> = (props) => {
             aria-describedby="alert-dialog-description"
         >
             <DialogTitle id="alert-dialog-title">{"New worklog"}</DialogTitle>
-            <DialogContent>
-                <Grid container justify="center" alignItems="center">
+            <DialogContent >
+                <Grid container justify="center" alignItems="center" >
 
-                    <Grid item className="TimeSLider" style={{width : "30rem"}}>
+                    <Grid item className="TimeSLider" style={{paddingTop : "10%"}} >
                         {
                             ModalTimeLineValues?.start && ModalTimeLineValues?.end &&
                             <TimeSlider value={ModalTimeLineValues} disabled={false}
