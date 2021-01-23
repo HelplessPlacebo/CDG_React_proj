@@ -11,20 +11,17 @@
     z-index: 100;
 
 }
-
 /*                                              */
 .WorklogBlockContainer {
     width: 1200px;
     margin-top: 5px;
     margin-left: 73px;
     z-index: 30;
-
 }
 
-.WorklogActive {
-}
 
-.WorklogBlockContainer:hover .WorklogActive {
+
+.WorklogBlockContainer:hover {
     background-color: #FFFFFF;
     border-radius: 10px;
     z-index: 200;
@@ -133,14 +130,14 @@
 }
 
 .WorkTime {
-    padding-left: 31px;
-    padding-top: 29px;
     display: grid;
     grid-template-columns: 45px 10px 51px;
-    grid-template-rows: 27px;
     z-index: 30;
     transition-timing-function: ease-out ;
     transition-duration: .3s;
+    justify-content: center;
+    align-content: center;
+    grid-gap: 4px;
 }
 
 
@@ -160,10 +157,10 @@
 }
 
 .Minus {
-    margin-top:  -3px;
     font-style: normal;
     font-size: 18px;
     color: #424242;
+    justify-self: center;
 }
 
 /*Color Point*/
@@ -220,20 +217,10 @@
 }
 
 .ControlButtonsContainer {
-    margin-top: 21px;
-    margin-left: 37px;
     z-index: 30;
-
-}
-
-.PlayButton {
+    justify-self: center;
+    align-self: center;
     cursor: pointer;
-
-}
-
-.StopButton {
-    cursor: pointer;
-
 }
 
 .ProgressBarContainer {

@@ -65,7 +65,7 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
         }
     }
 
-    return (<div className={WLS.WorkLogs}>
+    return <div className={WLS.WorkLogs}>
         <div className={props.PlayingWorklog?.id === props.WorklogInfo.id || ShowMenu
             ? WLS.WorklogBlockContainerActive
             : WLS.WorklogBlockContainer}>
@@ -75,16 +75,15 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
                     className={props.PlayingWorklog?.id === props.WorklogInfo.id || ShowMenu ? WLS.WorklogActiveBG : WLS.WorklogBG}
                     src={WorklogActiveBG} alt=""/>
 
-                <div className={WLS.WorklogActive}>
-                    <div className={WLS.WorklogBlock}>
 
+                    <div className={WLS.WorklogBlock}>
                         {
                             props.WorklogInfo.NestingItems && props.WorklogInfo.NestingItems.length > 0
                                 ? <div className={WLS.NestingButtonPose}>
                                     {
                                         NestingIsShowing
-                                            ? <div onClick={OnHideNestingWorklogs} className={WLS.NestingBG}><img
-                                                className={WLS.TwwContentImg} src={ArrowUp} alt=""/>
+                                            ? <div onClick={OnHideNestingWorklogs} className={WLS.NestingBG}>
+                                                <img className={WLS.TwwContentImg} src={ArrowUp} alt=""/>
                                             </div>
 
                                             : <div onClick={OnShowNestingWorklogs} className={WLS.NestingBG}>
@@ -142,16 +141,12 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
 
                         {props.PlayingWorklog?.id === props.WorklogInfo.id
 
-                            ? <div className={WLS.ControlButtonsContainer}>
-                                <div onClick={onStopButtonClicked} className={WLS.StopButton}>
+                            ? <div className={WLS.ControlButtonsContainer} onClick={onStopButtonClicked}>
                                     <img src={StopButton} alt="stop-button"/>
-                                </div>
                             </div>
 
-                            : <div className={WLS.ControlButtonsContainer}>
-                                <div onClick={onPlayButtonClicked} className={WLS.PlayButton}>
+                            : <div className={WLS.ControlButtonsContainer}  onClick={onPlayButtonClicked}>
                                     <img src={PlayButton} alt="play-button"/>
-                                </div>
                             </div>}
 
                         <div className="WLMoreContainer">
@@ -160,15 +155,18 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
                                 : WLS.WorklogMoreButton}>
                                 <img src={WLMoreButtonBG} alt=""/>
                             </div>
+
                             <div onMouseEnter={OnShowMenu}
                                  className={props.PlayingWorklog?.id === props.WorklogInfo.id || ShowMenu
                                      ? WLS.WorklogMoreVerticalActive
                                      : WLS.WorklogMoreVertical}>
                                 <img src={WLMoreButtonVertical} alt="more-vertical"/>
                             </div>
+
                         </div>
+
                     </div>
-                </div>
+
             </div>
 
             <DeleteWorklogConfirmModal DeleteModalParams={props.DeleteModalParams} DeleteWorklog={props.DeleteWorklog}
@@ -192,11 +190,9 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
             />}
 
         {
-
             NestingIsShowing && <NestingWorkLog {...props} />
-
         }
-    </div>)
+    </div>
 }
 
 export default WorkLog

@@ -1,4 +1,7 @@
 
+html{
+    background-color: #E5E5E5;
+}
 
 @font-face {
     font-family: 'Roboto', serif;
@@ -12,6 +15,7 @@
     font-family: "Roboto",serif;
     display: grid;
     grid-template-columns: 1296px 624px;
+    padding-bottom: 10rem;
 }
 
 .CalendarAndButtonsContainer {
@@ -40,6 +44,12 @@
     /*-o-background-size: cover;*/
     /*background-size: cover;*/
 }
+.PathErr {
+    position: fixed;
+    top : 50%;
+    left : 50%;
+}
+
 @media (max-width: 1500px) {
     .AppContainer {
         font-family: 'Roboto', serif;

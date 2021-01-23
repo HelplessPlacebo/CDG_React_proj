@@ -36,7 +36,6 @@ export type T_MDTP_WorkLogsContainer = {
 export type TWorklogsContainerProps = T_MDTP_WorkLogsContainer & T_MSTP_WorkLogsContainer & TWorklogsContainerOwnProps
 
 const WorkLogsContainer:React.FC<TWorklogsContainerProps> =(props)=>{
-
         return (
             <div className="WorklogBlockWrapper">
                 {props.ComponentToDraw === "Worklogs"
