@@ -1,28 +1,27 @@
-import React, {useState} from 'react';
-import {connect} from "react-redux";
-import MaterialNav from "./Components/NavBar/MaterialNavBar";
-import {Redirect, Route, Switch} from "react-router-dom";
+import React, {useState} from 'react'
+import {connect} from "react-redux"
+import MaterialNav from "./Components/NavBar/MaterialNavBar"
+import {Redirect, Route, Switch} from "react-router-dom"
 import AS from "./App.module.css"
-import WorkLogsContainer from "./Components/WorkLogs/WorkLogsContainer";
-import TimeTracking from "./Components/TimeTracking/TimeTracking";
-import {GlobalState} from "./Data/redux-store";
+import WorkLogsContainer from "./Components/WorkLogs/WorkLogsContainer"
+import TimeTracking from "./Components/TimeTracking/TimeTracking"
+import {GlobalState} from "./Data/redux-store"
 import {
     SetIsPlayingWorklogById, ChangeWorklog,
     TWorkLog, TSetIsPlayingWorklogById, TChangeWorklog, TAddWorklog,
     AddWorklog, TTimerData, TAddToFavorite, AddToFavorite, TWorklogBlock
 } from "./Data/WorkLogsReducer";
-import CalendarAndControlButtons from "./Components/CalendarAndControllButtons/CalendarAndControlButtons";
+import CalendarAndControlButtons from "./Components/CalendarAndControllButtons/CalendarAndControlButtons"
 import {TCurrentDate} from "./Data/CalendarReducer";
 import {
     ChangeIssue, AddIssue, DeleteIssue, SetIssues, SetCompletedIssues,
     TAddIssue, TChangeIssue, TDeleteIssue, TSetIssues, TSetCompletedIssues
-} from "./Data/IssuesReducer";
-import {useBooleanState} from "./Components/hooks/useBooleanState";
-import AuthPage from "./Components/Auth/AuthPage";
-import SnackBar, {TSnackBarOptions} from "./Components/SnackBar/SnackBar";
-import {withSuspense} from "./assets/utils/withSuspense/withSuspense";
-import {PathErr} from "./Components/PathErrorPage/PathErr";
-
+} from "./Data/IssuesReducer"
+import {useBooleanState} from "./Components/hooks/useBooleanState"
+import AuthPage from "./Components/Auth/AuthPage"
+import SnackBar, {TSnackBarOptions} from "./Components/SnackBar/SnackBar"
+import {withSuspense} from "./assets/utils/withSuspense/withSuspense"
+import {PathErr} from "./Components/PathErrorPage/PathErr"
 //////////////////////////// lazy loading ////////////////////////////////////////
 const Issues = React.lazy(() => import("./Components/Issues/Issues"))
 const Favorites = React.lazy(() => import("./Components/CalendarAndControllButtons/Favorites/FavoritesPage"))
@@ -103,66 +102,66 @@ const App: React.FC<TAppProps> = (props) => {
                                                               DeleteIssue={props.DeleteIssue}
                                                               CompletedIssues={props.CompletedIssues}
                                                               SetIssues={props.SetIssues}
-                                                              SetCompletedIssues={props.SetCompletedIssues}
-                               />}/>
+                                                              SetCompletedIssues={props.SetCompletedIssues}/>
+                               }/>
 
                         <Route path='/Home'
-                               render={() => <>
-                                   <div className={AS.CalendarAndButtonsContainer}>
-                                       <CalendarAndControlButtons
-                                           FavoritesIsClicked={FavoritesIsClicked.isDisplayed}
-                                           OnAllClicked={FavoritesIsClicked.Hide}
-                                           OnFavoritesClick={FavoritesIsClicked.Show}
-                                           CurrentDate={props.CurrentDate}
-                                       />
-                                   </div>
+                                render={() => <>
+                                    <div className={AS.CalendarAndButtonsContainer}>
+                                        <CalendarAndControlButtons
+                                            FavoritesIsClicked={FavoritesIsClicked.isDisplayed}
+                                            OnAllClicked={FavoritesIsClicked.Hide}
+                                            OnFavoritesClick={FavoritesIsClicked.Show}
+                                            CurrentDate={props.CurrentDate}
+                                        />
+                                    </div>
 
-                                   <div className={AS.MainWrapper}>
-                                       <Switch>
-                                           <Route exact path='/Home/All'
-                                                  render={() => <WorkLogsContainer TimerData={TimerData}
-                                                                                   openWorklogChangeModal={WorklogChangeModalIsOpen.Show}
-                                                                                   ComponentToDraw={"Worklogs"}
-                                                                                   ShowSnackBar={ShowSnackBar}
-                                                                                   closeWorklogChangeModal={WorklogChangeModalIsOpen.Hide}
-                                                                                   SetTimerData={OnSetTimerData}
-                                                                                   WorklogChangeModalIsOpen={WorklogChangeModalIsOpen.isDisplayed}
-                                                  />
-                                                  }/>
+                                    <div className={AS.MainWrapper}>
+                                        <Switch>
+                                            <Route exact path='/Home/All'
+                                                   render={() => <WorkLogsContainer TimerData={TimerData}
+                                                                                    openWorklogChangeModal={WorklogChangeModalIsOpen.Show}
+                                                                                    ComponentToDraw={"Worklogs"}
+                                                                                    ShowSnackBar={ShowSnackBar}
+                                                                                    closeWorklogChangeModal={WorklogChangeModalIsOpen.Hide}
+                                                                                    SetTimerData={OnSetTimerData}
+                                                                                    WorklogChangeModalIsOpen={WorklogChangeModalIsOpen.isDisplayed}
+                                                   />
+                                                   }/>
 
-                                           <Route exact path='/Home/Favorites'
-                                                  render={() => <SuspendedFavorites
-                                                      FavoritesIsClicked={FavoritesIsClicked.isDisplayed}
-                                                      WorklogsBlocks={props.WorklogsBlocks}
-                                                      openWorklogChangeModal={WorklogChangeModalIsOpen.Show}
-                                                      TimerData={TimerData}
-                                                      AddWorklog={props.AddWorklog}
-                                                      PlayingWorklog={props.PlayingWorklog}
-                                                      FavoritesWorklog={props.FavoritesWorklog}
-                                                      SetTimerData={OnSetTimerData}
-                                                      ShowSnackBar={ShowSnackBar}
-                                                      closeWorklogChangeModal={WorklogChangeModalIsOpen.Hide}
-                                                      WorklogChangeModalIsOpen={WorklogChangeModalIsOpen.isDisplayed}
-                                                      ComponentToDraw="FavoritesWorklogs"
-                                                  />}/>
-                                           <Route component={PathErr}/>
-                                       </Switch>
+                                            <Route exact path='/Home/Favorites'
+                                                   render={() => <SuspendedFavorites
+                                                       FavoritesIsClicked={FavoritesIsClicked.isDisplayed}
+                                                       WorklogsBlocks={props.WorklogsBlocks}
+                                                       openWorklogChangeModal={WorklogChangeModalIsOpen.Show}
+                                                       TimerData={TimerData}
+                                                       AddWorklog={props.AddWorklog}
+                                                       PlayingWorklog={props.PlayingWorklog}
+                                                       FavoritesWorklog={props.FavoritesWorklog}
+                                                       SetTimerData={OnSetTimerData}
+                                                       ShowSnackBar={ShowSnackBar}
+                                                       closeWorklogChangeModal={WorklogChangeModalIsOpen.Hide}
+                                                       WorklogChangeModalIsOpen={WorklogChangeModalIsOpen.isDisplayed}
+                                                       ComponentToDraw="FavoritesWorklogs"
+                                                   />}/>
+                                            <Route component={PathErr}/>
+                                        </Switch>
 
-                                       <div className={AS.TImeTracking_and_Calendar}>
-                                           <TimeTracking PlayingWorklog={props.PlayingWorklog}
-                                                         FavoritesIsClicked={FavoritesIsClicked.isDisplayed}
-                                                         SetIsPlayingWorklogById={props.SetIsPlayingWorklogById}
-                                                         AddWorklog={props.AddWorklog}
-                                                         SetTimerData={OnSetTimerData}
-                                                         openWorklogChangeModal={WorklogChangeModalIsOpen.Show}
-                                                         ChangeWorklog={props.ChangeWorklog}
-                                                         Issues={props.Issues}
-                                           />
-                                       </div>
+                                        <div className={AS.TImeTracking_and_Calendar}>
+                                            <TimeTracking PlayingWorklog={props.PlayingWorklog}
+                                                          FavoritesIsClicked={FavoritesIsClicked.isDisplayed}
+                                                          SetIsPlayingWorklogById={props.SetIsPlayingWorklogById}
+                                                          AddWorklog={props.AddWorklog}
+                                                          SetTimerData={OnSetTimerData}
+                                                          openWorklogChangeModal={WorklogChangeModalIsOpen.Show}
+                                                          ChangeWorklog={props.ChangeWorklog}
+                                                          Issues={props.Issues}
+                                            />
+                                        </div>
 
-                                   </div>
-                               </>
-                               }
+                                    </div>
+                                </>
+                                }
                         />
                         <Route component={PathErr}/>
                     </Switch>

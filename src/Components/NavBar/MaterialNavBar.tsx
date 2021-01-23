@@ -81,12 +81,12 @@ type TMaterialNavProps = {
 
                 Settings
             </MenuItem>
-            <MenuItem>
-                <IconButton color="primary">
-                    <InfoIcon/>
-                </IconButton>
-                Info
-            </MenuItem>
+            {/*<MenuItem>*/}
+            {/*    <IconButton color="primary">*/}
+            {/*        <InfoIcon/>*/}
+            {/*    </IconButton>*/}
+            {/*    Info*/}
+            {/*</MenuItem>*/}
             <MenuItem>
                 <IconButton onClick={LogOut} color="primary">
                     <ExitToAppIcon/>
@@ -135,11 +135,11 @@ type TMaterialNavProps = {
                             </IconButton>
                         </Tooltip>
 
-                            <Tooltip title="Info" arrow placement="bottom">
-                                <IconButton color="inherit">
-                                    <InfoIcon/>
-                                </IconButton>
-                            </Tooltip>
+                            {/*<Tooltip title="Info" arrow placement="bottom">*/}
+                            {/*    <IconButton color="inherit">*/}
+                            {/*        <InfoIcon/>*/}
+                            {/*    </IconButton>*/}
+                            {/*</Tooltip>*/}
 
                         <Tooltip title="Logout" arrow placement="bottom">
                             <IconButton onClick={LogOut} color="inherit">
