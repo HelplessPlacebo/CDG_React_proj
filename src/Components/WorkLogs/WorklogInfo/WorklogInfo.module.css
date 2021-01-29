@@ -1,15 +1,15 @@
 .SummaryWorklogInfo {
     display: grid;
-    grid-template-columns: 899px 101px 85px;
-    grid-template-rows: 50px;
+    grid-template-columns: 3fr 1fr;
+    /*grid-template-columns: repeat(auto-fill, minmax(898px,600px));*/
+    /*display: grid;*/
+    /*grid-template-columns: 899px 101px 85px;*/
+    /*grid-template-rows: 50px;*/
 }
 
 .DateBlockContainer {
     width: 255px;
     height: 32px;
-}
-
-.DateBlockSize {
     font-style: normal;
     font-weight: bold;
     font-size: 24px;
@@ -17,10 +17,20 @@
     color: #1E1E1E;
 }
 
-.DownloadIcon {
 
+.DownloadIcon {
     align-self: center;
-    margin-left: 47px;
+    /*margin-left: 47px;*/
+}
+
+.statusContainer {
+    align-self: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    /*display: grid;*/
+    /*!*grid-template-columns: repeat(auto-fill, minmax(100px, 100px));*!*/
+    /*align-self: center;*/
 }
 
 .DateTime {
@@ -41,6 +51,20 @@
 }
 
 
-.WLlineStrokeContainer{
+.WLlineStrokeContainer {
     margin-top: 34px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .SummaryWorklogInfo{
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+    }
+    .statusContainer{
+        padding-top: 20px;
+        grid-template-columns: 1fr ;
+        grid-template-rows: 1fr 1fr;
+
+    }
 }

@@ -1,6 +1,7 @@
 import {TShowSnackBar} from "../App";
-import {TTimerData} from "../Data/WorkLogsReducer";
-import {TComponentToDraw} from "../Components/WorkLogs/WorkLogsContainer";
+import {TTimerData} from "../Redux/WorkLogsReducer";
+
+export type TComponentToDraw = "Worklogs" | "FavoritesWorklogs"
 
 export type TWorklogsContainerOwnProps={
     openWorklogChangeModal: () => void
@@ -9,7 +10,6 @@ export type TWorklogsContainerOwnProps={
     TimerData: TTimerData | undefined
 
     closeWorklogChangeModal: () => void
-    WorklogChangeModalIsOpen: boolean
     SetTimerData: (data : TTimerData | undefined) => void
 }
 

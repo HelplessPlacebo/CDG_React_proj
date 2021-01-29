@@ -1,5 +1,5 @@
 import React, {Suspense} from "react"
-import Progress from "../../../Components/Progress/Progress";
+import Progress from "../../Progress/Progress";
 
 export function withSuspense<WCP>(WrappedComponent: React.ComponentType<WCP>) {
     return (props: WCP) => {
@@ -8,4 +8,6 @@ export function withSuspense<WCP>(WrappedComponent: React.ComponentType<WCP>) {
         </Suspense>
     }
 }
+
+
 

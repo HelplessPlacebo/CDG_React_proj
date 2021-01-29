@@ -1,10 +1,8 @@
 import React from "react";
 import FS from "./WorklogInfo.module.css"
 import ProgressBar from "../../ProgressBar/ProgressBar";
-import LineStroke from "../../LineStroke/LineStroke";
-import {
-    CurrentDate, TBlockInfo, TSendWorklogsData, TSetWorklogStatus, TWorkLog
-} from "../../../Data/WorkLogsReducer";
+import {LineStroke} from "../../LineStroke/LineStroke";
+import {CurrentDate, TBlockInfo, TSetWorklogStatus, TWorkLog} from "../../../Redux/WorkLogsReducer";
 import {TShowSnackBar} from "../../../App";
 import BackupIcon from '@material-ui/icons/Backup';
 import CreateSnackBarOptions from "../../../assets/secondary/CreateSnackbarOptions";
@@ -20,7 +18,7 @@ export type TWorklogInfoProps = {
     SetWorklogStatus: TSetWorklogStatus
 }
 
-const WorklogInfo: React.FC<TWorklogInfoProps> = (props) => {
+export const WorklogInfo: React.FC<TWorklogInfoProps> = (props) => {
 
     const OnSendWorklogData = (): void => {
         props.Worklogs.map(Worklog => {
@@ -61,31 +59,31 @@ const WorklogInfo: React.FC<TWorklogInfoProps> = (props) => {
             <div className={FS.SummaryWorklogInfo}>
 
                 <div className={FS.DateBlockContainer}>
-                    <div className={FS.DateBlockSize}>
-                        {props.DateOfCreation}
-                    </div>
+                    {props.DateOfCreation}
                 </div>
 
-                <div className={FS.DateTime}>
+                <div className={FS.statusContainer}>
+                    <div className={FS.DateTime}>
 
-                    <div>
-                        {props.SummaryTime}
+                        <div>
+                            {props.SummaryTime}
+                        </div>
+
+                        <div className={FS.Progress}>
+                            <ProgressBar status={props.SummaryStatus}/>
+                        </div>
+
                     </div>
 
-                    <div className={FS.Progress}>
-                        <ProgressBar status={props.SummaryStatus}/>
-                    </div>
+                    {
+                        props.BlockInfo.BlockCreatedDate === CurrentDate
+                            ? <BackupIcon style={{cursor: "pointer"}} color={"primary"} fontSize={"large"}
+                                          onClick={OnSendWorklogData}
+                                          className={FS.DownloadIcon}/>
 
+                            : <BackupIcon color={"disabled"} fontSize={"large"} className={FS.DownloadIcon}/>
+                    }
                 </div>
-
-                {
-                    props.BlockInfo.BlockCreatedDate === CurrentDate
-                        ? <BackupIcon style={{cursor: "pointer"}} color={"primary"} fontSize={"large"}
-                                      onClick={OnSendWorklogData}
-                                      className={FS.DownloadIcon}/>
-
-                        : <BackupIcon color={"disabled"} fontSize={"large"} className={FS.DownloadIcon}/>
-                }
 
             </div>
 
@@ -96,5 +94,3 @@ const WorklogInfo: React.FC<TWorklogInfoProps> = (props) => {
         </>
     )
 }
-
-export default WorklogInfo

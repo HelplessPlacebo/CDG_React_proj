@@ -10,7 +10,7 @@ export type TCustomInputProps = {
     width : number
 }
 
-const CustomInput: React.FC<TCustomInputProps> = (props) => {
+export const CustomInput: React.FC<TCustomInputProps> = (props) => {
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             root: {
@@ -34,5 +34,3 @@ const CustomInput: React.FC<TCustomInputProps> = (props) => {
         />
     </div>
 }
-
-export default CustomInput

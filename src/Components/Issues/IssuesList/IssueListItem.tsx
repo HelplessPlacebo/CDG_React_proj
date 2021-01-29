@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -8,9 +8,10 @@ import Tooltip from "@material-ui/core/Tooltip";
 import EditIcon from "@material-ui/icons/Edit";
 import {blue, blueGrey} from "@material-ui/core/colors";
 import DeleteIcon from "@material-ui/icons/Delete";
-import {TChangeIssue, TDeleteIssue} from "../../Data/IssuesReducer";
-import CustomListInput from "./CustomListInput";
-import {useInput} from "../hooks/useInput";
+import {TChangeIssue, TDeleteIssue} from "../../../Redux/IssuesReducer";
+import {CustomListInput} from "../Inputs/CustomListInput";
+import {useInput} from "../../hooks/useInput";
+import {useBooleanState} from "../../hooks/useBooleanState";
 
 export type TIssueListItemProps = {
     Issue: string
@@ -21,27 +22,24 @@ export type TIssueListItemProps = {
     ChangeIssue: TChangeIssue
 }
 
-const IssueListItem: React.FC<TIssueListItemProps> = (props) => {
-    const [EditInputIsShowing, SetEditInputIsShowing] = useState(false)
+export const IssueListItem: React.FC<TIssueListItemProps> = (props) => {
+    const EditInputData = useBooleanState(false)
     const EditInputValue = useInput('')
 
     const OnSaveNewValue = () => {
         props.ChangeIssue(props.Issue, EditInputValue.value)
-        SetEditInputIsShowing(false)
+        EditInputData.Hide()
         EditInputValue.clear()
     }
     const onCancelInput = () =>{
-        SetEditInputIsShowing(false)
+        EditInputData.Hide()
     }
-
-
-
 
     const labelId = `transfer-list-all-item-${props.Issue}-label`
 
     return (<div className="IssueListItem">
             {
-                EditInputIsShowing
+                EditInputData.isDisplayed
                     ? <CustomListInput onSubmit={OnSaveNewValue}
                              {...EditInputValue.bind} onCancel={onCancelInput} SubmitButtonText={"Save"}
                                        CancelButtonText={"cancel"}
@@ -72,13 +70,12 @@ const IssueListItem: React.FC<TIssueListItemProps> = (props) => {
                                 {
                                     props.el === "Issue" && <Grid item style={{paddingRight : ".5rem"}}>
                                         <Tooltip title="Edit" arrow placement="top">
-                                            <EditIcon onClick={() => SetEditInputIsShowing(true)}
+                                            <EditIcon onClick={() => EditInputData.Show()}
                                                       style={{color: blue[400], cursor: "pointer"}}
                                                       fontSize="default"/>
                                         </Tooltip>
                                     </Grid>
                                 }
-
 
                                 <Grid item >
                                     <Tooltip title="Delete" arrow placement="top">
@@ -99,5 +96,3 @@ const IssueListItem: React.FC<TIssueListItemProps> = (props) => {
         </div>
     )
 }
-
-export default IssueListItem

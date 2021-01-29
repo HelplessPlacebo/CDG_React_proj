@@ -1,7 +1,7 @@
 import React from "react";
 import WorkLog, {TWorklogProps} from "./WorkLog";
 
-const NestingWorkLog: React.FC<TWorklogProps> = (props) => {
+export const NestingWorkLog: React.FC<TWorklogProps> = (props) => {
 
     return <div className="NestedItem">
 
@@ -17,5 +17,3 @@ const NestingWorkLog: React.FC<TWorklogProps> = (props) => {
         }
     </div>
 }
-
-export default NestingWorkLog

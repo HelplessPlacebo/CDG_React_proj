@@ -45,7 +45,7 @@ const findColorObject = (colorName:string) : ColorType  =>{
 
 }
 
-const  CustomizedButton : React.FC<TCustomizedButtonProps>  = (props) => {
+export const  CustomizedButton : React.FC<TCustomizedButtonProps>  = (props) => {
 
     const useStyles = makeStyles((theme) =>
         createStyles({
@@ -78,4 +78,3 @@ const  CustomizedButton : React.FC<TCustomizedButtonProps>  = (props) => {
         {props.text}
     </ColorButton>
 }
-export default CustomizedButton

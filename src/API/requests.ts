@@ -1,5 +1,5 @@
 import axios from "axios";
-import {TSendWorklogsData} from "../Data/WorkLogsReducer";
+import {TSendWorklogsData} from "../Redux/WorkLogsReducer";
 
 const instance = axios.create({
     withCredentials: true,

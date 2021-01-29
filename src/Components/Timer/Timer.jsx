@@ -2,26 +2,25 @@ import React, {useState, useEffect} from 'react';
 import TS from "./Timer.module.css"
 import PlayButton from "@material-ui/icons/PlayCircleFilled"
 import {ToFullTime} from "../../assets/secondary/CalculateTime"
-import CustomInput from "../ChangeWorklogModal/CustomInput";
-import IssuesSelectInput from "../Issues/IssuesSelectInput";
+import {CustomInput} from "../CustomElements/CustomInput/CustomInput";
+import {IssuesSelectInput} from "../Issues/Inputs/IssuesSelectInput";
 import {useInput} from "../hooks/useInput";
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
 import StopIcon from '@material-ui/icons/Stop';
 import {red} from "@material-ui/core/colors"
+import {useBooleanState} from "../hooks/useBooleanState";
 
-const Timer = (props) => {
+export const Timer = (props) => {
     const [seconds, setSeconds] = useState(Number.parseInt(props.PlayingWorklog.TimerValue.substr(6, props.PlayingWorklog.TimerValue.length)))
     const [minutes, setMinutes] = useState(Number.parseInt(props.PlayingWorklog.TimerValue.substr(3, props.PlayingWorklog.TimerValue.length - 6)))
     const [hours, setHours] = useState(Number.parseInt(props.PlayingWorklog.TimerValue.substr(0, props.PlayingWorklog.TimerValue.length - 6)))
-    const [isActive, setIsActive] = useState(true);
+    const TimerStatusData = useBooleanState(true)
     const WorklogInput= useInput(props.PlayingWorklog.TaskField ? props.PlayingWorklog.TaskField : "")
     const IssueInput = useInput(props.PlayingWorklog.Issue ? props.PlayingWorklog.Issue : "")
-    const toggle = () => {
-        setIsActive(!isActive);
-    }
+
     const OnStopTimer = () => {
         props.openWorklogChangeModal()
-        setIsActive(false)
+        TimerStatusData.Hide()
         let TimerData = {
             TimerValue: ToFullTime(hours) + ":" + ToFullTime(minutes) + ":" + ToFullTime(seconds),
             TimerIssue: IssueInput.value ? IssueInput.value : props.PlayingWorklog?.Issue,
@@ -32,7 +31,7 @@ const Timer = (props) => {
 
     useEffect(() => {
         let interval = null;
-        if (isActive) {
+        if (TimerStatusData.isDisplayed) {
             interval = setInterval(() => {
                 setSeconds(seconds => seconds + 1);
                 if (seconds > 59) {
@@ -48,11 +47,11 @@ const Timer = (props) => {
                     clearInterval(interval);
                 }
             }, 1000);
-        } else if (isActive && seconds !== 0) {
+        } else if (TimerStatusData.isDisplayed && seconds !== 0) {
             clearInterval(interval);
         }
         return () => clearInterval(interval);
-    }, [isActive, seconds, minutes, hours]);
+    }, [ TimerStatusData.isDisplayed,seconds, minutes, hours]);
 
     return (
 
@@ -80,8 +79,8 @@ const Timer = (props) => {
                         <StopIcon style={{marginTop : "5px", width: "50px",
                             height: "50px",backgroundColor : red[400],borderRadius : "100%",color : red[50]}} />
                     </div>
-                    <div style={{paddingLeft : "5px"}} className="controlButtons" onClick={toggle}>
-                        {isActive ?
+                    <div style={{paddingLeft : "5px"}} className="controlButtons" onClick={TimerStatusData.Switch}>
+                        {TimerStatusData.isDisplayed ?
                             <PauseCircleFilledIcon style={{width: "60px", height: "60px"}} color={"primary"} />
                             : <PlayButton style={{width: "60px", height: "60px"}} color={"primary"}/>
                         }
@@ -90,5 +89,3 @@ const Timer = (props) => {
             </div>
         </div>)
 }
-
-export default Timer

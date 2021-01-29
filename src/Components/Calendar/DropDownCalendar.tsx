@@ -1,24 +1,25 @@
 import React from "react";
 import {
-    TCalendars, TClickedDay,
+    TCalendar,
+    TClickedDay,
     TCurrentDate,
     TSetClickedMonthDay,
-} from "../../Data/CalendarReducer";
+} from "../../Redux/CalendarReducer";
 import CS from "./Calendar.module.css"
-import CalendarDay from "./CalendarDay";
-import {randomInteger, TWorklogBlock} from "../../Data/WorkLogsReducer";
-import DropDownCalendarFooterElement from "./DropDownCalendarFooterElement";
+import {CalendarDay} from "./CalendarDay";
+import {randomInteger, TWorklogBlock} from "../../Redux/WorkLogsReducer";
+import {DropDownCalendarFooterElement} from "./DropDownCalendarFooterElement";
 
 export type TDropDownCalendarProps = {
-    Calendars: TCalendars
+    Calendar: TCalendar
     ClickedMonthDay: TClickedDay
     SetClickedMonthDay: TSetClickedMonthDay
     CurrentDate: TCurrentDate
     WorklogsBlocks: Array<TWorklogBlock>
 }
 
-const DropDownCalendar: React.FC<TDropDownCalendarProps> = (props) => {
-    let DaysNamesArr = ["S", "M", "T", "W", "T", "F", "S"]
+export const DropDownCalendar: React.FC<TDropDownCalendarProps> = (props) => {
+    const DaysNamesArr = ["S", "M", "T", "W", "T", "F", "S"]
 
     return (<div className={CS.DropDownCalendar}>
         <div className={CS.DropDownCalendarHeader}>
@@ -28,25 +29,22 @@ const DropDownCalendar: React.FC<TDropDownCalendarProps> = (props) => {
             <div className={CS.DropDownCalendarContent}>
 
                 {DaysNamesArr.map(el => {
-                    return <div key={randomInteger(0, 10000)}
-                                className={CS.DropDownCalendarDayNames}>
+                    return <div key={randomInteger(0, 10000)} className={CS.DropDownCalendarDayNames}>
                         {el}
-
                     </div>
                 })}
 
                 {
-                    //@ts-ignore
-                    props.Calendars[props.CurrentDate.CurrentMonth].map(day => {
-                    return <CalendarDay ClickedMonthDay={props.ClickedMonthDay}
-                                        CurrentDay={props.CurrentDate.CurrentDay}
-                                        MonthName={props.CurrentDate.CurrentMonth}
-                                        key={day.id}
-                                        SetClickedMonthDay={props.SetClickedMonthDay}
-                                        {...day}
-                                        WorklogsBlocks={props.WorklogsBlocks}
-                    />
-                })}
+                    props.Calendar[props.CurrentDate.CurrentMonth].map(day => {
+                        return <CalendarDay ClickedMonthDay={props.ClickedMonthDay}
+                                            CurrentDay={props.CurrentDate.CurrentDay}
+                                            MonthName={props.CurrentDate.CurrentMonth}
+                                            key={day.id}
+                                            SetClickedMonthDay={props.SetClickedMonthDay}
+                                            {...day}
+                                            WorklogsBlocks={props.WorklogsBlocks}
+                        />
+                    })}
 
             </div>
         </div>
@@ -61,6 +59,3 @@ const DropDownCalendar: React.FC<TDropDownCalendarProps> = (props) => {
         </div>
     </div>)
 }
-
-
-export default DropDownCalendar

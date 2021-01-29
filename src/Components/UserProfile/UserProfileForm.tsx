@@ -2,7 +2,7 @@ import React from 'react'
 import {makeStyles, createStyles, Theme} from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid';
 import avatar from "../../assets/imgs/avatar.jpg"
-import CustomInput from "../ChangeWorklogModal/CustomInput"
+import {CustomInput} from "../CustomElements/CustomInput/CustomInput"
 import {useInput} from "../hooks/useInput"
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type TUserProfileFormProps = {}
 
-const UserProfileForm: React.FC<TUserProfileFormProps> = (props) => {
+export const UserProfileForm: React.FC<TUserProfileFormProps> = (props) => {
     const classes = useStyles();
     const NewUserNameInput = useInput("")
     const NewUserKLastNameInput = useInput("")
@@ -68,5 +68,3 @@ const UserProfileForm: React.FC<TUserProfileFormProps> = (props) => {
         </Grid>
     </div>
 }
-
-export default UserProfileForm

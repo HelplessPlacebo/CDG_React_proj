@@ -1,6 +1,5 @@
 import React from "react";
 import CS from "./Calendar.module.css";
-
 import Danger from "../../assets/imgs/CalendarDayStatusDanger.svg"
 import Warn from "../../assets/imgs/CalendarDayStatusWarning.svg"
 import OK from "../../assets/imgs/CalendarDayStatusOK.svg"
@@ -9,7 +8,7 @@ export type TDropDownCalendarFooterElementProps = {
     status: "ok" | "danger" | "warning" | "empty"
     text: string
 }
-const DropDownCalendarFooterElement: React.FC<TDropDownCalendarFooterElementProps> = (props) => {
+export const DropDownCalendarFooterElement: React.FC<TDropDownCalendarFooterElementProps> = (props) => {
     return (<div className={CS.DropDownCalendarFooterElement}>
             {
                 props.status !== "empty" ?
@@ -31,5 +30,3 @@ const DropDownCalendarFooterElement: React.FC<TDropDownCalendarFooterElementProp
         </div>
     )
 }
-
-export default DropDownCalendarFooterElement

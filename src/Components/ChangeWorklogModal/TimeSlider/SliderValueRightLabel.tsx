@@ -9,8 +9,7 @@ export type TLeftLabelProps = {
     offsetRight : number | undefined
 }
 
-const LeftLabel :React.FC<TLeftLabelProps> = (props) =>{
-
+export const RightLabel :React.FC<TLeftLabelProps> = (props) =>{
     return <div className={LS.RightLabel}
                 style={{ display : `${!props.value && !props.Position ? "none" : "block" }`,
                     right : `${props.Position && props.offsetRight &&   props.offsetRight - props.Position  +"px" }`}}>
@@ -19,4 +18,3 @@ const LeftLabel :React.FC<TLeftLabelProps> = (props) =>{
     </div>
 }
 
-export default LeftLabel

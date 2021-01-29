@@ -1,0 +1,11 @@
+.container{
+    align-self: center;
+    display: grid;
+    grid-template-columns: repeat(2,80px);
+    grid-template-rows: 1fr;
+}
+@media (max-width: 480px) {
+    .container{
+        padding-top: 20px;
+    }
+}

@@ -1,55 +1,30 @@
 import React from 'react'
-import {connect} from "react-redux";
+import {useSelector} from "react-redux";
 import ChangeWorklogModal from "./ChangeWorklogModal";
-import {GlobalState} from "../../Data/redux-store";
-import {
-    TAddWorklog, TChangeWorklog, TSetIsPlayingWorklogById,
-    TTimerData, TWorkLog, ChangeWorklog, TSetWorklogToChange,
-    SetWorklogToChange, ChangeFavoritesWorklog, TChangeFavoritesWorklog
-}
-    from "../../Data/WorkLogsReducer";
-import {AddWorklog, SetIsPlayingWorklogById} from "../../Data/WorkLogsReducer";
+import {TTimerData} from "../../Redux/WorkLogsReducer";
+import {getPlayingWorklog, getWorklogToChange} from "../Selectors/WorklogsSelectors";
+import {getIssues} from "../Selectors/IssuesSelectors";
+import {useWorklogsFunctions} from "../hooks/useWorklogsFunctions";
 
-export type TModalWindowContainerOwnProps = {
+export type TModalWindowContainerProps = {
     closeWorklogChangeModal: () => void
     WorklogChangeModalIsOpen: boolean
     TimerData: TTimerData | undefined
-    SetTimerData: (data :TTimerData | undefined) => void
-    Issues: string[]
+    SetTimerData: (data: TTimerData | undefined) => void
 }
-
-export type T_MSTP_ModalWindowContainer = {
-    PlayingWorklog: TWorkLog | null
-    WorklogToChange: TWorkLog | null
-
-}
-
-export type T_MDTP_ModalWindowContainer = {
-    AddWorklog: TAddWorklog
-    SetIsPlayingWorklogById: TSetIsPlayingWorklogById
-    ChangeWorklog: TChangeWorklog
-    SetWorklogToChange: TSetWorklogToChange
-    ChangeFavoritesWorklog: TChangeFavoritesWorklog
-}
-
-export type TModalWindowContainerProps =
-    T_MDTP_ModalWindowContainer
-    & T_MSTP_ModalWindowContainer
-    & TModalWindowContainerOwnProps
 
 const ChangeWorklogModalContainer: React.FC<TModalWindowContainerProps> = (props) => {
-    return <ChangeWorklogModal {...props}/>
+
+    const playingWorklog = useSelector(getPlayingWorklog)
+    const worklogToChange = useSelector(getWorklogToChange)
+    const issues = useSelector(getIssues)
+
+    const WFS = useWorklogsFunctions()
+    return <ChangeWorklogModal {...props}
+                               WorklogToChange={worklogToChange} Issues={issues} PlayingWorklog={playingWorklog}
+                               AddWorklog={WFS.addWorklog} SetIsPlayingWorklogById={WFS.setIsPlayingWorklogById}
+                               SetWorklogToChange={WFS.setWorklogToChange} ChangeWorklog={WFS.changeWorklog}
+                               ChangeFavoritesWorklog={WFS.changeFavoritesWorklog}/>
 }
 
-
-
-let StateToProps = (state: GlobalState): T_MSTP_ModalWindowContainer => ({
-    PlayingWorklog: state.WorklogsData.PlayingWorklog,
-    WorklogToChange: state.WorklogsData.WorklogToChange
-})
-
-export default connect<T_MSTP_ModalWindowContainer, T_MDTP_ModalWindowContainer, TModalWindowContainerOwnProps, GlobalState>
-(StateToProps, {
-    AddWorklog, SetIsPlayingWorklogById, SetWorklogToChange,
-    ChangeWorklog, ChangeFavoritesWorklog
-})(ChangeWorklogModalContainer)
+export default ChangeWorklogModalContainer

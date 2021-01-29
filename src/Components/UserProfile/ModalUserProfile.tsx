@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import {TransitionProps} from '@material-ui/core/transitions';
-import UserProfileForm from "./UserProfileForm";
+import {UserProfileForm} from "./UserProfileForm";
 //import {useInput} from "../hooks/useInput";
 
 const Transition = React.forwardRef(function Transition(

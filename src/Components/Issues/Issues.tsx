@@ -1,26 +1,19 @@
-import React, { useState} from 'react'
-import {makeStyles, Theme, createStyles} from '@material-ui/core/styles'
+import React, {useState} from 'react'
+import {createStyles, makeStyles, Theme} from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
-import {TAddIssue, TChangeIssue, TDeleteIssue, TSetCompletedIssues, TSetIssues} from "../../Data/IssuesReducer"
-import IssuesList from "./IssuesLists/IssuesList"
+import {TAddIssue, TChangeIssue, TDeleteIssue, TSetCompletedIssues, TSetIssues} from "../../Redux/IssuesReducer"
+import {IssuesList} from "./IssuesList/IssuesList"
 import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            paddingTop : "2rem"
-            // position: "absolute",
-            // top : "4rem",
-            // left: 0,
-            // bottom : "4rem",
-            // width: "100%",
+            paddingTop: "2rem"
         },
         list: {
-            // width: "100%%",
-            // height : "100%%",
             backgroundColor: theme.palette.background.paper,
-            boxShadow : "0px 2px 10px rgba(0,0,0,0.5)"
+            boxShadow: "0px 2px 10px rgba(0,0,0,0.5)"
         },
         button: {
             color: "#fdfffb",
@@ -49,14 +42,11 @@ export type TIssuesProps = {
 }
 
 
-const Issues: React.FC<TIssuesProps> = (props) => {
+export  const Issues: React.FC<TIssuesProps> = (props) => {
     const classes = useStyles()
     const [checked, setChecked] = useState<string[]>([])
-
-
     const IssuesChecked = intersection(checked, props.Issues);
     const CompletedIssuesChecked = intersection(checked, props.CompletedIssues);
-
 
     const handleCheckedIssues = () => {
         props.SetCompletedIssues(props.CompletedIssues.concat(IssuesChecked))
@@ -70,49 +60,48 @@ const Issues: React.FC<TIssuesProps> = (props) => {
         setChecked(not(checked, CompletedIssuesChecked))
     }
 
-    return (
-        <Grid container spacing={3} alignItems="center" justify="center" className={classes.root} >
+    return <Grid container spacing={3} alignItems="center" justify="center" className={classes.root}>
 
-            <Container style={{margin : 0}}  maxWidth="xl">
-                <Grid  item className={classes.list}>
-                    <IssuesList title={"Issues"} items={props.Issues}
-                                el={"Issue"}
-                                DeleteIssue={props.DeleteIssue} AddIssue={props.AddIssue}
-                                checked={checked} setChecked={setChecked}
-                                ChangeIssue={props.ChangeIssue}
-                    />
-                </Grid>
-                </Container>
-
-            <Grid item>
-                <Grid container direction="column" alignItems="center">
-                    <Button
-                        variant="contained"
-                        size="small"
-                        className={classes.button}
-                        onClick={handleCheckedIssues}
-                        disabled={IssuesChecked.length === 0}
-                        aria-label="move selected right"
-                        color={"secondary"}
-                    >
-                        &gt;
-                    </Button>
-                    <Button
-                        variant="contained"
-                        size="small"
-                        className={classes.button}
-                        onClick={handleCheckedCompletedIssues}
-                        disabled={CompletedIssuesChecked.length === 0}
-                        aria-label="move selected left"
-                        color={"primary"}
-                    >
-                        &lt;
-                    </Button>
-                </Grid>
+        <Container style={{margin: 0}} maxWidth="xl">
+            <Grid item className={classes.list}>
+                <IssuesList title={"Issues"} items={props.Issues}
+                            el={"Issue"}
+                            DeleteIssue={props.DeleteIssue} AddIssue={props.AddIssue}
+                            checked={checked} setChecked={setChecked}
+                            ChangeIssue={props.ChangeIssue}
+                />
             </Grid>
+        </Container>
 
-                    <Container style={{margin : 0,paddingBottom : "2rem"}} maxWidth="xl" >
-            <Grid  item className={classes.list}>
+        <Grid item>
+            <Grid container direction="column" alignItems="center">
+                <Button
+                    variant="contained"
+                    size="small"
+                    className={classes.button}
+                    onClick={handleCheckedIssues}
+                    disabled={IssuesChecked.length === 0}
+                    aria-label="move selected right"
+                    color={"secondary"}
+                >
+                    &gt;
+                </Button>
+                <Button
+                    variant="contained"
+                    size="small"
+                    className={classes.button}
+                    onClick={handleCheckedCompletedIssues}
+                    disabled={CompletedIssuesChecked.length === 0}
+                    aria-label="move selected left"
+                    color={"primary"}
+                >
+                    &lt;
+                </Button>
+            </Grid>
+        </Grid>
+
+        <Container style={{margin: 0, paddingBottom: "2rem"}} maxWidth="xl">
+            <Grid item className={classes.list}>
                 <IssuesList title={"Completed Issues"} items={props.CompletedIssues}
                             el={"CompletedIssue"} setChecked={setChecked}
                             checked={checked} AddIssue={props.AddIssue}
@@ -120,9 +109,6 @@ const Issues: React.FC<TIssuesProps> = (props) => {
                             ChangeIssue={props.ChangeIssue}
                 />
             </Grid>
-                    </Container>
-        </Grid>
-    )
+        </Container>
+    </Grid>
 }
-
-export default Issues

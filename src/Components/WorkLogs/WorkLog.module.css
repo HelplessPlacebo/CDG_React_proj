@@ -1,19 +1,14 @@
 
 .WorklogInfoContainer {
     font-family: 'Roboto', serif;
-    width: 1085px;
-    margin-top: 50px;
-    margin-left: 96px;
+    /*width: 1085px;*/
+    padding-top: 50px;
+    padding-left: 96px;
 }
 
-.WorklogBG {
-    position: absolute;
-    z-index: 100;
-
-}
 /*                                              */
 .WorklogBlockContainer {
-    width: 1200px;
+    /*width: 1200px;*/
     margin-top: 5px;
     margin-left: 73px;
     z-index: 30;
@@ -126,6 +121,7 @@
 .WorklogBlock {
     display: grid;
     grid-template-columns: 185px 4px 761px 83px 75px 80px;
+    /*grid-template-columns: 1fr 0.1fr 5fr 0.8fr 0.1fr 0.8fr;*/
     grid-template-rows: 76px;
 }
 

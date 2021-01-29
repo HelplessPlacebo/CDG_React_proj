@@ -8,7 +8,7 @@ export type TAllProps = {
     OnAllClicked: () => void
 }
 
-const All: React.FC<TAllProps> = (props) => {
+export const AllButton: React.FC<TAllProps> = (props) => {
     return (
         <div className={props.FavoritesIsClicked
             ? AllS.AllButtonBg
@@ -17,11 +17,8 @@ const All: React.FC<TAllProps> = (props) => {
             <div  className={props.FavoritesIsClicked
                 ? AllS.item
                 : AllS.ActiveItem}>
-
                 <NavLink onClick={props.OnAllClicked}   to={"/Home/All"}> All </NavLink>
             </div>
         </div>
     )
 }
-
-export default All

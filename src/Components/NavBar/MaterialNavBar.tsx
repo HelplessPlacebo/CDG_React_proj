@@ -3,7 +3,6 @@ import {makeStyles, Theme, createStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SettingsIcon from '@material-ui/icons/Settings';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -51,7 +50,6 @@ type TMaterialNavProps = {
     onUnAuth : ()=>void
 }
  const MaterialNav : React.FC<TMaterialNavProps> = (props) =>{
-    console.log("nav")
     const classes = useStyles();
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -81,12 +79,6 @@ type TMaterialNavProps = {
 
                 Settings
             </MenuItem>
-            {/*<MenuItem>*/}
-            {/*    <IconButton color="primary">*/}
-            {/*        <InfoIcon/>*/}
-            {/*    </IconButton>*/}
-            {/*    Info*/}
-            {/*</MenuItem>*/}
             <MenuItem>
                 <IconButton onClick={LogOut} color="primary">
                     <ExitToAppIcon/>
@@ -113,7 +105,7 @@ type TMaterialNavProps = {
                 <Toolbar>
                     <div className={HS.NavLinks}>
                         <div className={HS.item}>
-                            <NavLink to="/Home/All">
+                            <NavLink to="/Home/AllButton">
                                 Worklogs
                             </NavLink>
                         </div>
@@ -134,12 +126,6 @@ type TMaterialNavProps = {
                                 <SettingsIcon/>
                             </IconButton>
                         </Tooltip>
-
-                            {/*<Tooltip title="Info" arrow placement="bottom">*/}
-                            {/*    <IconButton color="inherit">*/}
-                            {/*        <InfoIcon/>*/}
-                            {/*    </IconButton>*/}
-                            {/*</Tooltip>*/}
 
                         <Tooltip title="Logout" arrow placement="bottom">
                             <IconButton onClick={LogOut} color="inherit">

@@ -1,13 +1,13 @@
 import React from "react";
-import {TDeleteFromFavorites, TDeleteWorklog} from "../../Data/WorkLogsReducer";
+import {TDeleteFromFavorites, TDeleteWorklog} from "../../Redux/WorkLogsReducer";
 import {TDeleteModalParams} from "../WorkLogs/WorkLogsBlock";
-import {TComponentToDraw} from "../WorkLogs/WorkLogsContainer";
-import CustomizedButton from "../CustomizedButton/CustomizedButton";
+import {CustomizedButton} from "../CustomElements/CustomizedButton/CustomizedButton";
 import Dialog from "@material-ui/core/Dialog/Dialog"
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle"
 import DialogContent from "@material-ui/core/DialogContent/DialogContent"
 import Grid from "@material-ui/core/Grid/Grid"
 import DeleteIcon from '@material-ui/icons/Delete';
+import {TComponentToDraw} from "../../globalTypes/Types";
 
 export type TDeleteWorklogConfirmModalProps = {
     isOpen: boolean
@@ -18,7 +18,7 @@ export type TDeleteWorklogConfirmModalProps = {
     DeleteFromFavorites: TDeleteFromFavorites
 }
 
-const DeleteWorklogConfirmModal: React.FC<TDeleteWorklogConfirmModalProps> = (props) => {
+export const DeleteWorklogConfirmModal: React.FC<TDeleteWorklogConfirmModalProps> = (props) => {
     const OnModalSubmit = () => {
         if (props.DeleteModalParams) {
             props.ComponentToDraw === "Worklogs"
@@ -72,5 +72,4 @@ const DeleteWorklogConfirmModal: React.FC<TDeleteWorklogConfirmModalProps> = (pr
 
 }
 
-export default DeleteWorklogConfirmModal
 

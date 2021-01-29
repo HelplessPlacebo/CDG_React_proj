@@ -9,7 +9,7 @@ export type TFavoritesProps = {
     OnFavoritesClick: () => void
 }
 
-const FavoritesButton: React.FC<TFavoritesProps> = (props) => {
+export const FavoritesButton: React.FC<TFavoritesProps> = (props) => {
     return (
         <div
              className={props.FavoritesIsClicked
@@ -34,5 +34,3 @@ const FavoritesButton: React.FC<TFavoritesProps> = (props) => {
         </div>
     )
 }
-
-export default FavoritesButton

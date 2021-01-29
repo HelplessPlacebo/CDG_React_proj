@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 )
 
-const CustomListInput: React.FC<TCustonListInputProps> = (props) => {
+export const CustomListInput: React.FC<TCustonListInputProps> = (props) => {
     const classes = useStyles()
     return <div className={classes.AddIssueInput}>
         <Grid container justify="center" alignItems="center" direction="column">
@@ -60,5 +60,3 @@ const CustomListInput: React.FC<TCustonListInputProps> = (props) => {
         </Grid>
     </div>
 }
-
-export default CustomListInput

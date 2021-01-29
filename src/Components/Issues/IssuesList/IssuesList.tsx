@@ -1,9 +1,9 @@
 import React, {Dispatch} from "react";
 import Card from "@material-ui/core/Card";
 import Divider from "@material-ui/core/Divider";
-import {TAddIssue, TChangeIssue, TDeleteIssue} from "../../../Data/IssuesReducer";
-import ListHeader from "./ListHeader";
-import ListContent from "./ListContent";
+import {TAddIssue, TChangeIssue, TDeleteIssue} from "../../../Redux/IssuesReducer";
+import {ListHeader} from "./ListHeader";
+import {ListContent} from "./ListContent";
 
 
 export type TIssuesListProps = {
@@ -18,8 +18,7 @@ export type TIssuesListProps = {
 }
 
 
-const IssuesList: React.FC<TIssuesListProps> = (props) => {
-
+export const IssuesList: React.FC<TIssuesListProps> = (props) => {
 
     return <Card style={{width: "100%", height: "100%"}}>
 
@@ -29,7 +28,7 @@ const IssuesList: React.FC<TIssuesListProps> = (props) => {
 
         <Divider/>
 
-        <div style={{paddingTop :"1rem"}}>
+        <div style={{paddingTop: "1rem"}}>
             <ListContent checked={props.checked} items={props.items} el={props.el} DeleteIssue={props.DeleteIssue}
                          ChangeIssue={props.ChangeIssue} setChecked={props.setChecked}/>
         </div>
@@ -37,5 +36,3 @@ const IssuesList: React.FC<TIssuesListProps> = (props) => {
 
     </Card>
 }
-
-export default IssuesList

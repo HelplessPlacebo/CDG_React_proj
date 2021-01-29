@@ -1,19 +1,19 @@
 import React, {Dispatch, SetStateAction, useState} from "react";
 import WLS from "./WorkLog.module.css"
 import PlayButton from "../../assets/imgs/play-button.svg"
-import LineStroke from "../LineStroke/LineStroke";
+import {LineStroke} from "../LineStroke/LineStroke";
 import WLMoreButtonBG from "../../assets/imgs/worklogMoreButtonBG.svg"
 import WLMoreButtonVertical from "../../assets/imgs/worklogMoreVertical.svg"
 import CP_danger from "../../assets/imgs/danger_cp.svg"
 import CP_warning from "../../assets/imgs/warning_cp.svg"
 import CP_ok from "../../assets/imgs/ok_cp.svg"
-import {TWorkLog, CurrentDate} from "../../Data/WorkLogsReducer";
+import {TWorkLog, CurrentDate, TBlockInfo} from "../../Redux/WorkLogsReducer";
 import ArrowUp from "../../assets/imgs/arrow-up.svg"
-import WorkLogDropDown from "./DropDown/WorklogDropDown";
+import {WorkLogDropDown} from "./DropDown/WorklogDropDown";
 import StopButton from "../../assets/imgs/stop_button.svg"
-import DeleteWorklogConfirmModal from "../DeleteConfirmModal/DeleteConfirmModal";
+import {DeleteWorklogConfirmModal} from "../DeleteConfirmModal/DeleteConfirmModal";
 import {TDeleteModalParams, TWorklogsBlockProps} from "./WorkLogsBlock";
-import NestingWorkLog from "./NestingWorkLog";
+import {NestingWorkLog} from "./NestingWorkLog";
 import WorklogActiveBG from "../../assets/imgs/ActiveWorklogBG.svg"
 
 
@@ -25,6 +25,7 @@ export type TWorklogOwnProps = {
     SetDeleteModalParams: Dispatch<SetStateAction<TDeleteModalParams | undefined>>
     WorklogInfo: TWorkLog
     ParentId?: number
+    BlockInfo?: TBlockInfo
 }
 export type TWorklogProps = TWorklogsBlockProps & TWorklogOwnProps
 
@@ -72,100 +73,101 @@ const WorkLog: React.FC<TWorklogProps> = (props) => {
             <div className="WorklogBG">
 
                 <img
-                    className={props.PlayingWorklog?.id === props.WorklogInfo.id || ShowMenu ? WLS.WorklogActiveBG : WLS.WorklogBG}
+                    className={props.PlayingWorklog?.id === props.WorklogInfo.id
+                    || ShowMenu ? WLS.WorklogActiveBG : WLS.WorklogBG}
                     src={WorklogActiveBG} alt=""/>
 
 
-                    <div className={WLS.WorklogBlock}>
-                        {
-                            props.WorklogInfo.NestingItems && props.WorklogInfo.NestingItems.length > 0
-                                ? <div className={WLS.NestingButtonPose}>
-                                    {
-                                        NestingIsShowing
-                                            ? <div onClick={OnHideNestingWorklogs} className={WLS.NestingBG}>
-                                                <img className={WLS.TwwContentImg} src={ArrowUp} alt=""/>
-                                            </div>
+                <div className={WLS.WorklogBlock}>
+                    {
+                        props.WorklogInfo.NestingItems && props.WorklogInfo.NestingItems.length > 0
+                            ? <div className={WLS.NestingButtonPose}>
+                                {
+                                    NestingIsShowing
+                                        ? <div onClick={OnHideNestingWorklogs} className={WLS.NestingBG}>
+                                            <img className={WLS.TwwContentImg} src={ArrowUp} alt=""/>
+                                        </div>
 
-                                            : <div onClick={OnShowNestingWorklogs} className={WLS.NestingBG}>
+                                        : <div onClick={OnShowNestingWorklogs} className={WLS.NestingBG}>
                                             <span
                                                 className={WLS.TwwContentText}>
                                                     {props.WorklogInfo.NestingItems.length}
                                             </span>
-                                            </div>
-                                    }
+                                        </div>
+                                }
+                            </div>
+
+                            : props.WorklogInfo.StartTime && props.WorklogInfo.EndTime
+                            ? <div className={WLS.WorkTime}>
+
+                                <div className={WLS.StartTime}>
+                                    {props.WorklogInfo.StartTime}
                                 </div>
 
-                                : props.WorklogInfo.StartTime && props.WorklogInfo.EndTime
-                                ? <div className={WLS.WorkTime}>
-
-                                    <div className={WLS.StartTime}>
-                                        {props.WorklogInfo.StartTime}
-                                    </div>
-
-                                    <div className={WLS.Minus}>
-                                        -
-                                    </div>
-
-                                    <div className={WLS.EndTime}>
-                                        {props.WorklogInfo.EndTime}
-                                    </div>
-
+                                <div className={WLS.Minus}>
+                                    -
                                 </div>
-                                : <div></div>
-                        }
 
+                                <div className={WLS.EndTime}>
+                                    {props.WorklogInfo.EndTime}
+                                </div>
+
+                            </div>
+                            : <div></div>
+                    }
+
+                    <div className={props.PlayingWorklog?.id === props.WorklogInfo.id || ShowMenu
+                        ? WLS.ColorPointPoseActive
+                        : WLS.ColorPointPose}>
+                        <img style={{transitionTimingFunction: "ease-out", transitionDuration: "0.3s"}}
+                             src={props.WorklogInfo.status === "ok"
+                                 ? CP_ok : props.WorklogInfo.status === "warning"
+                                     ? CP_warning : props.WorklogInfo.status === "danger"
+                                         ? CP_danger : undefined} alt=""
+                        />
+                    </div>
+
+                    <div onClick={OnSetWorklogToChange} className={WLS.WorklogContentContainer}>
+                        <div className={WLS.Issue}>
+                            {props.WorklogInfo.Issue}
+                        </div>
+                        <div className={WLS.TaskField}>
+                            {props.WorklogInfo.TaskField}
+                        </div>
+                    </div>
+
+
+                    <div className={WLS.TimerValueContainer}>
+                        <div className={WLS.TimerValue}>{props.WorklogInfo.TimerValue}</div>
+                    </div>
+
+                    {props.PlayingWorklog?.id === props.WorklogInfo.id
+
+                        ? <div className={WLS.ControlButtonsContainer} onClick={onStopButtonClicked}>
+                            <img src={StopButton} alt="stop-button"/>
+                        </div>
+
+                        : <div className={WLS.ControlButtonsContainer} onClick={onPlayButtonClicked}>
+                            <img src={PlayButton} alt="play-button"/>
+                        </div>}
+
+                    <div className="WLMoreContainer">
                         <div className={props.PlayingWorklog?.id === props.WorklogInfo.id || ShowMenu
-                            ? WLS.ColorPointPoseActive
-                            : WLS.ColorPointPose}>
-                            <img style={{transitionTimingFunction: "ease-out", transitionDuration: "0.3s"}}
-                                 src={props.WorklogInfo.status === "ok"
-                                     ? CP_ok : props.WorklogInfo.status === "warning"
-                                         ? CP_warning : props.WorklogInfo.status === "danger"
-                                             ? CP_danger : undefined} alt=""
-                            />
+                            ? WLS.WorklogMoreButtonActive
+                            : WLS.WorklogMoreButton}>
+                            <img src={WLMoreButtonBG} alt=""/>
                         </div>
 
-                        <div onClick={OnSetWorklogToChange} className={WLS.WorklogContentContainer}>
-                            <div className={WLS.Issue}>
-                                {props.WorklogInfo.Issue}
-                            </div>
-                            <div className={WLS.TaskField}>
-                                {props.WorklogInfo.TaskField}
-                            </div>
-                        </div>
-
-
-                        <div className={WLS.TimerValueContainer}>
-                            <div className={WLS.TimerValue}>{props.WorklogInfo.TimerValue}</div>
-                        </div>
-
-                        {props.PlayingWorklog?.id === props.WorklogInfo.id
-
-                            ? <div className={WLS.ControlButtonsContainer} onClick={onStopButtonClicked}>
-                                    <img src={StopButton} alt="stop-button"/>
-                            </div>
-
-                            : <div className={WLS.ControlButtonsContainer}  onClick={onPlayButtonClicked}>
-                                    <img src={PlayButton} alt="play-button"/>
-                            </div>}
-
-                        <div className="WLMoreContainer">
-                            <div className={props.PlayingWorklog?.id === props.WorklogInfo.id || ShowMenu
-                                ? WLS.WorklogMoreButtonActive
-                                : WLS.WorklogMoreButton}>
-                                <img src={WLMoreButtonBG} alt=""/>
-                            </div>
-
-                            <div onMouseEnter={OnShowMenu}
-                                 className={props.PlayingWorklog?.id === props.WorklogInfo.id || ShowMenu
-                                     ? WLS.WorklogMoreVerticalActive
-                                     : WLS.WorklogMoreVertical}>
-                                <img src={WLMoreButtonVertical} alt="more-vertical"/>
-                            </div>
-
+                        <div onMouseEnter={OnShowMenu}
+                             className={props.PlayingWorklog?.id === props.WorklogInfo.id || ShowMenu
+                                 ? WLS.WorklogMoreVerticalActive
+                                 : WLS.WorklogMoreVertical}>
+                            <img src={WLMoreButtonVertical} alt="more-vertical"/>
                         </div>
 
                     </div>
+
+                </div>
 
             </div>
 

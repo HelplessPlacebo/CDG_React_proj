@@ -1,29 +1,50 @@
-import React, {SyntheticEvent, useState, useEffect,} from "react";
+import React, {SyntheticEvent, useState, useEffect,} from "react"
 import MS from "./ModalWindow.module.css"
-import TimeSlider from "./TimeSlider/TimeSlider";
-import {CalculateNewStartTime, ToFullTime} from "../../assets/secondary/CalculateTime";
-import IssuesSelectInput from "../Issues/IssuesSelectInput";
-import CustomInput from "./CustomInput";
-import {useInput} from "../hooks/useInput";
-import CustomizedButton from "../CustomizedButton/CustomizedButton";
+import {TimeSlider} from "./TimeSlider/TimeSlider"
+import {CalculateNewStartTime, ToFullTime} from "../../assets/secondary/CalculateTime"
+import {IssuesSelectInput} from "../Issues/Inputs/IssuesSelectInput"
+import {CustomInput} from "../CustomElements/CustomInput/CustomInput"
+import {useInput} from "../hooks/useInput"
 import {TModalWindowContainerProps} from "./ChangeWorklogModalContainer";
 import Dialog from "@material-ui/core/Dialog/Dialog"
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle"
 import DialogContent from "@material-ui/core/DialogContent/DialogContent"
 import Grid from "@material-ui/core/Grid/Grid"
 import SaveIcon from '@material-ui/icons/Save';
+import {
+    TAddWorklog,
+    TChangeFavoritesWorklog, TChangeWorklog,
+    TSetIsPlayingWorklogById,
+    TSetWorklogToChange,
+    TWorkLog
+} from "../../Redux/WorkLogsReducer";
+import {CustomizedButton} from "../CustomElements/CustomizedButton/CustomizedButton";
+
 
 type TTimerValue = {
     start: string | null
     end: string | null
 }
+type TChangeWorklogModalProps = TModalWindowContainerProps & {
+    Issues: string[]
+    WorklogToChange: TWorkLog | null
+    PlayingWorklog: TWorkLog | null
 
-const ChangeWorklogModal: React.FC<TModalWindowContainerProps> = (props) => {
-    let ModalWorklogInput = useInput(props.WorklogToChange && props.WorklogToChange.TaskField ? props.WorklogToChange.TaskField : "")
-    let ModalIssueInput = useInput(props.WorklogToChange && props.WorklogToChange.Issue ? props.WorklogToChange.Issue : "")
-    let [ModalTimeLineValues, SetModalTimeLineValues] = useState<TTimerValue>()
-    let [NewWorklogNameIsFilled, SetNewWorklogNameIsFilled] = useState<boolean>(false)
-    let [NewIssueNameIsFilled, SetNewIssueNameIsFilled] = useState<boolean>(false)
+    ChangeFavoritesWorklog: TChangeFavoritesWorklog
+    SetIsPlayingWorklogById: TSetIsPlayingWorklogById
+    SetWorklogToChange: TSetWorklogToChange
+    ChangeWorklog: TChangeWorklog
+    AddWorklog: TAddWorklog
+}
+
+const ChangeWorklogModal: React.FC<TChangeWorklogModalProps> = (props) => {
+
+    const ModalWorklogInput = useInput(props.WorklogToChange && props.WorklogToChange.TaskField ? props.WorklogToChange.TaskField : "")
+    const ModalIssueInput = useInput(props.WorklogToChange && props.WorklogToChange.Issue ? props.WorklogToChange.Issue : "")
+    const [ModalTimeLineValues, SetModalTimeLineValues] = useState<TTimerValue>()
+    const [NewWorklogNameIsFilled, SetNewWorklogNameIsFilled] = useState<boolean>(false)
+    const [NewIssueNameIsFilled, SetNewIssueNameIsFilled] = useState<boolean>(false)
+
     let EmptyWorklogTimerMinutes = props.TimerData?.TimerValue.substr(3, props.TimerData?.TimerValue.length - 6)
     let EmptyWorklogTimerEndHours = props.TimerData?.TimerValue.substr(0, props.TimerData?.TimerValue.length - 6)
     let CurrentTime = ToFullTime(new Date().getHours()) + ":" + ToFullTime(new Date().getMinutes())
@@ -130,10 +151,10 @@ const ChangeWorklogModal: React.FC<TModalWindowContainerProps> = (props) => {
             aria-describedby="alert-dialog-description"
         >
             <DialogTitle id="alert-dialog-title">{"New worklog"}</DialogTitle>
-            <DialogContent >
-                <Grid container justify="center" alignItems="center" >
+            <DialogContent>
+                <Grid container justify="center" alignItems="center">
 
-                    <Grid item className="TimeSLider" style={{paddingTop : "10%"}} >
+                    <Grid item className="TimeSLider" style={{paddingTop: "10%"}}>
                         {
                             ModalTimeLineValues?.start && ModalTimeLineValues?.end &&
                             <TimeSlider value={ModalTimeLineValues} disabled={false}
@@ -152,13 +173,12 @@ const ChangeWorklogModal: React.FC<TModalWindowContainerProps> = (props) => {
                                 name</div>
                         }
 
-                        <div style={{paddingTop:"1rem"}}>
+                        <div style={{paddingTop: "1rem"}}>
                             {
                                 //@ts-ignore
-                                <IssuesSelectInput  Issues={props.Issues}{...ModalIssueInput.bind} />
+                                <IssuesSelectInput Issues={props.Issues}{...ModalIssueInput.bind} />
                             }
                         </div>
-
 
 
                         {
@@ -169,7 +189,7 @@ const ChangeWorklogModal: React.FC<TModalWindowContainerProps> = (props) => {
 
                     </Grid>
 
-                    <Grid item style={{paddingTop: "3rem",paddingBottom:"1rem"}} className="ContorlButtons">
+                    <Grid item style={{paddingTop: "3rem", paddingBottom: "1rem"}} className="ContorlButtons">
                         <Grid container direction="row" justify="space-around" alignItems="center">
 
                             <Grid item onClick={OnModalSubmit}>
@@ -179,7 +199,7 @@ const ChangeWorklogModal: React.FC<TModalWindowContainerProps> = (props) => {
 
                             <Grid onClick={props.closeWorklogChangeModal}>
                                 <CustomizedButton fontColor="red" text={"go back"}
-                                                  variant={"outlined"} fontSize={14} />
+                                                  variant={"outlined"} fontSize={14}/>
                             </Grid>
 
                         </Grid>

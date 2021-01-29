@@ -1,16 +1,11 @@
 import React, {Dispatch} from "react";
 import WLDD from "./WorklogDropDown.module.css"
 import {
-    CurrentDate,
-    randomInteger,
-    TAddToFavorite,
-    TAddWorklog,
-    TBlockInfo,
-    TNestingItem,
-    TWorkLog
-} from "../../../Data/WorkLogsReducer";
-import {TComponentToDraw} from "../WorkLogsContainer";
+    CurrentDate, randomInteger, TAddToFavorite,
+    TAddWorklog, TBlockInfo, TWorkLog
+} from "../../../Redux/WorkLogsReducer";
 import {TShowSnackBar} from "../../../App";
+import {TComponentToDraw} from "../../../globalTypes/Types";
 
 export type TWorklogDropDownProps = {
     OnDeleteModalOpen: (e: React.MouseEvent<HTMLElement>) => void
@@ -24,10 +19,10 @@ export type TWorklogDropDownProps = {
     ShowSnackBar: TShowSnackBar
 
     onHideMenu: () => void
-    WorklogInfo : TWorkLog
-    NestingIsShowing : boolean
+    WorklogInfo: TWorkLog
+    NestingIsShowing: boolean
 }
-const WorkLogDropDown: React.FC<TWorklogDropDownProps> = (props) => {
+export const WorkLogDropDown: React.FC<TWorklogDropDownProps> = (props) => {
 
     const OnDeleteModalOpenContainer = (e: React.MouseEvent<HTMLElement>) => {
         if ((props.ComponentToDraw === "FavoritesWorklogs" && !props.PlayingWorklog)
@@ -83,4 +78,3 @@ const WorkLogDropDown: React.FC<TWorklogDropDownProps> = (props) => {
 
     </div>)
 }
-export default WorkLogDropDown

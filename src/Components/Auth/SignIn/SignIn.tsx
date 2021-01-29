@@ -10,7 +10,7 @@ export type TLoginFormData={
     email:string,
     password : string
 }
-const SignIn:React.FC<TSignInProps> = props => {
+export const SignIn:React.FC<TSignInProps> = props => {
     const history=useHistory()
     const [authErr,setAuthErr] = useState<string[]>([])
     const handleSubmit = (formData : TLoginFormData) => {
@@ -25,5 +25,3 @@ const SignIn:React.FC<TSignInProps> = props => {
         <SignInFormRedux onSubmit={handleSubmit} ComponentIsSignUp={props.ComponentIsSignUp} authErr={authErr}/>
     </div>
 }
-
-export default SignIn

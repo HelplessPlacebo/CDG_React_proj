@@ -59,7 +59,7 @@ export type TTimerData = {
     TimerTaskField: string
 }
 export type TSendWorklogsData = {
-    WorkLogsBlocks: TWorklogBlock
+    WorkLogsBlocks: TWorklogBlock[]
 }
 
 let DefaultState = {
@@ -379,30 +379,30 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
 
                 if (WB.BlockInfo.BlockCreatedDate === CurrentDate) {
 
-                    if(Worklog.Issue === action.NewWorklog.Issue){
+                    if (Worklog.Issue === action.NewWorklog.Issue) {
 
-                        if(Worklog.id !== action.NewWorklog.id){
-                            WB.Worklogs = WB.Worklogs.filter(FWorklog=>FWorklog.id !== action.NewWorklog.id)
-                            if(Worklog.NestingItems && Worklog.NestingItems?.length > 0){
-                                Worklog.NestingItems.map(NestingItem=>{
-                                    if(NestingItem.id === action.NewWorklog.id){
-                                        if(NestingItem.Issue === action.NewWorklog.Issue)
-                                            Object.assign(NestingItem,action.NewWorklog)
+                        if (Worklog.id !== action.NewWorklog.id) {
+                            WB.Worklogs = WB.Worklogs.filter(FWorklog => FWorklog.id !== action.NewWorklog.id)
+                            if (Worklog.NestingItems && Worklog.NestingItems?.length > 0) {
+                                Worklog.NestingItems.map(NestingItem => {
+                                    if (NestingItem.id === action.NewWorklog.id) {
+                                        if (NestingItem.Issue === action.NewWorklog.Issue)
+                                            Object.assign(NestingItem, action.NewWorklog)
 
                                     } else Worklog.NestingItems?.push(action.NewWorklog)
                                 })
                             } else Worklog.NestingItems = [action.NewWorklog]
 
 
-                        }else Object.assign(Worklog,action.NewWorklog)
+                        } else Object.assign(Worklog, action.NewWorklog)
 
-                    }else {
-                        if(Worklog.id === action.NewWorklog.id) Object.assign(Worklog,action.NewWorklog)
+                    } else {
+                        if (Worklog.id === action.NewWorklog.id) Object.assign(Worklog, action.NewWorklog)
 
-                        else if(Worklog.NestingItems && Worklog.NestingItems?.length > 0){
+                        else if (Worklog.NestingItems && Worklog.NestingItems?.length > 0) {
                             Worklog.NestingItems.map(CNestingItem => {
-                                if(CNestingItem.id === action.NewWorklog.id && CNestingItem.Issue !== action.NewWorklog.Issue){
-                                    Worklog.NestingItems = Worklog.NestingItems?.filter(FNestingItem=>FNestingItem.id !== action.NewWorklog.id)
+                                if (CNestingItem.id === action.NewWorklog.id && CNestingItem.Issue !== action.NewWorklog.Issue) {
+                                    Worklog.NestingItems = Worklog.NestingItems?.filter(FNestingItem => FNestingItem.id !== action.NewWorklog.id)
                                     WB.Worklogs.push(action.NewWorklog)
                                 }
                             })
@@ -534,35 +534,35 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
     }
 }
 
-export const AddWorklog = (NewWorklog ?: TWorkLog, IsFavorites?: boolean) => {
+export const AddWorklogAC = (NewWorklog ?: TWorkLog, IsFavorites?: boolean) => {
     return {type: ADD_WORKLOG, NewWorklog, IsFavorites} as const
 }
-export type TAddWorklog = typeof AddWorklog
+export type TAddWorklog = typeof AddWorklogAC
 
-export const DeleteWorklog = (DelWorklogId: number, DelParentId: number | null = null) => {
+export const DeleteWorklogAC = (DelWorklogId: number, DelParentId: number | null = null) => {
     return {type: DEL_WORKLOG, DelWorklogId, DelParentId} as const
 }
-export type TDeleteWorklog = typeof DeleteWorklog
+export type TDeleteWorklog = typeof DeleteWorklogAC
 
-export const SetIsPlayingWorklogById = (IsPlaying: boolean, ElementId?: number, IsFavorites ?: boolean) => {
+export const SetIsPlayingWorklogByIdAC = (IsPlaying: boolean, ElementId?: number, IsFavorites ?: boolean) => {
     return {type: SET_IS_PLAYING_WORKLOG_BY_ID, IsPlaying, ElementId, IsFavorites} as const
 }
-export type TSetIsPlayingWorklogById = typeof SetIsPlayingWorklogById
+export type TSetIsPlayingWorklogById = typeof SetIsPlayingWorklogByIdAC
 
-export const ChangeWorklog = (NewWorklog: TWorkLog) => {
-    return {type: CHANGE_WORKLOG,  NewWorklog} as const
+export const ChangeWorklogAC = (NewWorklog: TWorkLog) => {
+    return {type: CHANGE_WORKLOG, NewWorklog} as const
 }
-export type TChangeWorklog = typeof ChangeWorklog
+export type TChangeWorklog = typeof ChangeWorklogAC
 
-export const SetWorklogToChange = (WorklogToChange: TWorkLog | undefined = undefined) => {
+export const SetWorklogToChangeAC = (WorklogToChange: TWorkLog | undefined = undefined) => {
     return {type: SET_WORKLOG_TO_CHANGE, WorklogToChange} as const
 }
-export type TSetWorklogToChange = typeof SetWorklogToChange
+export type TSetWorklogToChange = typeof SetWorklogToChangeAC
 
-export const AddToFavorite = (WorklogId: number) => {
+export const AddToFavoriteAC = (WorklogId: number) => {
     return {type: ADD_TO_FAVORITE, WorklogId} as const
 }
-export type TAddToFavorite = typeof AddToFavorite
+export type TAddToFavorite = typeof AddToFavoriteAC
 
 
 // export const SendWorklogBlockThunk = (WorklogBlockData: TSendWorklogsData): TWorklogsThunks => async (dispatch) => {
@@ -574,25 +574,25 @@ export type TAddToFavorite = typeof AddToFavorite
 // }
 // export type TSendWorklogBlockThunk = typeof SendWorklogBlockThunk
 
-export const SetWorklogStatus = (options: {
+export const SetWorklogStatusAC = (options: {
     target: "worklog" | "worklogblock",
     id: number,
     status: "ok" | "danger" | "warning"
 }) => {
     return {type: SET_WORKLOG_STATUS, options} as const
 }
-export type TSetWorklogStatus = typeof SetWorklogStatus
+export type TSetWorklogStatus = typeof SetWorklogStatusAC
 
-export const DeleteFromFavorites = (WorklogId: number) => {
+export const DeleteFromFavoritesAC = (WorklogId: number) => {
     return {type: DELETE_FROM_FAVORITES, WorklogId} as const
 }
 
-export type TDeleteFromFavorites = typeof DeleteFromFavorites
+export type TDeleteFromFavorites = typeof DeleteFromFavoritesAC
 
-export const ChangeFavoritesWorklog = (WorklogId: number, NewWorklog: TWorkLog) => {
+export const ChangeFavoritesWorklogAC = (WorklogId: number, NewWorklog: TWorkLog) => {
     return {type: CHANGE_FAVORITES_WORKLOG, WorklogId, NewWorklog} as const
 }
 
-export type TChangeFavoritesWorklog = typeof ChangeFavoritesWorklog
+export type TChangeFavoritesWorklog = typeof ChangeFavoritesWorklogAC
 
 export default WorklogsReducer

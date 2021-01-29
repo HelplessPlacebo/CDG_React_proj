@@ -1,6 +1,6 @@
 import React from "react"
 import Grid from "@material-ui/core/Grid"
-import CustomizedButton from "../../CustomizedButton/CustomizedButton"
+import {CustomizedButton} from "../../CustomElements/CustomizedButton/CustomizedButton"
 import {CreateField, FormInput} from "../../../assets/utils/ValidartorsComponents/ElementsValidators"
 import {required, Email} from "../../../assets/utils/validators"
 import {reduxForm, InjectedFormProps} from "redux-form"

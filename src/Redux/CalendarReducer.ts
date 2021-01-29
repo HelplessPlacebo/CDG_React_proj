@@ -45,7 +45,7 @@ const RandomDaysCreate = (statuses: Array<string> = [], IntroDaysCount: number, 
                 Signature: "outro",
                 DayNumber: p,
                 DayStatus: RandomStatus(statuses),
-                id: randomInteger(0, 10000)
+                id: randomInteger(0, 100000)
             })
         }
         OutArr.push(...IntroDaysArr)
@@ -62,11 +62,10 @@ export type TDay = {
     DayStatus: string
     id: number
 }
+type TMonth = TDay[]
 
-export  type TCalendar = Array<TDay>
-
-export interface TCalendars {
-    [key: string]: TCalendar
+export interface TCalendar {
+    [key: string]: TMonth
 }
 
 export type TClickedDay = {
@@ -84,7 +83,7 @@ export type TCurrentDate = {
 }
 
 let DefaultState = {
-    Calendars: {
+    Calendar: {
         January: RandomDaysCreate(["ok", "danger", "warning"], 2, 3, 30),
         February: RandomDaysCreate(["ok", "danger", "warning"], 4, 1, 30),
         March: RandomDaysCreate(["ok", "danger", "warning"], 1, 4, 30),
@@ -97,7 +96,7 @@ let DefaultState = {
         October: RandomDaysCreate(["ok", "danger", "warning"], 1, 3, 31),
         November: RandomDaysCreate(["ok", "danger", "warning"], 2, 3, 30),
         December: RandomDaysCreate(["ok", "danger", "warning"], 2, 2, 31)
-    } as TCalendars,
+    } as TCalendar,
     ClickedMonthDay: null as TClickedDay,
     CurrentDate: GetCurrentDate() as TCurrentDate
 }

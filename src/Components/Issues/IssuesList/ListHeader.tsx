@@ -3,11 +3,11 @@ import Grid from "@material-ui/core/Grid";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import CardHeader from "@material-ui/core/CardHeader/CardHeader"
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import CustomListInput from "../CustomListInput";
+import {CustomListInput} from "../Inputs/CustomListInput";
 import {useInput} from "../../hooks/useInput";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
-import {TAddIssue} from "../../../Data/IssuesReducer";
-import CustomizedButton from "../../CustomizedButton/CustomizedButton";
+import {TAddIssue} from "../../../Redux/IssuesReducer";
+import {CustomizedButton} from "../../CustomElements/CustomizedButton/CustomizedButton";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -34,7 +34,7 @@ type TCardHeaderProps = {
     el: "Issue" | "CompletedIssue"
     title: React.ReactNode
 }
-const ListHeader: React.FC<TCardHeaderProps> = (props) => {
+export const ListHeader: React.FC<TCardHeaderProps> = (props) => {
     const classes = useStyles()
     const [AddIssueOpened, SetAddIssueOpened] = useState(false)
     const AddNewIssueInput = useInput('')
@@ -111,4 +111,3 @@ const ListHeader: React.FC<TCardHeaderProps> = (props) => {
         }
     </div>
 }
-export default ListHeader

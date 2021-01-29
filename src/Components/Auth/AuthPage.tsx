@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import SignIn from "./SignIn/SignIn";
+import {SignIn} from "./SignIn/SignIn";
 import LS from "./AuthModal.module.css";
 import {SignUp} from "./SignUp/SignUp";
 import {TShowSnackBar} from "../../App";
@@ -10,8 +10,7 @@ type TAuthPageProps = {
     onUnAuth: () => void
 }
 
-
-const AuthPage: React.FC<TAuthPageProps> = (props) => {
+export const AuthPage: React.FC<TAuthPageProps> = (props) => {
     const [ComponentToDraw, SetComponentToDraw] = useState("login")
     const ComponentIsSignIn = () => SetComponentToDraw("login")
     const ComponentIsSignUp = () => SetComponentToDraw("registration")
@@ -23,4 +22,4 @@ const AuthPage: React.FC<TAuthPageProps> = (props) => {
         }
     </div>
 }
-export default (AuthPage)
+

@@ -5,7 +5,9 @@
     height: 19px;
     cursor: pointer;
 }
-
+.WorklogsContainer{
+    padding-top: 3rem;
+}
 .FavoritesButtonBgActive {
     height: 47px;
     width: 143px;

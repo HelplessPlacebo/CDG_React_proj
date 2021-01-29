@@ -1,8 +1,8 @@
 import React, {Dispatch} from "react"
 import List from "@material-ui/core/List";
-import IssueListItem from "../IssueListItem";
+import {IssueListItem} from "./IssueListItem";
 import ListItem from "@material-ui/core/ListItem";
-import { TChangeIssue, TDeleteIssue} from "../../../Data/IssuesReducer";
+import { TChangeIssue, TDeleteIssue} from "../../../Redux/IssuesReducer";
 
 
 type TListContentProps={
@@ -14,7 +14,7 @@ type TListContentProps={
     setChecked: Dispatch<string[]>
 }
 
-const ListContent :React.FC<TListContentProps> = props=> {
+export const ListContent :React.FC<TListContentProps> = props=> {
 
     const handleToggle = (value: string) => () => {
         const currentIndex = props.checked.indexOf(value)
@@ -36,4 +36,3 @@ const ListContent :React.FC<TListContentProps> = props=> {
         </List>
     </div>
 }
-export default ListContent
