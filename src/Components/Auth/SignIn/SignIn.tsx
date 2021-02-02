@@ -3,7 +3,7 @@ import {SignInFormRedux} from "./SignInForm"
 import {useHistory} from 'react-router-dom'
 
 type TSignInProps={
-    ComponentIsSignUp:()=>void
+    componentIsSignUp:()=>void
     onAuth:()=>void
 }
 export type TLoginFormData={
@@ -22,6 +22,6 @@ export const SignIn:React.FC<TSignInProps> = props => {
     }
 
     return <div className="SignInContainer">
-        <SignInFormRedux onSubmit={handleSubmit} ComponentIsSignUp={props.ComponentIsSignUp} authErr={authErr}/>
+        <SignInFormRedux onSubmit={handleSubmit} componentIsSignUp={props.componentIsSignUp} authErr={authErr}/>
     </div>
 }

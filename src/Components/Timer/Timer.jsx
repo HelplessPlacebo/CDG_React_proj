@@ -11,27 +11,27 @@ import {red} from "@material-ui/core/colors"
 import {useBooleanState} from "../hooks/useBooleanState";
 
 export const Timer = (props) => {
-    const [seconds, setSeconds] = useState(Number.parseInt(props.PlayingWorklog.TimerValue.substr(6, props.PlayingWorklog.TimerValue.length)))
-    const [minutes, setMinutes] = useState(Number.parseInt(props.PlayingWorklog.TimerValue.substr(3, props.PlayingWorklog.TimerValue.length - 6)))
-    const [hours, setHours] = useState(Number.parseInt(props.PlayingWorklog.TimerValue.substr(0, props.PlayingWorklog.TimerValue.length - 6)))
-    const TimerStatusData = useBooleanState(true)
-    const WorklogInput= useInput(props.PlayingWorklog.TaskField ? props.PlayingWorklog.TaskField : "")
-    const IssueInput = useInput(props.PlayingWorklog.Issue ? props.PlayingWorklog.Issue : "")
+    const [seconds, setSeconds] = useState(Number.parseInt(props.playingWorklog.TimerValue.substr(6, props.playingWorklog.TimerValue.length)))
+    const [minutes, setMinutes] = useState(Number.parseInt(props.playingWorklog.TimerValue.substr(3, props.playingWorklog.TimerValue.length - 6)))
+    const [hours, setHours] = useState(Number.parseInt(props.playingWorklog.TimerValue.substr(0, props.playingWorklog.TimerValue.length - 6)))
+    const timerStatusData = useBooleanState(true)
+    const worklogInput= useInput(props.playingWorklog.TaskField ? props.playingWorklog.TaskField : "")
+    const issueInput = useInput(props.playingWorklog.Issue ? props.playingWorklog.Issue : "")
 
-    const OnStopTimer = () => {
+    const onStopTimer = () => {
         props.openWorklogChangeModal()
-        TimerStatusData.Hide()
+        timerStatusData.Hide()
         let TimerData = {
             TimerValue: ToFullTime(hours) + ":" + ToFullTime(minutes) + ":" + ToFullTime(seconds),
-            TimerIssue: IssueInput.value ? IssueInput.value : props.PlayingWorklog?.Issue,
-            TimerTaskField: WorklogInput.value ? WorklogInput.value : props.PlayingWorklog?.TaskField,
+            TimerIssue: issueInput.value ? issueInput.value : props.playingWorklog?.Issue,
+            TimerTaskField: worklogInput.value ? worklogInput.value : props.playingWorklog?.TaskField,
         }
-        props.SetTimerData(TimerData)
+        props.setTimerData(TimerData)
     }
 
     useEffect(() => {
         let interval = null;
-        if (TimerStatusData.isDisplayed) {
+        if (timerStatusData.isDisplayed) {
             interval = setInterval(() => {
                 setSeconds(seconds => seconds + 1);
                 if (seconds > 59) {
@@ -47,24 +47,24 @@ export const Timer = (props) => {
                     clearInterval(interval);
                 }
             }, 1000);
-        } else if (TimerStatusData.isDisplayed && seconds !== 0) {
+        } else if (timerStatusData.isDisplayed && seconds !== 0) {
             clearInterval(interval);
         }
         return () => clearInterval(interval);
-    }, [ TimerStatusData.isDisplayed,seconds, minutes, hours]);
+    }, [ timerStatusData.isDisplayed,seconds, minutes, hours]);
 
     return (
 
         <div className={TS.TimeRContainer}>
-            <CustomInput {...WorklogInput.bind}
+            <CustomInput {...worklogInput.bind}
                          label={"Task Field"}
                          placeholder={"Please, enter the task"}
                          width={250}
             />
 
             <div style={{marginTop : " 10px"}} className={"IssuesSelectinput"}>
-                <IssuesSelectInput  Issues={props.Issues}
-                                    {...IssueInput.bind}
+                <IssuesSelectInput  issues={props.issues}
+                                    {...issueInput.bind}
                                     width={250}
                 />
             </div>
@@ -75,12 +75,12 @@ export const Timer = (props) => {
 
             <div className={TS.TimerControlButtonsContainer}>
                 <div className={TS.TimerControlButtons}>
-                    <div onClick={OnStopTimer}>
+                    <div onClick={onStopTimer}>
                         <StopIcon style={{marginTop : "5px", width: "50px",
                             height: "50px",backgroundColor : red[400],borderRadius : "100%",color : red[50]}} />
                     </div>
-                    <div style={{paddingLeft : "5px"}} className="controlButtons" onClick={TimerStatusData.Switch}>
-                        {TimerStatusData.isDisplayed ?
+                    <div style={{paddingLeft : "5px"}} className="controlButtons" onClick={timerStatusData.Switch}>
+                        {timerStatusData.isDisplayed ?
                             <PauseCircleFilledIcon style={{width: "60px", height: "60px"}} color={"primary"} />
                             : <PlayButton style={{width: "60px", height: "60px"}} color={"primary"}/>
                         }

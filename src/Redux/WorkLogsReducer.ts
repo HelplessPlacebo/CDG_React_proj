@@ -22,7 +22,7 @@ export type TNestingItem = {
     StartTime: string | null
     EndTime: string | null
     TaskField: string | null
-    status: "ok" | "warning" | "danger" | string
+    status: "ok" | "warning" | "danger"
     Issue?: string | null
     id: number
     TimerValue: string | null
@@ -39,7 +39,7 @@ export type TWorkLog = {
     StartTime: string | null
     EndTime: string | null
     TaskField: string | null
-    status: "ok" | "warning" | "danger" | string
+    status: "ok" | "warning" | "danger"
     TimerValue: string | null
     NestingItems?: Array<TNestingItem> | null
     id: number

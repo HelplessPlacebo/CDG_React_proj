@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField/TextField"
 import MenuItem from "@material-ui/core/MenuItem/MenuItem"
 
 export type TIssuesSelectInputProps = {
-    Issues: string[]
+    issues: string[]
     onChange: (event: React.ChangeEvent<{ value: unknown; }>) => void
     value?: string
     width: number
@@ -42,7 +42,7 @@ export const IssuesSelectInput: React.FC<TIssuesSelectInputProps> = (props) => {
                     variant="outlined"
                     fullWidth={true}
                 >
-                    {props.Issues.map((issue) => (
+                    {props.issues.map((issue) => (
                         <MenuItem key={issue} value={issue}>
                             {issue}
                         </MenuItem>

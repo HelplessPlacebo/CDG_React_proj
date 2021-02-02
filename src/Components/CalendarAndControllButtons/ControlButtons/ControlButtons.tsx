@@ -4,15 +4,15 @@ import {FavoritesButton} from "./Favorites/FavoritesButton";
 import CBS from "./ControlButtons.module.css"
 
 type TControlButtonsProps = {
-    FavoritesIsClicked: boolean
-    OnAllClicked: () => void
-    OnFavoritesClick: () => void
+    favoritesIsClicked: boolean
+    onAllClicked: () => void
+    onFavoritesClick: () => void
 }
 export const ControlButtons: React.FC<TControlButtonsProps> = (props) => {
     return <div className={CBS.container}>
-        <AllButton FavoritesIsClicked={props.FavoritesIsClicked} OnAllClicked={props.OnAllClicked}/>
+        <AllButton favoritesIsClicked={props.favoritesIsClicked} onAllClicked={props.onAllClicked}/>
 
-        <FavoritesButton OnFavoritesClick={props.OnFavoritesClick}
-                         FavoritesIsClicked={props.FavoritesIsClicked}/>
+        <FavoritesButton onFavoritesClick={props.onFavoritesClick}
+                         favoritesIsClicked={props.favoritesIsClicked}/>
     </div>
 }

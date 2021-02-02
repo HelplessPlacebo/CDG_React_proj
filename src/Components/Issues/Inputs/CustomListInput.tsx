@@ -9,8 +9,8 @@ export  type TCustonListInputProps = {
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
     onSubmit: () => void
     onCancel: () => void
-    SubmitButtonText: string
-    CancelButtonText: string
+    submitButtonText: string
+    cancelButtonText: string
 }
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -43,14 +43,14 @@ export const CustomListInput: React.FC<TCustonListInputProps> = (props) => {
                 <Grid container justify="space-around" alignItems="center">
                     <Grid item>
                         <Button onClick={props.onSubmit} color={"primary"} size={"small"} variant={"contained"}>
-                            {props.SubmitButtonText}
+                            {props.submitButtonText}
                         </Button>
                     </Grid>
 
                     <Grid item>
                         <Button onClick={props.onCancel} style={{marginLeft: "20%"}} color={"inherit"} size={"small"}
                                 variant={"contained"}>
-                            {props.CancelButtonText}
+                            {props.cancelButtonText}
                         </Button>
                     </Grid>
 

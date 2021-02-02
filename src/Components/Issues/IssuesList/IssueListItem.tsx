@@ -14,12 +14,12 @@ import {useInput} from "../../hooks/useInput";
 import {useBooleanState} from "../../hooks/useBooleanState";
 
 export type TIssueListItemProps = {
-    Issue: string
+    issue: string
     el: "Issue" | "CompletedIssue"
     checked: string[]
     handleToggle: (value: string) => void
-    DeleteIssue: TDeleteIssue
-    ChangeIssue: TChangeIssue
+    deleteIssue: TDeleteIssue
+    changeIssue: TChangeIssue
 }
 
 export const IssueListItem: React.FC<TIssueListItemProps> = (props) => {
@@ -27,7 +27,7 @@ export const IssueListItem: React.FC<TIssueListItemProps> = (props) => {
     const EditInputValue = useInput('')
 
     const OnSaveNewValue = () => {
-        props.ChangeIssue(props.Issue, EditInputValue.value)
+        props.changeIssue(props.issue, EditInputValue.value)
         EditInputData.Hide()
         EditInputValue.clear()
     }
@@ -35,31 +35,31 @@ export const IssueListItem: React.FC<TIssueListItemProps> = (props) => {
         EditInputData.Hide()
     }
 
-    const labelId = `transfer-list-all-item-${props.Issue}-label`
+    const labelId = `transfer-list-all-item-${props.issue}-label`
 
     return (<div className="IssueListItem">
             {
                 EditInputData.isDisplayed
                     ? <CustomListInput onSubmit={OnSaveNewValue}
-                             {...EditInputValue.bind} onCancel={onCancelInput} SubmitButtonText={"Save"}
-                                       CancelButtonText={"cancel"}
+                             {...EditInputValue.bind} onCancel={onCancelInput} submitButtonText={"Save"}
+                                       cancelButtonText={"cancel"}
                                              />
-                    : <Grid key={props.Issue} container alignItems="center" justify="space-around">
+                    : <Grid key={props.issue} container alignItems="center" justify="space-around">
 
                         <Grid item  style={{width:"85%"}}>
 
                             <ListItem role="listitem" button
                                       //@ts-ignore
-                                      onClick={props.handleToggle(props.Issue)}>
+                                      onClick={props.handleToggle(props.issue)}>
                                 <ListItemIcon>
                                     <Checkbox
-                                        checked={props.checked.indexOf(props.Issue) !== -1}
+                                        checked={props.checked.indexOf(props.issue) !== -1}
                                         tabIndex={-1}
                                         disableRipple
                                         inputProps={{'aria-labelledby': labelId}}
                                     />
                                 </ListItemIcon>
-                                <ListItemText id={labelId} primary={props.Issue}/>
+                                <ListItemText id={labelId} primary={props.issue}/>
                             </ListItem>
                         </Grid>
 
@@ -80,7 +80,7 @@ export const IssueListItem: React.FC<TIssueListItemProps> = (props) => {
                                 <Grid item >
                                     <Tooltip title="Delete" arrow placement="top">
                                         <DeleteIcon
-                                            onClick={() => props.DeleteIssue(props.Issue, props.el)}
+                                            onClick={() => props.deleteIssue(props.issue, props.el)}
                                             style={props.el === "Issue"
                                                 ? {color: blueGrey[600], cursor: "pointer"}
                                                 : {color: blueGrey[600], cursor: "pointer"}}

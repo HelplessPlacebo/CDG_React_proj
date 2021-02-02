@@ -9,8 +9,8 @@ type TListContentProps={
     checked: string[]
     items: string[]
     el: "Issue" | "CompletedIssue"
-    DeleteIssue: TDeleteIssue
-    ChangeIssue: TChangeIssue
+    deleteIssue: TDeleteIssue
+    changeIssue: TChangeIssue
     setChecked: Dispatch<string[]>
 }
 
@@ -27,9 +27,9 @@ export const ListContent :React.FC<TListContentProps> = props=> {
     return <div className="CardContentContainer">
         <List dense component="div" role="list">
             {props.items.map((value: string) => {
-                return (<IssueListItem key={value} Issue={value} el={props.el} checked={props.checked}
-                                       handleToggle={handleToggle} DeleteIssue={props.DeleteIssue}
-                                       ChangeIssue={props.ChangeIssue}/>)
+                return (<IssueListItem key={value} issue={value} el={props.el} checked={props.checked}
+                                       handleToggle={handleToggle} deleteIssue={props.deleteIssue}
+                                       changeIssue={props.changeIssue}/>)
 
             })}
             <ListItem/>

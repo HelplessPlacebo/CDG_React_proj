@@ -1,16 +1,16 @@
 import React from "react";
-import WorkLog, {TWorklogProps} from "./WorkLog";
+import {WorkLog,TWorklogProps} from "./WorkLog";
 
 export const NestingWorkLog: React.FC<TWorklogProps> = (props) => {
 
     return <div className="NestedItem">
 
         {
-            props.WorklogInfo.NestingItems?.map(NestingItem =>
+            props.worklogInfo.NestingItems?.map(NestingItem =>
                 <div key={NestingItem.id}>
                     <WorkLog {...props}
-                             WorklogInfo={NestingItem}
-                             ParentId={props.WorklogInfo.id}
+                             worklogInfo={NestingItem}
+                             parentId={props.worklogInfo.id}
                     />
                 </div>
             )

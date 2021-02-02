@@ -1,93 +1,88 @@
 import React, {useState} from "react";
-import WorkLog from "./WorkLog";
+import {WorkLog} from "./WorkLog";
 import {WorklogInfo} from "./WorklogInfo/WorklogInfo";
 import WLS from "./WorkLog.module.css"
-import {
-    TAddToFavorite,
-    TAddWorklog,
-    TDeleteFromFavorites,
-    TDeleteWorklog,
-    TSetIsPlayingWorklogById,
-    TSetWorklogStatus,
-    TSetWorklogToChange,
-    TWorkLog,
-    TWorklogBlock
-} from "../../Redux/WorkLogsReducer";
-import {TWorklogsBlockContainerProps} from "./WorklogsBlockContainer";
-import {useBooleanState} from "../hooks/useBooleanState";
+import {useBooleanState} from "../hooks/useBooleanState"
+import {useSelector} from "react-redux"
+import {getFavoritesWorklog, getPlayingWorklog, getWorklogsBlocks} from "../Selectors/WorklogsSelectors"
+import {useWorklogsFunctions} from "../hooks/useWorklogsFunctions"
+import {TWorklogsContainerOwnProps} from "../../globalTypes/Types"
+import {DeleteWorklogConfirmModal} from "../DeleteConfirmModal/DeleteConfirmModal";
+import {TWorkLog} from "../../Redux/WorkLogsReducer";
 
-export type TWorklogsBlockOwnProps = {
-    AddWorklog: TAddWorklog
-    DeleteWorklog: TDeleteWorklog
-    SetIsPlayingWorklogById: TSetIsPlayingWorklogById
-    SetWorklogToChange: TSetWorklogToChange
-    AddToFavorite: TAddToFavorite
-    SetWorklogStatus: TSetWorklogStatus
-    DeleteFromFavorites: TDeleteFromFavorites
-    WorklogsBlocks: TWorklogBlock[]
-    PlayingWorklog: TWorkLog | null
-    FavoritesWorklogs: TWorkLog[]
-}
-export type TWorklogsBlockProps = TWorklogsBlockContainerProps & TWorklogsBlockOwnProps
 
-export type TDeleteModalParams = {
-    ParentId?: number
-    WorkLogToDeleteId: number
-}
+export const WorkLogsBlock: React.FC<TWorklogsContainerOwnProps> = (props) => {
+    const worklogsBlocks = useSelector(getWorklogsBlocks)
+    const playingWorklog = useSelector(getPlayingWorklog)
+    const favoritesWorklogs = useSelector(getFavoritesWorklog)
 
-export const WorkLogsBlock: React.FC<TWorklogsBlockProps> = (props) => {
-    const DeleteModalStatus = useBooleanState(false)
-    const [DeleteModalParams, SetDeleteModalParams] = useState<TDeleteModalParams>()
+    const WFS = useWorklogsFunctions()
 
-    return <>
+    const deleteModalStatus = useBooleanState(false)
+    const [worklogToDelete, setWorklogToDelete] = useState<TWorkLog | null>(null)
+    const onDeleteWorklog = () => {
+        if (worklogToDelete) {
+            props.componentToDraw === "Worklogs"
+                ? WFS.deleteWorklog(worklogToDelete.id, worklogToDelete.ParentId)
+                : WFS.deleteFromFavorites(worklogToDelete.id)
+            deleteModalStatus.Hide()
+        }
+    }
+
+
+    return <div className="WorklogsBlock">
         {
-            props.ComponentToDraw === "Worklogs"
-                ? props.WorklogsBlocks.map(WorklogBlock => <div key={WorklogBlock.BlockInfo.id} className="Worklogs">
+            props.componentToDraw === "Worklogs"
+                ? worklogsBlocks.map(WorklogBlock => <div key={WorklogBlock.BlockInfo.id} className="Worklogs">
                     <div className={WLS.WorklogInfoContainer}>
-                        <WorklogInfo DateOfCreation={WorklogBlock.BlockInfo.BlockCreatedDate}
-                                     SummaryTime={WorklogBlock.BlockInfo.SummaryTime}
-                                     SummaryStatus={WorklogBlock.BlockInfo.SummaryStatus}
-                                     Worklogs={WorklogBlock.Worklogs}
-                                     BlockInfo={WorklogBlock.BlockInfo}
-                                     ShowSnackBar={props.ShowSnackBar}
-                                     SetWorklogStatus={props.SetWorklogStatus}/>
+                        <WorklogInfo dateOfCreation={WorklogBlock.BlockInfo.BlockCreatedDate}
+                                     summaryTime={WorklogBlock.BlockInfo.SummaryTime}
+                                     summaryStatus={WorklogBlock.BlockInfo.SummaryStatus}
+                                     worklogs={WorklogBlock.Worklogs}
+                                     blockInfo={WorklogBlock.BlockInfo}
+                                     showSnackBar={props.showSnackBar}
+                                     setWorklogStatus={WFS.setWorklogStatus}/>
                     </div>
-
                     {
                         WorklogBlock.Worklogs.map(Worklog => <div key={Worklog.id} className="WorklogContainer">
                                 <WorkLog
-                                    WorklogInfo={Worklog}
                                     {...props}
-                                    BlockInfo={WorklogBlock.BlockInfo}
-                                    DeleteModalIsOpen={DeleteModalStatus.isDisplayed}
-                                    OnDeleteModalClose={DeleteModalStatus.Hide}
-                                    OnDeleteModalOpen={DeleteModalStatus.Show}
-                                    SetDeleteModalParams={SetDeleteModalParams}
-                                    DeleteModalParams={DeleteModalParams}
+                                    worklogInfo={Worklog}
+                                    showDeleteModal={deleteModalStatus.Show}
+                                    setWorklogToDelete={setWorklogToDelete}
+                                    blockInfo={WorklogBlock.BlockInfo}
+                                    setWorklogToChange={WFS.setWorklogToChange}
+                                    setIsPlayingWorklogById={WFS.setIsPlayingWorklogById}
+                                    playingWorklog={playingWorklog}
+                                    addWorklog={WFS.addWorklog}
+                                    addToFavorite={WFS.addToFavorite}
                                 />
                             </div>
                         )
                     }
-
                 </div>
                 )
                 : <div className="FavoritesWorklogs">
                     {
-                        props.FavoritesWorklogs && props.FavoritesWorklogs.length > 0 && props.FavoritesWorklogs.map(
+                        favoritesWorklogs.length > 0 && favoritesWorklogs.map(
                             FavoritesWorklog => <div key={FavoritesWorklog.id} className="FavoritesWorklogContainer">
                                 <WorkLog
-                                    WorklogInfo={FavoritesWorklog}
                                     {...props}
-                                    DeleteModalIsOpen={DeleteModalStatus.isDisplayed}
-                                    OnDeleteModalClose={DeleteModalStatus.Hide}
-                                    OnDeleteModalOpen={DeleteModalStatus.Show}
-                                    SetDeleteModalParams={SetDeleteModalParams}
-                                    DeleteModalParams={DeleteModalParams}
+                                    worklogInfo={FavoritesWorklog}
+                                    showDeleteModal={deleteModalStatus.Show}
+                                    setWorklogToChange={WFS.setWorklogToChange}
+                                    setWorklogToDelete={setWorklogToDelete}
+                                    setIsPlayingWorklogById={WFS.setIsPlayingWorklogById}
+                                    playingWorklog={playingWorklog}
+                                    addWorklog={WFS.addWorklog}
+                                    addToFavorite={WFS.addToFavorite}
                                 />
                             </div>
                         )
                     }
                 </div>
         }
-    </>
+        <DeleteWorklogConfirmModal isOpen={deleteModalStatus.isDisplayed} onClose={deleteModalStatus.Hide}
+                                   onSubmit={onDeleteWorklog}/>
+    </div>
 }

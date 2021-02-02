@@ -8,38 +8,33 @@ import {TShowSnackBar} from "../../../App";
 import {TComponentToDraw} from "../../../globalTypes/Types";
 
 export type TWorklogDropDownProps = {
-    OnDeleteModalOpen: (e: React.MouseEvent<HTMLElement>) => void
-    SetDeleteModalParams: Dispatch<any>
-    ParentId?: number
-    AddToFavorite: TAddToFavorite
-    PlayingWorklog: TWorkLog | null
-    ComponentToDraw: TComponentToDraw
-    AddWorklog: TAddWorklog
-    BlockInfo?: TBlockInfo
-    ShowSnackBar: TShowSnackBar
-
+    showDeleteModal: () => void
+    setWorklogToDelete: Dispatch<any>
+    addToFavorite: TAddToFavorite
+    playingWorklog: TWorkLog | null
+    componentToDraw: TComponentToDraw
+    addWorklog: TAddWorklog
+    blockInfo?: TBlockInfo
+    showSnackBar: TShowSnackBar
     onHideMenu: () => void
-    WorklogInfo: TWorkLog
-    NestingIsShowing: boolean
+    worklogInfo: TWorkLog
+    nestingIsShowing: boolean
+    parentId : number | undefined
 }
 export const WorkLogDropDown: React.FC<TWorklogDropDownProps> = (props) => {
 
-    const OnDeleteModalOpenContainer = (e: React.MouseEvent<HTMLElement>) => {
-        if ((props.ComponentToDraw === "FavoritesWorklogs" && !props.PlayingWorklog)
-            || (props.BlockInfo?.BlockCreatedDate === CurrentDate && !props.PlayingWorklog)) {
-            props.SetDeleteModalParams({
-                WorkLogToDeleteId: props.WorklogInfo.id,
-                ParentId: props.ParentId
-            })
-
-            props.OnDeleteModalOpen(e)
+    const OnDeleteModalOpenContainer = () => {
+        if ((props.componentToDraw === "FavoritesWorklogs" && !props.playingWorklog)
+            || (props.blockInfo?.BlockCreatedDate === CurrentDate && !props.playingWorklog)) {
+            props.setWorklogToDelete({...props.worklogInfo,ParentId : props.parentId})
+            props.showDeleteModal()
         }
     }
     const OnAddToFavorites = () => {
-        if (!props.PlayingWorklog?.id && props.ComponentToDraw === "Worklogs") {
-            if (props.ParentId) props.AddToFavorite(props.WorklogInfo.id)
-            else props.AddToFavorite(props.WorklogInfo.id)
-            props.ShowSnackBar({
+        if (!props.playingWorklog?.id && props.componentToDraw === "Worklogs") {
+            if (props.parentId) props.addToFavorite(props.worklogInfo.id)
+            else props.addToFavorite(props.worklogInfo.id)
+            props.showSnackBar({
                 message: "worklog added to favorites", position: {horizontal: "center", vertical: "top"},
                 severity: "success"
             })
@@ -48,13 +43,13 @@ export const WorkLogDropDown: React.FC<TWorklogDropDownProps> = (props) => {
     }
 
     const OnDuplicateWorklog = () => {
-        if (!props.PlayingWorklog?.id && props.ComponentToDraw === "Worklogs") {
+        if (!props.playingWorklog?.id && props.componentToDraw === "Worklogs") {
             let CurrentWorklog: TWorkLog = {
-                ...props.WorklogInfo,
+                ...props.worklogInfo,
                 TimerValue: "00:00:00",
                 id: randomInteger(0, 10000),
             }
-            props.AddWorklog(CurrentWorklog)
+            props.addWorklog(CurrentWorklog)
         }
     }
 

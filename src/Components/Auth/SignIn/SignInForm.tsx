@@ -7,7 +7,7 @@ import {reduxForm, InjectedFormProps} from "redux-form"
 import {TLoginFormData} from "./SignIn";
 
 export type TOwnProps = {
-    ComponentIsSignUp: () => void
+    componentIsSignUp: () => void
     authErr: string[]
 }
 
@@ -49,7 +49,7 @@ const SignInForm: React.FC<InjectedFormProps<TLoginFormData, TOwnProps> & TOwnPr
                 </Grid>
 
                 <Grid item>
-                    <CustomizedButton onClick={props.ComponentIsSignUp} text="sign up"
+                    <CustomizedButton onClick={props.componentIsSignUp} text="sign up"
                                       variant="contained" bgColor="blue" fontSize="1.11rem"/>
                 </Grid>
             </Grid>

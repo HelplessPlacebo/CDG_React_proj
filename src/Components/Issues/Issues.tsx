@@ -2,9 +2,11 @@ import React, {useState} from 'react'
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
-import {TAddIssue, TChangeIssue, TDeleteIssue, TSetCompletedIssues, TSetIssues} from "../../Redux/IssuesReducer"
+import {AddIssue, ChangeIssue, DeleteIssue, SetCompletedIssues, SetIssues} from "../../Redux/IssuesReducer"
 import {IssuesList} from "./IssuesList/IssuesList"
 import Container from '@material-ui/core/Container';
+import {useDispatch, useSelector} from "react-redux";
+import {getCompletedIssues, getIssues} from "../Selectors/IssuesSelectors";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -31,32 +33,32 @@ const intersection = (a: string[], b: string[]) => {
 }
 
 
-export type TIssuesProps = {
-    Issues: Array<string>
-    CompletedIssues: Array<string>
-    AddIssue: TAddIssue
-    DeleteIssue: TDeleteIssue
-    ChangeIssue: TChangeIssue
-    SetIssues: TSetIssues
-    SetCompletedIssues: TSetCompletedIssues
-}
-
-
-export  const Issues: React.FC<TIssuesProps> = (props) => {
+const Issues = () => {
     const classes = useStyles()
+    const dispatch = useDispatch()
+
+    const issues = useSelector(getIssues)
+    const completedIssues = useSelector(getCompletedIssues)
+
+    const addIssue = (Issue: string) => dispatch(AddIssue(Issue))
+    const deleteIssue = (Issue: string, From: "Issue" | "CompletedIssue") => dispatch(DeleteIssue(Issue, From))
+    const changeIssue = (OldIssue: string, NewIssue: string) => dispatch(ChangeIssue(OldIssue, NewIssue))
+    const setIssues = (Issues: string[]) => dispatch(SetIssues(Issues))
+    const setCompletedIssues = (CompletedIssues: string[]) => dispatch(SetCompletedIssues(CompletedIssues))
+
     const [checked, setChecked] = useState<string[]>([])
-    const IssuesChecked = intersection(checked, props.Issues);
-    const CompletedIssuesChecked = intersection(checked, props.CompletedIssues);
+    const IssuesChecked = intersection(checked, issues);
+    const CompletedIssuesChecked = intersection(checked, completedIssues);
 
     const handleCheckedIssues = () => {
-        props.SetCompletedIssues(props.CompletedIssues.concat(IssuesChecked))
-        props.SetIssues(not(props.Issues, IssuesChecked))
+        setCompletedIssues(completedIssues.concat(IssuesChecked))
+        setIssues(not(issues, IssuesChecked))
         setChecked(not(checked, IssuesChecked))
     }
 
     const handleCheckedCompletedIssues = () => {
-        props.SetIssues(props.Issues.concat(CompletedIssuesChecked))
-        props.SetCompletedIssues(not(props.CompletedIssues, CompletedIssuesChecked))
+        setIssues(issues.concat(CompletedIssuesChecked))
+        setCompletedIssues(not(completedIssues, CompletedIssuesChecked))
         setChecked(not(checked, CompletedIssuesChecked))
     }
 
@@ -64,11 +66,11 @@ export  const Issues: React.FC<TIssuesProps> = (props) => {
 
         <Container style={{margin: 0}} maxWidth="xl">
             <Grid item className={classes.list}>
-                <IssuesList title={"Issues"} items={props.Issues}
+                <IssuesList title={"Issues"} items={issues}
                             el={"Issue"}
-                            DeleteIssue={props.DeleteIssue} AddIssue={props.AddIssue}
+                            deleteIssue={deleteIssue} addIssue={addIssue}
                             checked={checked} setChecked={setChecked}
-                            ChangeIssue={props.ChangeIssue}
+                            changeIssue={changeIssue}
                 />
             </Grid>
         </Container>
@@ -102,13 +104,14 @@ export  const Issues: React.FC<TIssuesProps> = (props) => {
 
         <Container style={{margin: 0, paddingBottom: "2rem"}} maxWidth="xl">
             <Grid item className={classes.list}>
-                <IssuesList title={"Completed Issues"} items={props.CompletedIssues}
+                <IssuesList title={"Completed Issues"} items={completedIssues}
                             el={"CompletedIssue"} setChecked={setChecked}
-                            checked={checked} AddIssue={props.AddIssue}
-                            DeleteIssue={props.DeleteIssue}
-                            ChangeIssue={props.ChangeIssue}
+                            checked={checked} addIssue={addIssue}
+                            deleteIssue={deleteIssue}
+                            changeIssue={changeIssue}
                 />
             </Grid>
         </Container>
     </Grid>
 }
+export default Issues

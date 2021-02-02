@@ -9,34 +9,34 @@ import CreateSnackBarOptions from "../../../assets/secondary/CreateSnackbarOptio
 
 
 export type TWorklogInfoProps = {
-    DateOfCreation: string | null
-    SummaryTime: string | null
-    SummaryStatus: "ok" | "danger" | "warning" | string
-    BlockInfo: TBlockInfo
-    Worklogs: Array<TWorkLog>
-    ShowSnackBar: TShowSnackBar
-    SetWorklogStatus: TSetWorklogStatus
+    dateOfCreation: string | null
+    summaryTime: string | null
+    summaryStatus: "ok" | "danger" | "warning" | string
+    blockInfo: TBlockInfo
+    worklogs: Array<TWorkLog>
+    showSnackBar: TShowSnackBar
+    setWorklogStatus: TSetWorklogStatus
 }
 
 export const WorklogInfo: React.FC<TWorklogInfoProps> = (props) => {
 
     const OnSendWorklogData = (): void => {
-        props.Worklogs.map(Worklog => {
+        props.worklogs.map(Worklog => {
             if (!Worklog.Issue || Worklog.Issue.length <= 0) {
-                props.ShowSnackBar(CreateSnackBarOptions("error", "Issue does not exist"))
-                props.SetWorklogStatus({target: "worklog", status: "danger", id: Worklog.id})
+                props.showSnackBar(CreateSnackBarOptions("error", "Issue does not exist"))
+                props.setWorklogStatus({target: "worklog", status: "danger", id: Worklog.id})
             } else if (!Worklog.TaskField || Worklog.TaskField.length <= 0) {
-                props.ShowSnackBar(CreateSnackBarOptions("warning", "Please, enter the worklog name"))
-                props.SetWorklogStatus({target: "worklog", status: "warning", id: Worklog.id})
+                props.showSnackBar(CreateSnackBarOptions("warning", "Please, enter the worklog name"))
+                props.setWorklogStatus({target: "worklog", status: "warning", id: Worklog.id})
             } else if (!Worklog.TimerValue || !Worklog.StartTime || !Worklog.EndTime) {
-                props.ShowSnackBar(CreateSnackBarOptions("error", "something goes wrong"))
+                props.showSnackBar(CreateSnackBarOptions("error", "something goes wrong"))
             } else {
-                props.SetWorklogStatus({target: "worklog", status: "ok", id: Worklog.id})
-                props.ShowSnackBar(CreateSnackBarOptions("success", "your worklog successfully logged"))
+                props.setWorklogStatus({target: "worklog", status: "ok", id: Worklog.id})
+                props.showSnackBar(CreateSnackBarOptions("success", "your worklog successfully logged"))
             }
         })
 
-        if (props.Worklogs.every(Worklog => Worklog.EndTime && Worklog.StartTime && Worklog.TimerValue
+        if (props.worklogs.every(Worklog => Worklog.EndTime && Worklog.StartTime && Worklog.TimerValue
             && Worklog.TaskField && Worklog.Issue)) {
             // let ObjToSend: TSendWorklogsData = {
             //     WorkLogsBlocks: {
@@ -45,11 +45,11 @@ export const WorklogInfo: React.FC<TWorklogInfoProps> = (props) => {
             //     }
             // }
             //props.SendWorklogBlockThunk(ObjToSend)
-            props.SetWorklogStatus({target: "worklogblock", status: "ok", id: props.BlockInfo.id})
-            props.ShowSnackBar(CreateSnackBarOptions("success", "your worklog successfully logged"))
+            props.setWorklogStatus({target: "worklogblock", status: "ok", id: props.blockInfo.id})
+            props.showSnackBar(CreateSnackBarOptions("success", "your worklog successfully logged"))
         } else {
-            props.ShowSnackBar(CreateSnackBarOptions("error", "Issue does not exist"))
-            props.SetWorklogStatus({target: "worklogblock", status: "danger", id: props.BlockInfo.id})
+            props.showSnackBar(CreateSnackBarOptions("error", "Issue does not exist"))
+            props.setWorklogStatus({target: "worklogblock", status: "danger", id: props.blockInfo.id})
         }
     }
 
@@ -59,24 +59,24 @@ export const WorklogInfo: React.FC<TWorklogInfoProps> = (props) => {
             <div className={FS.SummaryWorklogInfo}>
 
                 <div className={FS.DateBlockContainer}>
-                    {props.DateOfCreation}
+                    {props.dateOfCreation}
                 </div>
 
                 <div className={FS.statusContainer}>
                     <div className={FS.DateTime}>
 
                         <div>
-                            {props.SummaryTime}
+                            {props.summaryTime}
                         </div>
 
                         <div className={FS.Progress}>
-                            <ProgressBar status={props.SummaryStatus}/>
+                            <ProgressBar status={props.summaryStatus}/>
                         </div>
 
                     </div>
 
                     {
-                        props.BlockInfo.BlockCreatedDate === CurrentDate
+                        props.blockInfo.BlockCreatedDate === CurrentDate
                             ? <BackupIcon style={{cursor: "pointer"}} color={"primary"} fontSize={"large"}
                                           onClick={OnSendWorklogData}
                                           className={FS.DownloadIcon}/>

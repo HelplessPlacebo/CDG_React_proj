@@ -1,11 +1,11 @@
 import React from "react";
 import CS from "./Calendar.module.css"
 import CalendarIcon from "../../assets/imgs/calendar.svg"
-import {DropDownCalendarContainer} from "./DropDownCalendarContainer"
+import {DropDownCalendar} from "./DropDownCalendar"
 import {TCurrentDate} from "../../Redux/CalendarReducer"
 import {useBooleanState} from "../hooks/useBooleanState"
 
-export type TCalendarProps = { CurrentDate: TCurrentDate }
+export type TCalendarProps = { currentDate: TCurrentDate }
 
 const Calendar: React.FC<TCalendarProps> = (props) => {
     const DropDownCalendarData = useBooleanState(false)
@@ -16,7 +16,7 @@ const Calendar: React.FC<TCalendarProps> = (props) => {
             <div className={CS.CalendarContent}>
 
                 <div className={CS.CalendarDate}>
-                    {props.CurrentDate.CurrentDay} {props.CurrentDate.CurrentMonth} {props.CurrentDate.CurrentYear}
+                    {props.currentDate.CurrentDay} {props.currentDate.CurrentMonth} {props.currentDate.CurrentYear}
                 </div>
 
                 <div className={CS.CalendarIcon}>
@@ -30,7 +30,7 @@ const Calendar: React.FC<TCalendarProps> = (props) => {
             DropDownCalendarData.isDisplayed &&
             <>
                 <div className={CS.bg} onClick={DropDownCalendarData.Hide}/>
-                <DropDownCalendarContainer/>
+                <DropDownCalendar/>
             </>
         }
 
@@ -38,6 +38,6 @@ const Calendar: React.FC<TCalendarProps> = (props) => {
 }
 
 export default React.memo(Calendar, (prevProps, nextProps) => {
-    if (prevProps.CurrentDate !== nextProps.CurrentDate) return false
+    if (prevProps.currentDate !== nextProps.currentDate) return false
     else return true
 })

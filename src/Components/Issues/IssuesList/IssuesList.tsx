@@ -12,9 +12,9 @@ export type TIssuesListProps = {
     el: "Issue" | "CompletedIssue"
     checked: string[]
     setChecked: Dispatch<string[]>
-    AddIssue: TAddIssue
-    DeleteIssue: TDeleteIssue
-    ChangeIssue: TChangeIssue
+    addIssue: TAddIssue
+    deleteIssue: TDeleteIssue
+    changeIssue: TChangeIssue
 }
 
 
@@ -23,14 +23,14 @@ export const IssuesList: React.FC<TIssuesListProps> = (props) => {
     return <Card style={{width: "100%", height: "100%"}}>
 
         <ListHeader checked={props.checked} setChecked={props.setChecked}
-                    AddIssue={props.AddIssue} items={props.items}
+                    addIssue={props.addIssue} items={props.items}
                     el={props.el} title={props.title}/>
 
         <Divider/>
 
         <div style={{paddingTop: "1rem"}}>
-            <ListContent checked={props.checked} items={props.items} el={props.el} DeleteIssue={props.DeleteIssue}
-                         ChangeIssue={props.ChangeIssue} setChecked={props.setChecked}/>
+            <ListContent checked={props.checked} items={props.items} el={props.el} deleteIssue={props.deleteIssue}
+                         changeIssue={props.changeIssue} setChecked={props.setChecked}/>
         </div>
 
 

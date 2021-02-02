@@ -5,20 +5,20 @@ import {SignUp} from "./SignUp/SignUp";
 import {TShowSnackBar} from "../../App";
 
 type TAuthPageProps = {
-    ShowSnackBar: TShowSnackBar
+    showSnackBar: TShowSnackBar
     onAuth: () => void
     onUnAuth: () => void
 }
 
 export const AuthPage: React.FC<TAuthPageProps> = (props) => {
-    const [ComponentToDraw, SetComponentToDraw] = useState("login")
-    const ComponentIsSignIn = () => SetComponentToDraw("login")
-    const ComponentIsSignUp = () => SetComponentToDraw("registration")
+    const [componentToDraw, setComponentToDraw] = useState("login")
+    const componentIsSignIn = () => setComponentToDraw("login")
+    const componentIsSignUp = () => setComponentToDraw("registration")
     return <div className={LS.modal}>
         {
-            ComponentToDraw === "login"
-                ? <SignIn ComponentIsSignUp={ComponentIsSignUp} onAuth={props.onAuth}/>
-                : <SignUp ComponentIsSignIn={ComponentIsSignIn} ShowSnackBar={props.ShowSnackBar}/>
+            componentToDraw === "login"
+                ? <SignIn componentIsSignUp={componentIsSignUp} onAuth={props.onAuth}/>
+                : <SignUp componentIsSignIn={componentIsSignIn} showSnackBar={props.showSnackBar}/>
         }
     </div>
 }

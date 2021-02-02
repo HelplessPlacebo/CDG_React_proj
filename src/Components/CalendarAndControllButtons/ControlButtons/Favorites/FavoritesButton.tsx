@@ -5,24 +5,24 @@ import { pink } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
 export type TFavoritesProps = {
-    FavoritesIsClicked: boolean
-    OnFavoritesClick: () => void
+    favoritesIsClicked: boolean
+    onFavoritesClick: () => void
 }
 
 export const FavoritesButton: React.FC<TFavoritesProps> = (props) => {
     return (
         <div
-             className={props.FavoritesIsClicked
+             className={props.favoritesIsClicked
             ? FS.FavoritesButtonBgActive
             : FS.FavoritesButtonBg} >
 
-            <div className={!props.FavoritesIsClicked
+            <div className={!props.favoritesIsClicked
                 ? FS.item
                 : FS.ActiveItem}>
                 <div className={FS.FavoritesTextContainer}>
 
                     <div>
-                        <NavLink onClick={props.OnFavoritesClick}  to={"/Home/Favorites"}> Favorites </NavLink>
+                        <NavLink onClick={props.onFavoritesClick}  to={"/Home/Favorites"}> Favorites </NavLink>
                     </div>
 
                     <div style={{paddingLeft:".5rem"}}>

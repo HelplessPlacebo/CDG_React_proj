@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 type TMaterialNavProps = {
-    OpenUserProfile : ()=> void
+    openUserProfile : ()=> void
     onUnAuth : ()=>void
 }
  const MaterialNav : React.FC<TMaterialNavProps> = (props) =>{
@@ -85,7 +85,7 @@ type TMaterialNavProps = {
                 </IconButton>
                 Logout
             </MenuItem>
-            <MenuItem     onClick={props.OpenUserProfile} >
+            <MenuItem     onClick={props.openUserProfile} >
                 <IconButton
                     aria-label="account of current user"
                     aria-controls="primary-search-account-menu"
@@ -105,7 +105,7 @@ type TMaterialNavProps = {
                 <Toolbar>
                     <div className={HS.NavLinks}>
                         <div className={HS.item}>
-                            <NavLink to="/Home/AllButton">
+                            <NavLink to="/Home/All">
                                 Worklogs
                             </NavLink>
                         </div>
@@ -139,7 +139,7 @@ type TMaterialNavProps = {
                                 aria-label="account of current user"
                                 aria-haspopup="true"
                                 color="inherit"
-                                onClick={props.OpenUserProfile}
+                                onClick={props.openUserProfile}
                             >
                                 <Avatar alt={"user avatar"} src={avatar}/>
                             </IconButton>

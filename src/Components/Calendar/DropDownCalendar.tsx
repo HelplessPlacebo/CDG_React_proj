@@ -1,29 +1,26 @@
 import React from "react";
-import {
-    TCalendar,
-    TClickedDay,
-    TCurrentDate,
-    TSetClickedMonthDay,
-} from "../../Redux/CalendarReducer";
+import {SetClickedMonthDay, TClickedDay,} from "../../Redux/CalendarReducer";
 import CS from "./Calendar.module.css"
 import {CalendarDay} from "./CalendarDay";
-import {randomInteger, TWorklogBlock} from "../../Redux/WorkLogsReducer";
+import {randomInteger} from "../../Redux/WorkLogsReducer";
 import {DropDownCalendarFooterElement} from "./DropDownCalendarFooterElement";
+import {useDispatch, useSelector} from "react-redux";
+import {getCalendar, getClickedMonthDay, getCurrentDate} from "../Selectors/CalendarSelectors";
+import {getWorklogsBlocks} from "../Selectors/WorklogsSelectors";
 
-export type TDropDownCalendarProps = {
-    Calendar: TCalendar
-    ClickedMonthDay: TClickedDay
-    SetClickedMonthDay: TSetClickedMonthDay
-    CurrentDate: TCurrentDate
-    WorklogsBlocks: Array<TWorklogBlock>
-}
 
-export const DropDownCalendar: React.FC<TDropDownCalendarProps> = (props) => {
+export const DropDownCalendar = () => {
+    const dispatch = useDispatch()
+    const calendar = useSelector(getCalendar)
+    const clickedMonthDay = useSelector(getClickedMonthDay)
+    const currentDate = useSelector(getCurrentDate)
+    const worklogsBlocks = useSelector(getWorklogsBlocks)
+    const setClickedMonthDay = (Day: TClickedDay) => dispatch(SetClickedMonthDay(Day))
     const DaysNamesArr = ["S", "M", "T", "W", "T", "F", "S"]
 
     return (<div className={CS.DropDownCalendar}>
         <div className={CS.DropDownCalendarHeader}>
-            {props.CurrentDate.CurrentMonth}
+            {currentDate.CurrentMonth}
         </div>
         <div className={CS.DropDOwnCalendarContentContainer}>
             <div className={CS.DropDownCalendarContent}>
@@ -35,14 +32,14 @@ export const DropDownCalendar: React.FC<TDropDownCalendarProps> = (props) => {
                 })}
 
                 {
-                    props.Calendar[props.CurrentDate.CurrentMonth].map(day => {
-                        return <CalendarDay ClickedMonthDay={props.ClickedMonthDay}
-                                            CurrentDay={props.CurrentDate.CurrentDay}
-                                            MonthName={props.CurrentDate.CurrentMonth}
+                    calendar[currentDate.CurrentMonth].map(day => {
+                        return <CalendarDay ClickedMonthDay={clickedMonthDay}
+                                            CurrentDay={currentDate.CurrentDay}
+                                            MonthName={currentDate.CurrentMonth}
                                             key={day.id}
-                                            SetClickedMonthDay={props.SetClickedMonthDay}
+                                            SetClickedMonthDay={setClickedMonthDay}
                                             {...day}
-                                            WorklogsBlocks={props.WorklogsBlocks}
+                                            WorklogsBlocks={worklogsBlocks}
                         />
                     })}
 

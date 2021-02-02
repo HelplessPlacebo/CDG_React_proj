@@ -8,9 +8,9 @@ import {useWorklogsFunctions} from "../hooks/useWorklogsFunctions";
 
 export type TModalWindowContainerProps = {
     closeWorklogChangeModal: () => void
-    WorklogChangeModalIsOpen: boolean
-    TimerData: TTimerData | undefined
-    SetTimerData: (data: TTimerData | undefined) => void
+    worklogChangeModalIsOpen: boolean
+    timerData: TTimerData | undefined
+    setTimerData: (data: TTimerData | undefined) => void
 }
 
 const ChangeWorklogModalContainer: React.FC<TModalWindowContainerProps> = (props) => {
@@ -21,10 +21,9 @@ const ChangeWorklogModalContainer: React.FC<TModalWindowContainerProps> = (props
 
     const WFS = useWorklogsFunctions()
     return <ChangeWorklogModal {...props}
-                               WorklogToChange={worklogToChange} Issues={issues} PlayingWorklog={playingWorklog}
-                               AddWorklog={WFS.addWorklog} SetIsPlayingWorklogById={WFS.setIsPlayingWorklogById}
-                               SetWorklogToChange={WFS.setWorklogToChange} ChangeWorklog={WFS.changeWorklog}
-                               ChangeFavoritesWorklog={WFS.changeFavoritesWorklog}/>
+                               worklogToChange={worklogToChange} issues={issues} playingWorklog={playingWorklog}
+                               addWorklog={WFS.addWorklog} setIsPlayingWorklogById={WFS.setIsPlayingWorklogById}
+                               setWorklogToChange={WFS.setWorklogToChange} changeWorklog={WFS.changeWorklog}
+                               changeFavoritesWorklog={WFS.changeFavoritesWorklog}/>
 }
-
 export default ChangeWorklogModalContainer

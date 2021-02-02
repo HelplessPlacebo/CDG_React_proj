@@ -1,4 +1,4 @@
-import React, {SyntheticEvent, useState, useEffect,} from "react"
+import React, {SyntheticEvent, useEffect, useState,} from "react"
 import MS from "./ModalWindow.module.css"
 import {TimeSlider} from "./TimeSlider/TimeSlider"
 import {CalculateNewStartTime, ToFullTime} from "../../assets/secondary/CalculateTime"
@@ -13,7 +13,8 @@ import Grid from "@material-ui/core/Grid/Grid"
 import SaveIcon from '@material-ui/icons/Save';
 import {
     TAddWorklog,
-    TChangeFavoritesWorklog, TChangeWorklog,
+    TChangeFavoritesWorklog,
+    TChangeWorklog,
     TSetIsPlayingWorklogById,
     TSetWorklogToChange,
     TWorkLog
@@ -26,27 +27,27 @@ type TTimerValue = {
     end: string | null
 }
 type TChangeWorklogModalProps = TModalWindowContainerProps & {
-    Issues: string[]
-    WorklogToChange: TWorkLog | null
-    PlayingWorklog: TWorkLog | null
+    issues: string[]
+    worklogToChange: TWorkLog | null
+    playingWorklog: TWorkLog  | null
 
-    ChangeFavoritesWorklog: TChangeFavoritesWorklog
-    SetIsPlayingWorklogById: TSetIsPlayingWorklogById
-    SetWorklogToChange: TSetWorklogToChange
-    ChangeWorklog: TChangeWorklog
-    AddWorklog: TAddWorklog
+    changeFavoritesWorklog: TChangeFavoritesWorklog
+    setIsPlayingWorklogById: TSetIsPlayingWorklogById
+    setWorklogToChange: TSetWorklogToChange
+    changeWorklog: TChangeWorklog
+    addWorklog: TAddWorklog
 }
 
 const ChangeWorklogModal: React.FC<TChangeWorklogModalProps> = (props) => {
 
-    const ModalWorklogInput = useInput(props.WorklogToChange && props.WorklogToChange.TaskField ? props.WorklogToChange.TaskField : "")
-    const ModalIssueInput = useInput(props.WorklogToChange && props.WorklogToChange.Issue ? props.WorklogToChange.Issue : "")
-    const [ModalTimeLineValues, SetModalTimeLineValues] = useState<TTimerValue>()
-    const [NewWorklogNameIsFilled, SetNewWorklogNameIsFilled] = useState<boolean>(false)
-    const [NewIssueNameIsFilled, SetNewIssueNameIsFilled] = useState<boolean>(false)
+    const modalWorklogInput = useInput(props.worklogToChange && props.worklogToChange.TaskField ? props.worklogToChange.TaskField : "")
+    const modalIssueInput = useInput(props.worklogToChange && props.worklogToChange.Issue ? props.worklogToChange.Issue : "")
+    const [modalTimeLineValues, setModalTimeLineValues] = useState<TTimerValue>()
+    const [newWorklogNameIsFilled, setNewWorklogNameIsFilled] = useState<boolean>(false)
+    const [newIssueNameIsFilled, setNewIssueNameIsFilled] = useState<boolean>(false)
 
-    let EmptyWorklogTimerMinutes = props.TimerData?.TimerValue.substr(3, props.TimerData?.TimerValue.length - 6)
-    let EmptyWorklogTimerEndHours = props.TimerData?.TimerValue.substr(0, props.TimerData?.TimerValue.length - 6)
+    let EmptyWorklogTimerMinutes = props.timerData?.TimerValue.substr(3, props.timerData?.TimerValue.length - 6)
+    let EmptyWorklogTimerEndHours = props.timerData?.TimerValue.substr(0, props.timerData?.TimerValue.length - 6)
     let CurrentTime = ToFullTime(new Date().getHours()) + ":" + ToFullTime(new Date().getMinutes())
     let EmptyWorklogTimeValues = {
         start: CalculateNewStartTime(CurrentTime, EmptyWorklogTimerEndHours, EmptyWorklogTimerMinutes) as string | null,
@@ -55,74 +56,75 @@ const ChangeWorklogModal: React.FC<TChangeWorklogModalProps> = (props) => {
 
     useEffect(() => {
 
-        if (props.TimerData) {
-            props.TimerData.TimerTaskField && ModalWorklogInput.forceUpdate(props.TimerData.TimerTaskField)
-            props.TimerData.TimerIssue && ModalIssueInput.forceUpdate(props.TimerData.TimerIssue)
-            if (props.PlayingWorklog && props.PlayingWorklog.StartTime && props.PlayingWorklog.EndTime) {
-                SetModalTimeLineValues({
-                    start: props.PlayingWorklog.StartTime,
-                    end: props.PlayingWorklog.EndTime
+        if (props.timerData) {
+            props.timerData.TimerTaskField && modalWorklogInput.forceUpdate(props.timerData.TimerTaskField)
+            props.timerData.TimerIssue && modalIssueInput.forceUpdate(props.timerData.TimerIssue)
+            if (props.playingWorklog && props.playingWorklog.StartTime && props.playingWorklog.EndTime) {
+                setModalTimeLineValues({
+                    start: props.playingWorklog.StartTime,
+                    end: props.playingWorklog.EndTime
                 })
-            } else SetModalTimeLineValues(EmptyWorklogTimeValues)
-        } else if (props.WorklogToChange) {
-            props.WorklogToChange.TaskField && ModalWorklogInput.forceUpdate(props.WorklogToChange.TaskField)
-            props.WorklogToChange.Issue && ModalIssueInput.forceUpdate(props.WorklogToChange.Issue)
-            SetModalTimeLineValues({
-                start: props.WorklogToChange.StartTime,
-                end: props.WorklogToChange.EndTime
+            } else setModalTimeLineValues(EmptyWorklogTimeValues)
+        } else if (props.worklogToChange) {
+            props.worklogToChange.TaskField && modalWorklogInput.forceUpdate(props.worklogToChange.TaskField)
+            props.worklogToChange.Issue && modalIssueInput.forceUpdate(props.worklogToChange.Issue)
+            setModalTimeLineValues({
+                start: props.worklogToChange.StartTime,
+                end: props.worklogToChange.EndTime
             })
         }
-    }, [props.TimerData?.TimerIssue, props.TimerData?.TimerTaskField, props.TimerData?.TimerValue,
-        props.WorklogToChange])
+    }, [props.timerData?.TimerIssue, props.timerData?.TimerTaskField, props.timerData?.TimerValue,
+        props.worklogToChange])
 
     const OnModalSubmit = (e: SyntheticEvent) => {
         {
-            ModalWorklogInput.value.length > 0
-                ? SetNewWorklogNameIsFilled(false)
-                : SetNewWorklogNameIsFilled(true)
+            modalWorklogInput.value.length > 0
+                ? setNewWorklogNameIsFilled(false)
+                : setNewWorklogNameIsFilled(true)
         }
         {
-            ModalIssueInput.value.length > 0
-                ? SetNewIssueNameIsFilled(false)
-                : SetNewIssueNameIsFilled(true)
+            modalIssueInput.value.length > 0
+                ? setNewIssueNameIsFilled(false)
+                : setNewIssueNameIsFilled(true)
         }
 
-        if (ModalWorklogInput.value.length > 0
-            && ModalIssueInput.value.length > 0
-            && ModalTimeLineValues) {
+        if (modalWorklogInput.value.length > 0
+            && modalIssueInput.value.length > 0
+            && modalTimeLineValues) {
 
-            let Obj: string
-            if (props.TimerData) Obj = "PlayingWorklog"; else Obj = "WorklogToChange"
+            let Obj : string
+            if (props.timerData) Obj = "playingWorklog"; else Obj = "worklogToChange"
+
             let NewWL = {
                 //@ts-ignore
                 ...props[Obj],
-                StartTime: ModalTimeLineValues.start,
-                EndTime: ModalTimeLineValues.end,
-                TaskField: ModalWorklogInput.value,
-                Issue: ModalIssueInput.value,
+                StartTime: modalTimeLineValues.start,
+                EndTime: modalTimeLineValues.end,
+                TaskField: modalWorklogInput.value,
+                Issue: modalIssueInput.value,
                 //@ts-ignore
                 status: props[Obj].status ? props[Obj].status : "warning",
-                //@ts-ignore
-                TimerValue: props.TimerData && props.TimerData.TimerValue ? props.TimerData.TimerValue
+
+                TimerValue: props.timerData && props.timerData.TimerValue ? props.timerData.TimerValue
                     //@ts-ignore
                     : props[Obj].TimerValue ? props[Obj].TimerValue : "00:00:00"
             }
 
             if (NewWL.IsFavorites) {
                 //@ts-ignore
-                props.ChangeFavoritesWorklog(props[Obj].id, NewWL)
+                props.changeFavoritesWorklog(props[Obj].id, NewWL)
                 //@ts-ignore
-                props.SetIsPlayingWorklogById(false, props[Obj].id)
+                props.setIsPlayingWorklogById(false, props[Obj].id)
             } else {
                 //@ts-ignore
-                props.ChangeWorklog(NewWL)
+                props.changeWorklog(NewWL)
                 //@ts-ignore
-                props.SetIsPlayingWorklogById(false, props[Obj].id)
+                props.setIsPlayingWorklogById(false, props[Obj].id)
             }
-            ModalWorklogInput.clear()
-            ModalIssueInput.clear()
-            SetNewWorklogNameIsFilled(false)
-            SetNewIssueNameIsFilled(false)
+            modalWorklogInput.clear()
+            modalIssueInput.clear()
+            setNewWorklogNameIsFilled(false)
+            setNewIssueNameIsFilled(false)
             close(e)
         }
     }
@@ -133,19 +135,19 @@ const ChangeWorklogModal: React.FC<TChangeWorklogModalProps> = (props) => {
         if (props.closeWorklogChangeModal) {
             props.closeWorklogChangeModal()
         }
-        props.SetTimerData(undefined)
-        props.SetWorklogToChange(undefined)
-        props.SetIsPlayingWorklogById(false)
-        ModalWorklogInput.clear()
-        ModalIssueInput.clear()
+        props.setTimerData(undefined)
+        props.setWorklogToChange(undefined)
+        props.setIsPlayingWorklogById(false)
+        modalWorklogInput.clear()
+        modalIssueInput.clear()
     }
 
 
-    if (!props.WorklogChangeModalIsOpen) return null;
+    if (!props.worklogChangeModalIsOpen) return null;
 
     return (
         <Dialog
-            open={props.WorklogChangeModalIsOpen}
+            open={props.worklogChangeModalIsOpen}
             onClose={props.closeWorklogChangeModal}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
@@ -156,35 +158,33 @@ const ChangeWorklogModal: React.FC<TChangeWorklogModalProps> = (props) => {
 
                     <Grid item className="TimeSLider" style={{paddingTop: "10%"}}>
                         {
-                            ModalTimeLineValues?.start && ModalTimeLineValues?.end &&
-                            <TimeSlider value={ModalTimeLineValues} disabled={false}
-                                        step={10} SetTimerValue={SetModalTimeLineValues}/>
+                            modalTimeLineValues?.start && modalTimeLineValues?.end &&
+                            <TimeSlider value={modalTimeLineValues} disabled={false}
+                                        step={10} SetTimerValue={setModalTimeLineValues}/>
                         }
                     </Grid>
 
                     <Grid item style={{paddingTop: "3rem"}} className="Inputs">
 
-                        <CustomInput {...ModalWorklogInput.bind} label={"Task Field"}
+                        <CustomInput {...modalWorklogInput.bind} label={"Task Field"}
                                      placeholder={"Please, enter the task"} width={500}/>
 
                         {
-                            NewWorklogNameIsFilled &&
-                            <div id="new-issue-err" className={MS.ModalInputError}> Please, enter worklog
-                                name</div>
+                            newWorklogNameIsFilled &&
+                            <div id="new-issue-err" className={MS.ModalInputError}> Please, enter worklog name</div>
                         }
 
                         <div style={{paddingTop: "1rem"}}>
                             {
                                 //@ts-ignore
-                                <IssuesSelectInput Issues={props.Issues}{...ModalIssueInput.bind} />
+                                <IssuesSelectInput issues={props.issues}{...modalIssueInput.bind} />
                             }
                         </div>
 
 
                         {
-                            NewIssueNameIsFilled &&
-                            <div id="new-issue-err" className={MS.ModalInputError}> Please, enter issue
-                                name</div>
+                            newIssueNameIsFilled &&
+                            <div id="new-issue-err" className={MS.ModalInputError}> Please, enter issue name</div>
                         }
 
                     </Grid>
@@ -217,6 +217,6 @@ const ChangeWorklogModal: React.FC<TChangeWorklogModalProps> = (props) => {
 }
 
 export default React.memo(ChangeWorklogModal, (prevProps, nextProps) => {
-    if (prevProps.WorklogChangeModalIsOpen !== nextProps.WorklogChangeModalIsOpen) return false
+    if (prevProps.worklogChangeModalIsOpen !== nextProps.worklogChangeModalIsOpen) return false
     else return true
 })

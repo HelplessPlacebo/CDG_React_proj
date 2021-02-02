@@ -6,16 +6,16 @@ import {useSelector} from "react-redux"
 import {getCurrentDate} from "../Selectors/CalendarSelectors";
 
 export type TCalendarAndControlButtonsProps = {
-    FavoritesIsClicked: boolean
-    OnFavoritesClick: () => void
-    OnAllClicked: () => void
+    favoritesIsClicked: boolean
+    onFavoritesClick: () => void
+    onAllClicked: () => void
 }
 
 export const CalendarAndControlButtons: React.FC<TCalendarAndControlButtonsProps> = (props) => {
     const currentDate = useSelector(getCurrentDate)
     return <div className={AS.CalendarAndButtons}>
-        <Calendar CurrentDate={currentDate}/>
-        <ControlButtons FavoritesIsClicked={props.FavoritesIsClicked} OnAllClicked={props.OnAllClicked}
-                        OnFavoritesClick={props.OnFavoritesClick}/>
+        <Calendar currentDate={currentDate}/>
+        <ControlButtons favoritesIsClicked={props.favoritesIsClicked} onAllClicked={props.onAllClicked}
+                        onFavoritesClick={props.onFavoritesClick}/>
     </div>
 }

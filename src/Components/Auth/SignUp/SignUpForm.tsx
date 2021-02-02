@@ -8,7 +8,7 @@ import {InjectedFormProps, reduxForm} from "redux-form";
 import {TSignUpFormData} from "./SignUp";
 
 type TOwnProps={
-    ComponentIsSignIn :()=>void
+    componentIsSignIn :()=>void
 }
 
 const SignUpForm: React.FC<InjectedFormProps<TSignUpFormData, TOwnProps> & TOwnProps> = (props) => {
@@ -45,7 +45,7 @@ const SignUpForm: React.FC<InjectedFormProps<TSignUpFormData, TOwnProps> & TOwnP
                                       fontSize="1.11rem" startIcon={<DoneIcon/>}/>
                 </Grid>
                 <Grid item>
-                    <CustomizedButton onClick={props.ComponentIsSignIn} text="sign in"
+                    <CustomizedButton onClick={props.componentIsSignIn} text="sign in"
                                       variant="contained" bgColor="teal"
                                       fontSize="1.11rem"/>
                 </Grid>

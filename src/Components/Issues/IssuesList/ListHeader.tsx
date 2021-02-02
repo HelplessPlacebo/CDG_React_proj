@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
 type TCardHeaderProps = {
     checked: string[]
     setChecked: Dispatch<string[]>
-    AddIssue: TAddIssue
+    addIssue: TAddIssue
     items: string[]
     el: "Issue" | "CompletedIssue"
     title: React.ReactNode
@@ -64,7 +64,7 @@ export const ListHeader: React.FC<TCardHeaderProps> = (props) => {
 
 
     const OnConfirmAddNewIssue = () => {
-        props.AddIssue(AddNewIssueInput.value)
+        props.addIssue(AddNewIssueInput.value)
         AddNewIssueInput.clear()
         SetAddIssueOpened(false)
     }
@@ -106,8 +106,8 @@ export const ListHeader: React.FC<TCardHeaderProps> = (props) => {
             AddIssueOpened && props.el === "Issue" && <CustomListInput {...AddNewIssueInput.bind}
                                                                        onSubmit={OnConfirmAddNewIssue}
                                                                        onCancel={OnCancelAddNewIssue}
-                                                                       SubmitButtonText={"Add"}
-                                                                       CancelButtonText={"cancel"}/>
+                                                                       submitButtonText={"Add"}
+                                                                       cancelButtonText={"cancel"}/>
         }
     </div>
 }

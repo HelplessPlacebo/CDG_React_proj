@@ -17,8 +17,8 @@ const Transition = React.forwardRef(function Transition(
 });
 
 type TModalUserProfile = {
-    IsOpen: boolean
-    Hide: () => void
+    isOpen: boolean
+    hide: () => void
 }
 const ModalUserProfile: React.FC<TModalUserProfile> = (props) => {
     //const profileNameInput = useInput("user name")
@@ -26,14 +26,14 @@ const ModalUserProfile: React.FC<TModalUserProfile> = (props) => {
     const SaveProfileChanges = () => {
         // some logic with req on server, then await for response, check if res.status === 200 then
         // save new profile data in reducer
-        props.Hide()
+        props.hide()
     }
 
     return <Dialog
-        open={props.IsOpen}
+        open={props.isOpen}
         TransitionComponent={Transition}
         keepMounted
-        onClose={props.Hide}
+        onClose={props.hide}
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
     >
@@ -47,7 +47,7 @@ const ModalUserProfile: React.FC<TModalUserProfile> = (props) => {
                 save
             </Button>
 
-            <Button onClick={props.Hide} color="primary">
+            <Button onClick={props.hide} color="primary">
                 go back
             </Button>
 
@@ -56,6 +56,6 @@ const ModalUserProfile: React.FC<TModalUserProfile> = (props) => {
 }
 
 export default React.memo(ModalUserProfile, (prevProps, nextProps) => {
-    if (nextProps.IsOpen !== prevProps.IsOpen) return false
+    if (nextProps.isOpen !== prevProps.isOpen) return false
     else return true
 })
