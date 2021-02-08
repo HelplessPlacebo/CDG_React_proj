@@ -1,29 +1,26 @@
-import React, {useState, useEffect, Dispatch} from 'react';
+import React, {useState, useEffect, Dispatch, SetStateAction} from 'react';
 //@ts-ignore
 import TimeRangeSlider from 'react-time-range-slider';
 import {LeftLabel} from "./SliderValueLeftLabel";
 import {RightLabel} from "./SliderValueRightLabel";
 import {findPosX} from "../../../assets/secondary/FindElementPose";
+import {TTimerValues} from "../ChangeWorklogModal";
 
 export type TTimeSliderProps = {
     step: number
     maxValue?: string
     minValue?: string
     format?: number
-    disabled: boolean
-    value?: {
+    disabled?: boolean
+    value: {
         start: string | null
         end: string | null
     }
-    SetTimerValue: Dispatch<any>
+    setTimerValues: Dispatch<SetStateAction<TTimerValues>>
 }
 
 
 export const TimeSlider: React.FC<TTimeSliderProps> = (props) => {
-    const [value, SetValue] = useState({
-        start: props.value?.start ? props.value.start as string | null : "08:00",
-        end: props.value?.end ? props.value.end as string | null : "22:00"
-    })
     const [LeftPose, SetLeftPose] = useState<number>()
     const [RightPose, SetRightPose] = useState<number>()
     const [LeftOffset, SetLeftOffset] = useState<number>()
@@ -52,9 +49,9 @@ export const TimeSlider: React.FC<TTimeSliderProps> = (props) => {
     }
 
     useEffect(() => {
-            props.value && SetValue(props.value)
+             props.setTimerValues(props.value)
             TimerButtonsInit()
-        }, [props.value && props.value]
+        }, [props.value]
     );
 
 
@@ -64,13 +61,11 @@ export const TimeSlider: React.FC<TTimeSliderProps> = (props) => {
 
     const timeChangeHandler = (time: any) => {
         TimerButtonsInit()
-        SetValue(time)
+       props.setTimerValues(time)
     }
 
     const changeCompleteHandler = (time: any) => {
         TimerButtonsInit()
-        props.SetTimerValue(value)
-        SetValue(time)
         /* console.log("Complete Handler Called", time);*/
     }
 
@@ -85,9 +80,9 @@ export const TimeSlider: React.FC<TTimeSliderProps> = (props) => {
             onChangeComplete={changeCompleteHandler}
             onChange={timeChangeHandler}
             step={props.step}
-            value={value}/>
+            value={props.value}/>
 
-        <LeftLabel Position={LeftPose} offsetLeft={LeftOffset} value={value}/>
-        <RightLabel Position={RightPose} value={value} offsetRight={RightOffset}/>
+        <LeftLabel Position={LeftPose} offsetLeft={LeftOffset} StartTime={props.value?.start}/>
+        <RightLabel Position={RightPose} EndTime={props.value?.end} offsetRight={RightOffset}/>
     </>);
 }

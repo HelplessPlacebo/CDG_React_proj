@@ -4,7 +4,6 @@ import {Redirect, Route, Switch} from "react-router-dom"
 import AS from "./App.module.css"
 import {WorkLogsBlock} from "./Components/WorkLogs/WorkLogsBlock"
 import {TimeTracking} from "./Components/TimeTracking/TimeTracking"
-import {TTimerData} from "./Redux/WorkLogsReducer"
 import {useBooleanState} from "./Components/hooks/useBooleanState"
 import {AuthPage} from "./Components/Auth/AuthPage"
 import SnackBar, {TSnackBarOptions} from "./Components/SnackBar/SnackBar"
@@ -15,7 +14,7 @@ import {CalendarAndControlButtons} from "./Components/CalendarAndControllButtons
 //////////////////////////// lazy loading ////////////////////////////////////////
 const Issues = React.lazy(() => import("./Components/Issues/Issues"))
 const Favorites = React.lazy(() => import("./Components/WorkLogs/FavoritesWorklogs"))
-const ChangeWorklogModalContainer = React.lazy(() => import("./Components/ChangeWorklogModal/ChangeWorklogModalContainer"))
+const ChangeWorklogModalContainer = React.lazy(() => import("./Components/ChangeWorklogModal/ChangeWorklogModal"))
 const ModalUserProfile = React.lazy(() => import("./Components/UserProfile/ModalUserProfile"))
 const SuspendedIssues = withSuspense(Issues)
 const SuspendedFavorites = withSuspense(Favorites)
@@ -33,7 +32,6 @@ export const App = () => {
     const favoritesClickedStatus = useBooleanState(false)
     const userProfileClickedStatus = useBooleanState(false)
     const snackBarDisplayingStatus = useBooleanState(false)
-    const [timerData, setTimerData] = useState<TTimerData | undefined>(undefined)
     const [snackBarOptions, setSnackBarOptions] = useState<TSnackBarOptions>({
         message: "something goes wrong",
         HideDuration: 3000,
@@ -41,7 +39,6 @@ export const App = () => {
         severity: "error"
     })
 
-    const onSetTimerData = (timerData: TTimerData | undefined) => setTimerData(timerData)
     const onAuth = () => setIsAuth(true)
     const onUnAuth = () => setIsAuth(false)
 
@@ -82,20 +79,17 @@ export const App = () => {
                                    <div className={AS.MainWrapper}>
                                        <Switch>
                                            <Route exact path='/Home/All'
-                                                  render={() => <WorkLogsBlock timerData={timerData}
-                                                                               openWorklogChangeModal={worklogModalStatus.Show}
-                                                                               componentToDraw="Worklogs"
-                                                                               showSnackBar={showSnackBar}
-                                                                               closeWorklogChangeModal={worklogModalStatus.Hide}
-                                                                               setTimerData={onSetTimerData}
+                                                  render={() => <WorkLogsBlock
+                                                      openWorklogChangeModal={worklogModalStatus.Show}
+                                                      componentToDraw="Worklogs"
+                                                      showSnackBar={showSnackBar}
+                                                      closeWorklogChangeModal={worklogModalStatus.Hide}
                                                   />
                                                   }/>
 
                                            <Route exact path='/Home/Favorites'
                                                   render={() => <SuspendedFavorites
                                                       openWorklogChangeModal={worklogModalStatus.Show}
-                                                      timerData={timerData}
-                                                      setTimerData={onSetTimerData}
                                                       showSnackBar={showSnackBar}
                                                       closeWorklogChangeModal={worklogModalStatus.Hide}
                                                       componentToDraw="FavoritesWorklogs"
@@ -105,7 +99,6 @@ export const App = () => {
 
                                        <div className={AS.TImeTracking_and_Calendar}>
                                            <TimeTracking favoritesIsClicked={worklogModalStatus.isDisplayed}
-                                                         setTimerData={onSetTimerData}
                                                          openWorklogChangeModal={worklogModalStatus.Show}
                                            />
                                        </div>
@@ -121,10 +114,8 @@ export const App = () => {
             }
 
             <SuspendedChangeWorklogModalContainer
-                setTimerData={onSetTimerData}
                 worklogChangeModalIsOpen={worklogModalStatus.isDisplayed}
                 closeWorklogChangeModal={worklogModalStatus.Hide}
-                timerData={timerData}
             />
 
             <SuspendedModalUserProfile isOpen={userProfileClickedStatus.isDisplayed}

@@ -14,17 +14,16 @@ const FavoritesWorklogs: React.FC<TWorklogsContainerOwnProps> = (props) => {
     const favoritesWorklog = useSelector(getFavoritesWorklog)
 
     const WFS = useWorklogsFunctions()
-    const AddNewFavoritesWorklog = () => !playingWorklog && WFS.addWorklog(undefined, true)
+    const AddNewFavoritesWorklog = () => !playingWorklog && WFS.addWorklog(null, true)
     return (<div>
         {
             favoritesWorklog.length > 0
                 ? <div className={FS.WorklogsContainer}>
-                    <WorkLogsBlock timerData={props.timerData}
-                                   openWorklogChangeModal={props.openWorklogChangeModal}
-                                   componentToDraw={props.componentToDraw}
-                                   setTimerData={props.setTimerData}
-                                   showSnackBar={props.showSnackBar}
-                                   closeWorklogChangeModal={props.closeWorklogChangeModal}
+                    <WorkLogsBlock
+                        openWorklogChangeModal={props.openWorklogChangeModal}
+                        componentToDraw={props.componentToDraw}
+                        showSnackBar={props.showSnackBar}
+                        closeWorklogChangeModal={props.closeWorklogChangeModal}
                     />
                 </div>
 

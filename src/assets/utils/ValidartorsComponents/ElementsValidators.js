@@ -3,6 +3,7 @@ import EVS from "./ElementsValidators.module.css"
 import {Field} from "redux-form";
 import { makeStyles } from '@material-ui/core/styles/index';
 import TextField from '@material-ui/core/TextField/index';
+import {IssuesSelectInput} from "../../../Components/Issues/Inputs/IssuesSelectInput";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -18,6 +19,14 @@ export const FormInput = ({input,meta,...props}) =>{
     return <div className={ meta.error && meta.touched ? EVS.formControl + " " + EVS.error : ""} >
         <TextField  className={classes.root}  placeholder={props.placeholder}
                     variant="outlined" {...input} {...props}/>
+        {meta.error && meta.touched ?   <div style={{padding : "1rem",color : "#b20400"}}> {meta.error}</div> : ""}
+    </div>
+}
+export const IssuesFormInput = ({input,meta,...props}) =>{
+    const classes = useStyles();
+    return <div className={ meta.error && meta.touched ? EVS.formControl + " " + EVS.error : ""} >
+        <IssuesSelectInput  className={classes.root}
+                    variant="outlined" {...input} {...props} />
         {meta.error && meta.touched ?   <div style={{padding : "1rem",color : "#b20400"}}> {meta.error}</div> : ""}
     </div>
 }

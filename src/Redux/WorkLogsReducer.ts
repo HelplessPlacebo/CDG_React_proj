@@ -62,7 +62,7 @@ export type TSendWorklogsData = {
     WorkLogsBlocks: TWorklogBlock[]
 }
 
-let DefaultState = {
+const DefaultState = {
     WorkLogsBlocks: [{
         BlockInfo: {
             BlockCreatedDate: "Wed,October 7",
@@ -534,7 +534,7 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
     }
 }
 
-export const AddWorklogAC = (NewWorklog ?: TWorkLog, IsFavorites?: boolean) => {
+export const AddWorklogAC = (NewWorklog : TWorkLog | null, IsFavorites?: boolean) => {
     return {type: ADD_WORKLOG, NewWorklog, IsFavorites} as const
 }
 export type TAddWorklog = typeof AddWorklogAC
@@ -554,7 +554,7 @@ export const ChangeWorklogAC = (NewWorklog: TWorkLog) => {
 }
 export type TChangeWorklog = typeof ChangeWorklogAC
 
-export const SetWorklogToChangeAC = (WorklogToChange: TWorkLog | undefined = undefined) => {
+export const SetWorklogToChangeAC = (WorklogToChange: TWorkLog | null = null) => {
     return {type: SET_WORKLOG_TO_CHANGE, WorklogToChange} as const
 }
 export type TSetWorklogToChange = typeof SetWorklogToChangeAC

@@ -10,7 +10,7 @@ import {
 export const useWorklogsFunctions = ()=>{
     const dispatch =  useDispatch()
 
-     const addWorklog = (NewWorklog ?: TWorkLog, IsFavorites?: boolean) => dispatch(AddWorklogAC(NewWorklog, IsFavorites))
+     const addWorklog = (NewWorklog : TWorkLog | null, IsFavorites?: boolean) => dispatch(AddWorklogAC(NewWorklog, IsFavorites))
 
      const deleteWorklog = (DelWorklogId: number, DelParentId: number | null = null) =>
         dispatch(DeleteWorklogAC(DelWorklogId,DelParentId))
@@ -18,7 +18,7 @@ export const useWorklogsFunctions = ()=>{
      const setIsPlayingWorklogById = (IsPlaying: boolean, ElementId?: number, IsFavorites ?: boolean) =>
         dispatch(SetIsPlayingWorklogByIdAC(IsPlaying, ElementId, IsFavorites))
 
-     const setWorklogToChange = (WorklogToChange: TWorkLog | undefined = undefined) =>
+     const setWorklogToChange = (WorklogToChange: TWorkLog | null = null) =>
         dispatch(SetWorklogToChangeAC(WorklogToChange))
 
      const changeWorklog = (NewWorklog: TWorkLog) => dispatch(ChangeWorklogAC(NewWorklog))
