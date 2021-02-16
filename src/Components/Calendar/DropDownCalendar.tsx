@@ -5,8 +5,8 @@ import {CalendarDay} from "./CalendarDay";
 import {randomInteger} from "../../Redux/WorkLogsReducer";
 import {DropDownCalendarFooterElement} from "./DropDownCalendarFooterElement";
 import {useDispatch, useSelector} from "react-redux";
-import {getCalendar, getClickedMonthDay, getCurrentDate} from "../Selectors/CalendarSelectors";
-import {getWorklogsBlocks} from "../Selectors/WorklogsSelectors";
+import {getCalendar, getClickedMonthDay, getCurrentDate} from "../../assets/utils/Selectors/CalendarSelectors";
+import {getWorklogsBlocks} from "../../assets/utils/Selectors/WorklogsSelectors";
 
 
 export const DropDownCalendar = () => {

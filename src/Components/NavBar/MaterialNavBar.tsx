@@ -1,5 +1,5 @@
 import React from 'react';
-import {makeStyles, Theme, createStyles} from '@material-ui/core/styles';
+import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,7 +12,7 @@ import HS from "./NavBar.module.css";
 import {NavLink} from "react-router-dom";
 import Tooltip from "@material-ui/core/Tooltip";
 import Avatar from '@material-ui/core/Avatar';
-import avatar from "../../assets/imgs/avatar.jpg"
+import EmptyAvatar from "../../assets/imgs/EmptyAvatar.jpg"
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
 type TMaterialNavProps = {
     openUserProfile : ()=> void
     onUnAuth : ()=>void
+    profileAvatarUrl : string | null
 }
  const MaterialNav : React.FC<TMaterialNavProps> = (props) =>{
     const classes = useStyles();
@@ -92,7 +93,7 @@ type TMaterialNavProps = {
                     aria-haspopup="true"
                     color="primary"
                 >
-                    <Avatar alt={"user avatar"} src={avatar}/>
+                    <Avatar alt={"user avatar"} src={props.profileAvatarUrl ? props.profileAvatarUrl : EmptyAvatar}/>
                 </IconButton>
                 Profile
             </MenuItem>
@@ -101,7 +102,7 @@ type TMaterialNavProps = {
 
     return (
         <div className={classes.grow}>
-            <AppBar position="static">
+            <AppBar position="sticky">
                 <Toolbar>
                     <div className={HS.NavLinks}>
                         <div className={HS.item}>
@@ -122,26 +123,25 @@ type TMaterialNavProps = {
                     <div className={classes.grow}/>
                     <div className={classes.sectionDesktop}>
                         <Tooltip title="Settings" arrow placement="bottom">
-                            <IconButton  color="inherit">
+                            <IconButton disableFocusRipple  color="inherit">
                                 <SettingsIcon/>
                             </IconButton>
                         </Tooltip>
 
                         <Tooltip title="Logout" arrow placement="bottom">
-                            <IconButton onClick={LogOut} color="inherit">
+                            <IconButton disableFocusRipple onClick={LogOut} color="inherit">
                                 <ExitToAppIcon/>
                             </IconButton>
                         </Tooltip>
 
                         <Tooltip title="Profile" arrow placement="bottom">
-                            <IconButton
-                                edge="end"
+                            <IconButton disableFocusRipple
                                 aria-label="account of current user"
                                 aria-haspopup="true"
                                 color="inherit"
                                 onClick={props.openUserProfile}
                             >
-                                <Avatar alt={"user avatar"} src={avatar}/>
+                                <Avatar alt={"user avatar"} src={props.profileAvatarUrl ? props.profileAvatarUrl : EmptyAvatar}/>
                             </IconButton>
                         </Tooltip>
                     </div>
@@ -163,5 +163,6 @@ type TMaterialNavProps = {
     );
 }
 export default  React.memo(MaterialNav,(prevProps,nextProps)=>{
-    return true
+    if(prevProps.profileAvatarUrl !== nextProps.profileAvatarUrl) return false
+    else return true
 })

@@ -1,15 +1,17 @@
 import { combineReducers, createStore, applyMiddleware} from "redux"
-import CalendarReducer from "./CalendarReducer";
-import WorkLogsReducer from "./WorkLogsReducer"
+import {calendarReducer} from "./CalendarReducer";
+import {worklogsReducer} from "./WorkLogsReducer"
 import {reducer as formReducer} from "redux-form"
 import  thunkMiddleWare from "redux-thunk"
-import IssuesReducer from "./IssuesReducer";
+import {issuesReducer} from "./IssuesReducer";
+import {profileReducer} from "./ProfileReducer"
 
 let reducers = combineReducers({
  form : formReducer,
- CalendarData : CalendarReducer,
- WorklogsData  : WorkLogsReducer,
- IssuesData : IssuesReducer
+ CalendarData : calendarReducer,
+ WorklogsData  : worklogsReducer,
+ IssuesData : issuesReducer,
+ ProfileData : profileReducer
 })
 
 type Treducers = typeof reducers

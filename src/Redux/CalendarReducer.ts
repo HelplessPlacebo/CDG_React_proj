@@ -1,17 +1,14 @@
 import {randomInteger} from "./WorkLogsReducer";
 import {GetCurrentDate} from "../assets/secondary/GetCurrentDate";
 
-
 const SET_CLICKED_MONTH_DAYS = 'CALENDAR/SET_CLICKED_MONTH_DAYS'
 
 const RandomStatus = (arr: Array<any>) => {
     if (arr.length <= 0) {
         throw new RangeError("getRandom: more elements taken than available");
     }
-    let rand = Math.floor(Math.random() * arr.length)
-    return arr[rand]
+    return arr[Math.floor(Math.random() * arr.length)]
 }
-
 
 const RandomDaysCreate = (statuses: Array<string> = [], IntroDaysCount: number, OutroDaysCount: number, DaysCount: number) => {
     let MaxDaysLength = 35
@@ -106,7 +103,7 @@ type  DefaultTilesState = typeof DefaultState
 
 type TTilesReducerActions = ReturnType<TSetClickedMonthDay>
 
-const CalendarReducer = (state = DefaultState, action: TTilesReducerActions): DefaultTilesState => {
+export const calendarReducer = (state = DefaultState, action: TTilesReducerActions): DefaultTilesState => {
 
     switch (action.type) {
         case SET_CLICKED_MONTH_DAYS : {
@@ -120,9 +117,6 @@ const CalendarReducer = (state = DefaultState, action: TTilesReducerActions): De
     }
 }
 
-export const SetClickedMonthDay = (Day: TClickedDay) => {
-    return {type: SET_CLICKED_MONTH_DAYS, Day} as const
-}
-export type TSetClickedMonthDay = typeof SetClickedMonthDay
+export const SetClickedMonthDay = (Day: TClickedDay) => ({type: SET_CLICKED_MONTH_DAYS, Day} as const)
 
-export default CalendarReducer
+export type TSetClickedMonthDay = typeof SetClickedMonthDay

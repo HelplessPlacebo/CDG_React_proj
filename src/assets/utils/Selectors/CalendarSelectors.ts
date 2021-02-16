@@ -1,4 +1,4 @@
-import {GlobalState} from "../../Redux/redux-store";
+import {GlobalState} from "../../../Redux/redux-store";
 
 export const getCalendar = (state : GlobalState) => state.CalendarData.Calendar
 export const getCurrentDate = (state : GlobalState) => state.CalendarData.CurrentDate

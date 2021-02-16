@@ -26,17 +26,9 @@ html{
 }
 
 .CalendarAndButtons {
-    /*width: 1069px;*/
     display: grid;
-    /*grid-template-columns: 893px 79px 1fr;*/
     grid-template-columns: 2.1fr 1fr 1fr;
     grid-template-rows: 58px;
-    /*display: grid;*/
-    /*grid-template-columns: 1.5fr 0.3fr 1.3fr;*/
-    /*grid-template-rows: 1fr;*/
-    /*gap: 0px 0px;*/
-    /*grid-template-areas:*/
-    /*        ". . .";*/
 }
 
 .TImeTracking_and_Calendar {
@@ -46,11 +38,6 @@ html{
 .AppContainer{
     overflow: hidden;
     background-color: #E5E5E5;
-    /*background: url(assets/images/bgc/clock4_gupsy_test.jpg) no-repeat center center fixed ;*/
-    /*-webkit-background-size: cover;*/
-    /*-moz-background-size: cover;*/
-    /*-o-background-size: cover;*/
-    /*background-size: cover;*/
 }
 .PathErr {
     position: fixed;

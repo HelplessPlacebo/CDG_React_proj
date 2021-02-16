@@ -4,7 +4,7 @@ import {WorklogInfo} from "./WorklogInfo/WorklogInfo";
 import WLS from "./WorkLog.module.css"
 import {useBooleanState} from "../hooks/useBooleanState"
 import {useSelector} from "react-redux"
-import {getFavoritesWorklog, getPlayingWorklog, getWorklogsBlocks} from "../Selectors/WorklogsSelectors"
+import {getFavoritesWorklog, getPlayingWorklog, getWorklogsBlocks} from "../../assets/utils/Selectors/WorklogsSelectors"
 import {useWorklogsFunctions} from "../hooks/useWorklogsFunctions"
 import {TWorklogsContainerOwnProps} from "../../globalTypes/Types"
 import {DeleteWorklogConfirmModal} from "../DeleteConfirmModal/DeleteConfirmModal";

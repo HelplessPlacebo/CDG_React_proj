@@ -7,10 +7,10 @@ export type TLeftLabelProps = {
 }
 
 export const RightLabel :React.FC<TLeftLabelProps> = (props) =>{
-    return <div className={LS.RightLabel}
+    return <div className={LS.Label}
                 style={{ display : `${!props.EndTime && !props.Position ? "none" : "block" }`,
                     right : `${props.Position && props.offsetRight &&   props.offsetRight - props.Position  +"px" }`}}>
-            <div className={LS.LeftLabelImage} > </div>
+            <div className={LS.LabelImage} />
             <div className={LS.LabelValue}> {props.EndTime && props.EndTime && props.EndTime } </div>
     </div>
 }

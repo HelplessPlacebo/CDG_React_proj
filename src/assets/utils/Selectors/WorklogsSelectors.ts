@@ -1,4 +1,4 @@
-import {GlobalState} from "../../Redux/redux-store";
+import {GlobalState} from "../../../Redux/redux-store";
 
 export const getPlayingWorklog = (state : GlobalState) => state.WorklogsData.PlayingWorklog
 export const getWorklogsBlocks = (state : GlobalState) => state.WorklogsData.WorkLogsBlocks

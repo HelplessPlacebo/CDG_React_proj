@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import CardHeader from "@material-ui/core/CardHeader/CardHeader"
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import {CustomListInput} from "../Inputs/CustomListInput";
+import {CustomListInput} from "../../CustomElements/CustomInputs/CustomListInput";
 import {useInput} from "../../hooks/useInput";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {TAddIssue} from "../../../Redux/IssuesReducer";

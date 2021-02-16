@@ -9,7 +9,9 @@ import {AuthPage} from "./Components/Auth/AuthPage"
 import SnackBar, {TSnackBarOptions} from "./Components/SnackBar/SnackBar"
 import {withSuspense} from "./Components/HOCs/withSuspense/withSuspense"
 import {PathErr} from "./Components/PathErrorPage/PathErr"
-import {CalendarAndControlButtons} from "./Components/CalendarAndControllButtons/CalendarAndControlButtons"
+import {CalendarAndControlButtons} from "./Components/Calendar/CalendarAndControllButtons/CalendarAndControlButtons"
+import {useSelector} from "react-redux";
+import {getProfileInfo} from "./assets/utils/Selectors/ProfileSelectors";
 
 //////////////////////////// lazy loading ////////////////////////////////////////
 const Issues = React.lazy(() => import("./Components/Issues/Issues"))
@@ -38,6 +40,7 @@ export const App = () => {
         position: {horizontal: "center", vertical: "bottom"},
         severity: "error"
     })
+    const profileInfo = useSelector(getProfileInfo)
 
     const onAuth = () => setIsAuth(true)
     const onUnAuth = () => setIsAuth(false)
@@ -55,75 +58,74 @@ export const App = () => {
     }
 
 
-    return (<div className="AppWrapper">
+    return <div className="AppWrapper">
 
-            {localStorage.getItem("IsAuth") === "true"
-                ? <>
-                    <MaterialNav openUserProfile={userProfileClickedStatus.Show} onUnAuth={onUnAuth}/>
+        {localStorage.getItem("IsAuth") === "true"
+            ? <>
+                <MaterialNav openUserProfile={userProfileClickedStatus.Show} onUnAuth={onUnAuth} profileAvatarUrl={profileInfo.avatarUrl}/>
 
-                    <Switch>
-                        <Route exact path='/' render={() => <Redirect to={"/Home/All"}/>}/>
-                        <Route exact path='/Issues'
-                               render={() => <SuspendedIssues/>}/>
+                <Switch>
+                    <Route exact path='/' render={() => <Redirect to={"/Home/All"}/>}/>
+                    <Route exact path='/Issues'
+                           render={() => <SuspendedIssues/>}/>
 
-                        <Route path='/Home'
-                               render={() => <>
-                                   <div className={AS.CalendarAndButtonsContainer}>
-                                       <CalendarAndControlButtons
-                                           favoritesIsClicked={favoritesClickedStatus.isDisplayed}
-                                           onAllClicked={favoritesClickedStatus.Hide}
-                                           onFavoritesClick={favoritesClickedStatus.Show}
+                    <Route path='/Home'
+                           render={() => <>
+                               <div className={AS.CalendarAndButtonsContainer}>
+                                   <CalendarAndControlButtons
+                                       favoritesIsClicked={favoritesClickedStatus.isDisplayed}
+                                       onAllClicked={favoritesClickedStatus.Hide}
+                                       onFavoritesClick={favoritesClickedStatus.Show}
+                                   />
+                               </div>
+
+                               <div className={AS.MainWrapper}>
+                                   <Switch>
+                                       <Route exact path='/Home/All'
+                                              render={() => <WorkLogsBlock
+                                                  openWorklogChangeModal={worklogModalStatus.Show}
+                                                  componentToDraw="Worklogs"
+                                                  showSnackBar={showSnackBar}
+                                                  closeWorklogChangeModal={worklogModalStatus.Hide}
+                                              />
+                                              }/>
+
+                                       <Route exact path='/Home/Favorites'
+                                              render={() => <SuspendedFavorites
+                                                  openWorklogChangeModal={worklogModalStatus.Show}
+                                                  showSnackBar={showSnackBar}
+                                                  closeWorklogChangeModal={worklogModalStatus.Hide}
+                                                  componentToDraw="FavoritesWorklogs"
+                                              />}/>
+                                       <Route component={PathErr}/>
+                                   </Switch>
+
+                                   <div className={AS.TImeTracking_and_Calendar}>
+                                       <TimeTracking favoritesIsClicked={worklogModalStatus.isDisplayed}
+                                                     openWorklogChangeModal={worklogModalStatus.Show}
                                        />
                                    </div>
 
-                                   <div className={AS.MainWrapper}>
-                                       <Switch>
-                                           <Route exact path='/Home/All'
-                                                  render={() => <WorkLogsBlock
-                                                      openWorklogChangeModal={worklogModalStatus.Show}
-                                                      componentToDraw="Worklogs"
-                                                      showSnackBar={showSnackBar}
-                                                      closeWorklogChangeModal={worklogModalStatus.Hide}
-                                                  />
-                                                  }/>
+                               </div>
+                           </>
+                           }
+                    />
+                    <Route component={PathErr}/>
+                </Switch>
+            </>
+            : <AuthPage onAuth={onAuth} onUnAuth={onUnAuth} showSnackBar={showSnackBar}/>
+        }
 
-                                           <Route exact path='/Home/Favorites'
-                                                  render={() => <SuspendedFavorites
-                                                      openWorklogChangeModal={worklogModalStatus.Show}
-                                                      showSnackBar={showSnackBar}
-                                                      closeWorklogChangeModal={worklogModalStatus.Hide}
-                                                      componentToDraw="FavoritesWorklogs"
-                                                  />}/>
-                                           <Route component={PathErr}/>
-                                       </Switch>
+        <SuspendedChangeWorklogModalContainer
+            worklogChangeModalIsOpen={worklogModalStatus.isDisplayed}
+            closeWorklogChangeModal={worklogModalStatus.Hide}
+        />
 
-                                       <div className={AS.TImeTracking_and_Calendar}>
-                                           <TimeTracking favoritesIsClicked={worklogModalStatus.isDisplayed}
-                                                         openWorklogChangeModal={worklogModalStatus.Show}
-                                           />
-                                       </div>
+        <SuspendedModalUserProfile isOpen={userProfileClickedStatus.isDisplayed}
+                                   hide={userProfileClickedStatus.Hide} profileInfo={profileInfo}/>
 
-                                   </div>
-                               </>
-                               }
-                        />
-                        <Route component={PathErr}/>
-                    </Switch>
-                </>
-                : <AuthPage onAuth={onAuth} onUnAuth={onUnAuth} showSnackBar={showSnackBar}/>
-            }
-
-            <SuspendedChangeWorklogModalContainer
-                worklogChangeModalIsOpen={worklogModalStatus.isDisplayed}
-                closeWorklogChangeModal={worklogModalStatus.Hide}
-            />
-
-            <SuspendedModalUserProfile isOpen={userProfileClickedStatus.isDisplayed}
-                                       hide={userProfileClickedStatus.Hide}/>
-
-            <SnackBar isShowing={snackBarDisplayingStatus.isDisplayed}
-                      onHide={hideSnackBar} options={snackBarOptions}/>
-        </div>
-    )
+        <SnackBar isShowing={snackBarDisplayingStatus.isDisplayed}
+                  onHide={hideSnackBar} options={snackBarOptions}/>
+    </div>
 }
 

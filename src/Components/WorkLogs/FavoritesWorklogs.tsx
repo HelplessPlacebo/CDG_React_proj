@@ -1,11 +1,11 @@
 import React from "react";
 import TTS from "../TimeTracking/TimeTracking.module.css";
-import FS from "../CalendarAndControllButtons/ControlButtons/Favorites/Favorites.module.css"
+import FS from "../Calendar/CalendarAndControllButtons/ControlButtons/Favorites/Favorites.module.css"
 import NewWorklogButton from "../../assets/imgs/new_worklog_button.svg";
 import {WorkLogsBlock} from "./WorkLogsBlock";
 import {TWorklogsContainerOwnProps} from "../../globalTypes/Types";
 import {useSelector} from "react-redux";
-import {getFavoritesWorklog, getPlayingWorklog} from "../Selectors/WorklogsSelectors";
+import {getFavoritesWorklog, getPlayingWorklog} from "../../assets/utils/Selectors/WorklogsSelectors";
 import {useWorklogsFunctions} from "../hooks/useWorklogsFunctions";
 
 

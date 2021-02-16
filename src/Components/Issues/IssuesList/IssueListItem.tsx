@@ -9,7 +9,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import {blue, blueGrey} from "@material-ui/core/colors";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {TChangeIssue, TDeleteIssue} from "../../../Redux/IssuesReducer";
-import {CustomListInput} from "../Inputs/CustomListInput";
+import {CustomListInput} from "../../CustomElements/CustomInputs/CustomListInput";
 import {useInput} from "../../hooks/useInput";
 import {useBooleanState} from "../../hooks/useBooleanState";
 

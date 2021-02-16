@@ -10,11 +10,9 @@ ReactDOM.render(
     <HashRouter  basename={process.env.PUBLIC_URL}>
         <Provider store={store}>
             <div className={AS.AppContainer}>
-                    <App/>
+                <App/>
             </div>
         </Provider>
     </HashRouter>,
-  document.getElementById('root')
+    document.getElementById('root')
 );
-
-

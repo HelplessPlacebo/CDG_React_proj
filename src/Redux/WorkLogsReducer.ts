@@ -11,6 +11,7 @@ const ADD_TO_FAVORITE = "WORKLOGS/ADD_TO_FAVORITE"
 const SET_WORKLOG_STATUS = "WORKLOGS/SET_WORKLOG_STATUS"
 const DELETE_FROM_FAVORITES = "WORKLOGS/DELETE_FROM_FAVORITES"
 const CHANGE_FAVORITES_WORKLOG = "WORKLOGS/CHANGE_FAVORITES_WORKLOG"
+
 export const CurrentDate = `${GetCurrentDate().DayName + "," + GetCurrentDate().CurrentMonth} ${GetCurrentDate().CurrentDay}`
 
 export const randomInteger = (min: number, max: number): number => {
@@ -60,6 +61,11 @@ export type TTimerData = {
 }
 export type TSendWorklogsData = {
     WorkLogsBlocks: TWorklogBlock[]
+}
+type TWorklogStatusOptions = {
+    target: "worklog" | "worklogblock",
+    id: number,
+    status: "ok" | "danger" | "warning"
 }
 
 const DefaultState = {
@@ -267,9 +273,7 @@ type TWorklogsReducerActions = ReturnType<TAddWorklog> | ReturnType<TDeleteWorkl
     | ReturnType<TSetWorklogToChange> | ReturnType<TAddToFavorite> | ReturnType<TSetWorklogStatus>
     | ReturnType<TDeleteFromFavorites> | ReturnType<TChangeFavoritesWorklog>
 
-type TWorklogsThunks = ThunkAction<Promise<void>, GlobalState, unknown, TWorklogsReducerActions>
-
-const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions): DefaultWorklogsState => {
+export const worklogsReducer = (state = DefaultState, action: TWorklogsReducerActions): DefaultWorklogsState => {
 
     const GetWorklogsBlockCopy = (): Array<TWorklogBlock> => {
         return JSON.parse(JSON.stringify(state.WorkLogsBlocks))
@@ -392,7 +396,6 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
                                     } else Worklog.NestingItems?.push(action.NewWorklog)
                                 })
                             } else Worklog.NestingItems = [action.NewWorklog]
-
 
                         } else Object.assign(Worklog, action.NewWorklog)
 
@@ -518,9 +521,7 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
                         id: randomInteger(0, 10000),
                         SummaryTime: "00:00:00"
                     },
-                    Worklogs: [
-                        action.NewWorklog
-                    ]
+                    Worklogs: [action.NewWorklog]
                 })
             return {
                 ...state,
@@ -528,71 +529,40 @@ const WorklogsReducer = (state = DefaultState, action: TWorklogsReducerActions):
                 FavoritesWorklogs: FavoritesWorklogsCopy
             }
         }
-
         default :
             return state
     }
 }
 
-export const AddWorklogAC = (NewWorklog : TWorkLog | null, IsFavorites?: boolean) => {
-    return {type: ADD_WORKLOG, NewWorklog, IsFavorites} as const
-}
-export type TAddWorklog = typeof AddWorklogAC
+export const AddWorklogAC = (NewWorklog: TWorkLog | null, IsFavorites?: boolean) =>
+    ({type: ADD_WORKLOG, NewWorklog, IsFavorites} as const)
 
-export const DeleteWorklogAC = (DelWorklogId: number, DelParentId: number | null = null) => {
-    return {type: DEL_WORKLOG, DelWorklogId, DelParentId} as const
-}
-export type TDeleteWorklog = typeof DeleteWorklogAC
+export const DeleteWorklogAC = (DelWorklogId: number, DelParentId: number | null = null) =>
+    ({type: DEL_WORKLOG, DelWorklogId, DelParentId} as const)
 
-export const SetIsPlayingWorklogByIdAC = (IsPlaying: boolean, ElementId?: number, IsFavorites ?: boolean) => {
-    return {type: SET_IS_PLAYING_WORKLOG_BY_ID, IsPlaying, ElementId, IsFavorites} as const
-}
-export type TSetIsPlayingWorklogById = typeof SetIsPlayingWorklogByIdAC
+export const SetIsPlayingWorklogByIdAC = (IsPlaying: boolean, ElementId?: number, IsFavorites ?: boolean) =>
+    ({type: SET_IS_PLAYING_WORKLOG_BY_ID, IsPlaying, ElementId, IsFavorites} as const)
 
-export const ChangeWorklogAC = (NewWorklog: TWorkLog) => {
-    return {type: CHANGE_WORKLOG, NewWorklog} as const
-}
-export type TChangeWorklog = typeof ChangeWorklogAC
+export const ChangeWorklogAC = (NewWorklog: TWorkLog) => ({type: CHANGE_WORKLOG, NewWorklog} as const)
 
-export const SetWorklogToChangeAC = (WorklogToChange: TWorkLog | null = null) => {
-    return {type: SET_WORKLOG_TO_CHANGE, WorklogToChange} as const
-}
-export type TSetWorklogToChange = typeof SetWorklogToChangeAC
+export const SetWorklogToChangeAC = (WorklogToChange: TWorkLog | null = null) =>
+    ({type: SET_WORKLOG_TO_CHANGE, WorklogToChange} as const)
 
-export const AddToFavoriteAC = (WorklogId: number) => {
-    return {type: ADD_TO_FAVORITE, WorklogId} as const
-}
-export type TAddToFavorite = typeof AddToFavoriteAC
+export const AddToFavoriteAC = (WorklogId: number) => ({type: ADD_TO_FAVORITE, WorklogId} as const)
 
+export const SetWorklogStatusAC = (options: TWorklogStatusOptions) => ({type: SET_WORKLOG_STATUS, options} as const)
 
-// export const SendWorklogBlockThunk = (WorklogBlockData: TSendWorklogsData): TWorklogsThunks => async (dispatch) => {
-//
-//     const SendNewMessageResult = await API.SendWorklogBlock(WorklogBlockData)
-//     // if (SendNewMessageResult.resultCode === 0) {
-//     //     dispatch(GetWorklogs(WorklogBlockId))
-//     // }
-// }
-// export type TSendWorklogBlockThunk = typeof SendWorklogBlockThunk
+export const DeleteFromFavoritesAC = (WorklogId: number) => ({type: DELETE_FROM_FAVORITES, WorklogId} as const)
 
-export const SetWorklogStatusAC = (options: {
-    target: "worklog" | "worklogblock",
-    id: number,
-    status: "ok" | "danger" | "warning"
-}) => {
-    return {type: SET_WORKLOG_STATUS, options} as const
-}
-export type TSetWorklogStatus = typeof SetWorklogStatusAC
-
-export const DeleteFromFavoritesAC = (WorklogId: number) => {
-    return {type: DELETE_FROM_FAVORITES, WorklogId} as const
-}
-
-export type TDeleteFromFavorites = typeof DeleteFromFavoritesAC
-
-export const ChangeFavoritesWorklogAC = (WorklogId: number, NewWorklog: TWorkLog) => {
-    return {type: CHANGE_FAVORITES_WORKLOG, WorklogId, NewWorklog} as const
-}
+export const ChangeFavoritesWorklogAC = (WorklogId: number, NewWorklog: TWorkLog) =>
+    ({type: CHANGE_FAVORITES_WORKLOG, WorklogId, NewWorklog} as const)
 
 export type TChangeFavoritesWorklog = typeof ChangeFavoritesWorklogAC
-
-export default WorklogsReducer
+export type TAddWorklog = typeof AddWorklogAC
+export type TDeleteWorklog = typeof DeleteWorklogAC
+export type TSetIsPlayingWorklogById = typeof SetIsPlayingWorklogByIdAC
+export type TChangeWorklog = typeof ChangeWorklogAC
+export type TSetWorklogToChange = typeof SetWorklogToChangeAC
+export type TAddToFavorite = typeof AddToFavoriteAC
+export type TSetWorklogStatus = typeof SetWorklogStatusAC
+export type TDeleteFromFavorites = typeof DeleteFromFavoritesAC

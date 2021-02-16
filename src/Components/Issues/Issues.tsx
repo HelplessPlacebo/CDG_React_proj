@@ -6,7 +6,7 @@ import {AddIssue, ChangeIssue, DeleteIssue, SetCompletedIssues, SetIssues} from 
 import {IssuesList} from "./IssuesList/IssuesList"
 import Container from '@material-ui/core/Container';
 import {useDispatch, useSelector} from "react-redux";
-import {getCompletedIssues, getIssues} from "../Selectors/IssuesSelectors";
+import {getCompletedIssues, getIssues} from "../../assets/utils/Selectors/IssuesSelectors";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import TS from "./Timer.module.css"
 import PlayButton from "@material-ui/icons/PlayCircleFilled"
 import {ToFullTime} from "../../assets/secondary/CalculateTime"
-import {CustomInput} from "../CustomElements/CustomInput/CustomInput";
-import {IssuesSelectInput} from "../Issues/Inputs/IssuesSelectInput";
+import {CustomInput} from "../CustomElements/CustomInputs/CustomInput";
+import {IssuesSelectInput} from "../CustomElements/CustomInputs/IssuesSelectInput";
 import {useInput} from "../hooks/useInput";
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
 import StopIcon from '@material-ui/icons/Stop';

@@ -1,6 +1,6 @@
 import React from "react";
 import FS from "./WorklogInfo.module.css"
-import ProgressBar from "../../ProgressBar/ProgressBar";
+import {ProgressBar} from "./ProgressBar";
 import {LineStroke} from "../../LineStroke/LineStroke";
 import {CurrentDate, TBlockInfo, TSetWorklogStatus, TWorkLog} from "../../../Redux/WorkLogsReducer";
 import {TShowSnackBar} from "../../../App";

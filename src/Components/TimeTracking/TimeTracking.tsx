@@ -2,8 +2,8 @@ import React from "react";
 import TTS from "./TimeTracking.module.css"
 import {Timer} from "../Timer/Timer"
 import {useSelector} from "react-redux"
-import {getIssues} from "../Selectors/IssuesSelectors";
-import {getPlayingWorklog} from "../Selectors/WorklogsSelectors";
+import {getIssues} from "../../assets/utils/Selectors/IssuesSelectors";
+import {getPlayingWorklog} from "../../assets/utils/Selectors/WorklogsSelectors";
 import {useWorklogsFunctions} from "../hooks/useWorklogsFunctions";
 import {UnActiveTimer} from "./UnActiveTimer";
 

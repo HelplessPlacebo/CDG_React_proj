@@ -6,8 +6,7 @@ export type TProgressBarProps = {
     status: "ok" | "danger" | "warning" | string
 }
 
-const ProgressBar: React.FC<TProgressBarProps> = (props) => {
-
+export const ProgressBar: React.FC<TProgressBarProps> = React.memo( (props) => {
     return (
         <React.Fragment>
             <Progress  style={{ width: "100px", height: "8px", borderRadius : "20px"}} >
@@ -23,6 +22,4 @@ const ProgressBar: React.FC<TProgressBarProps> = (props) => {
             </Progress>
         </React.Fragment>
     )
-}
-
-export default React.memo(ProgressBar)
+})

@@ -9,8 +9,8 @@ import {ChangeWorklogModalReduxForm} from "./ChangeWorklogModalForm";
 import {CalculateNewStartTime, ToFullTime} from "../../assets/secondary/CalculateTime";
 import {parseTimeStr} from "../../assets/secondary/ParseTimeStr";
 import {useSelector} from "react-redux";
-import {getWorklogToChange} from "../Selectors/WorklogsSelectors";
-import {getIssues} from "../Selectors/IssuesSelectors";
+import {getWorklogToChange} from "../../assets/utils/Selectors/WorklogsSelectors";
+import {getIssues} from "../../assets/utils/Selectors/IssuesSelectors";
 import {useWorklogsFunctions} from "../hooks/useWorklogsFunctions";
 
 

@@ -1,9 +1,9 @@
 import React from "react"
-import AS from "../../App.module.css"
-import Calendar from "../Calendar/Calendar"
+import AS from "../../../App.module.css"
+import Calendar from "../Calendar"
 import {ControlButtons} from "./ControlButtons/ControlButtons"
 import {useSelector} from "react-redux"
-import {getCurrentDate} from "../Selectors/CalendarSelectors";
+import {getCurrentDate} from "../../../assets/utils/Selectors/CalendarSelectors";
 
 export type TCalendarAndControlButtonsProps = {
     favoritesIsClicked: boolean
