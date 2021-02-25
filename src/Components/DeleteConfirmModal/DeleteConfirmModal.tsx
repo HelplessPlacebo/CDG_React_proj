@@ -5,6 +5,7 @@ import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle"
 import DialogContent from "@material-ui/core/DialogContent/DialogContent"
 import Grid from "@material-ui/core/Grid/Grid"
 import DeleteIcon from '@material-ui/icons/Delete';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 
 export type TDeleteWorklogConfirmModalProps = {
     isOpen: boolean
@@ -34,15 +35,16 @@ export const DeleteWorklogConfirmModal: React.FC<TDeleteWorklogConfirmModalProps
 
                                 <Grid item>
 
-                                    <CustomizedButton bgColor={"teal"} text={"delete"} onClick={props.onSubmit}
-                                                      variant={"contained"} fontSize={14} startIcon={<DeleteIcon/>}/>
+                                    <CustomizedButton fontColor="teal" text="delete" onClick={props.onSubmit}
+                                                      variant="outlined" fontSize="0.9rem" startIcon={<DeleteIcon/>}/>
 
                                 </Grid>
 
                                 <Grid item>
 
-                                    <CustomizedButton bgColor={"grey"} text={"go back"} onClick={props.onClose}
-                                                      variant={"contained"} fontSize={14} fontColor={"common"}/>
+                                    <CustomizedButton fontColor="blueGrey" text="go back" onClick={props.onClose}
+                                                      variant="outlined" fontSize=".9rem"
+                                                      startIcon={<ArrowForwardIcon/>}/>
 
 
                                 </Grid>

@@ -3,27 +3,31 @@ import Grid from "@material-ui/core/Grid"
 import {CustomizedButton} from "../CustomElements/CustomizedButton/CustomizedButton"
 import {CreateField, FormInput, IssuesFormInput} from "../../assets/utils/ValidartorsComponents/ElementsValidators"
 import {required} from "../../assets/utils/validators"
-import {InjectedFormProps, reduxForm} from "redux-form";
-import SaveIcon from "@material-ui/icons/Save";
-import {TWorkLog} from "../../Redux/WorkLogsReducer";
+import {InjectedFormProps, reduxForm} from "redux-form"
+import SaveIcon from "@material-ui/icons/Save"
+import CloseIcon from '@material-ui/icons/Close'
+import {TWorkLog} from "../../Redux/WorkLogsReducer"
 
 type TOwnProps = {
     onClose: () => void
-    issues : string[]
+    issues: string[]
 }
 
 const ChangeWorklogForm: React.FC<InjectedFormProps<TWorkLog | null, TOwnProps> & TOwnProps> = (props) => {
     return <div style={{paddingTop: "1.5rem", paddingRight: "2rem", paddingLeft: "2rem"}}
-                 className="SignUpFormContainer"
-                 onSubmit={props.handleSubmit}>
+                className="SignUpFormContainer"
+                onSubmit={props.handleSubmit}>
 
         <div className="ChangeWorklogFormTaskFieldInput">
-            {CreateField("Enter the task name", "TaskField", [required], FormInput, {label: "task name", fullWidth: true})}
+            {CreateField("Enter the task name", "TaskField", [required], FormInput, {
+                label: "task name",
+                fullWidth: true
+            })}
         </div>
 
         <div className="ChangeWorklogFormIssuesInput">
             {CreateField("chose issue", "Issue", [required], IssuesFormInput,
-                {label: "issues", fullWidth: true,issues : props.issues})}
+                {label: "issues", fullWidth: true, issues: props.issues})}
         </div>
 
         <div style={{paddingTop: "1rem"}} className="SignUpControlButtonsContainer">
@@ -34,7 +38,8 @@ const ChangeWorklogForm: React.FC<InjectedFormProps<TWorkLog | null, TOwnProps> 
                 </Grid>
                 <Grid item>
                     <CustomizedButton onClick={props.onClose} text="close"
-                                      variant="outlined" fontColor="blueGrey" fontSize=".9rem"/>
+                                      variant="outlined" fontColor="red"
+                                      fontSize=".9rem" startIcon={<CloseIcon/>}/>
                 </Grid>
             </Grid>
         </div>

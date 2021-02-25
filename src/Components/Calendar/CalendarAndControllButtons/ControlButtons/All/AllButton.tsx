@@ -1,23 +1,13 @@
 import React from "react";
 import AllS from "./All.module.css"
+import {NavLink} from "react-router-dom"
+import {TWorklogsTypeControlButtons} from "../../../../../globalTypes/Types"
 
-import {NavLink} from "react-router-dom";
-
-export type TAllProps = {
-    favoritesIsClicked: boolean
-    onAllClicked: () => void
-}
-
-export const AllButton: React.FC<TAllProps> = (props) => {
+export const AllButton: React.FC<TWorklogsTypeControlButtons> = (props) => {
     return (
-        <div className={props.favoritesIsClicked
-            ? AllS.AllButtonBg
-            : AllS.AllButtonBgActive}>
-
-            <div  className={props.favoritesIsClicked
-                ? AllS.item
-                : AllS.ActiveItem}>
-                <NavLink onClick={props.onAllClicked}   to={"/Home/All"}> All </NavLink>
+        <div className={props.worklogsType === "All" ? AllS.AllButtonBgActive : AllS.AllButtonBg}>
+            <div className={props.worklogsType === "All" ?AllS.ActiveItem : AllS.item }>
+                <NavLink to="/Home/All"> All </NavLink>
             </div>
         </div>
     )

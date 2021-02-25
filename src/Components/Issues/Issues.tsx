@@ -4,9 +4,9 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import {AddIssue, ChangeIssue, DeleteIssue, SetCompletedIssues, SetIssues} from "../../Redux/IssuesReducer"
 import {IssuesList} from "./IssuesList/IssuesList"
-import Container from '@material-ui/core/Container';
-import {useDispatch, useSelector} from "react-redux";
-import {getCompletedIssues, getIssues} from "../../assets/utils/Selectors/IssuesSelectors";
+import Container from '@material-ui/core/Container'
+import {useDispatch, useSelector} from "react-redux"
+import {getCompletedIssues, getIssues} from "../../assets/utils/Selectors/IssuesSelectors"
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -66,8 +66,8 @@ const Issues = () => {
 
         <Container style={{margin: 0}} maxWidth="xl">
             <Grid item className={classes.list}>
-                <IssuesList title={"Issues"} items={issues}
-                            el={"Issue"}
+                <IssuesList title="Issues" items={issues}
+                            el="Issue"
                             deleteIssue={deleteIssue} addIssue={addIssue}
                             checked={checked} setChecked={setChecked}
                             changeIssue={changeIssue}
@@ -84,7 +84,7 @@ const Issues = () => {
                     onClick={handleCheckedIssues}
                     disabled={IssuesChecked.length === 0}
                     aria-label="move selected right"
-                    color={"secondary"}
+                    color="secondary"
                 >
                     &gt;
                 </Button>
@@ -95,7 +95,7 @@ const Issues = () => {
                     onClick={handleCheckedCompletedIssues}
                     disabled={CompletedIssuesChecked.length === 0}
                     aria-label="move selected left"
-                    color={"primary"}
+                    color="primary"
                 >
                     &lt;
                 </Button>
@@ -104,8 +104,8 @@ const Issues = () => {
 
         <Container style={{margin: 0, paddingBottom: "2rem"}} maxWidth="xl">
             <Grid item className={classes.list}>
-                <IssuesList title={"Completed Issues"} items={completedIssues}
-                            el={"CompletedIssue"} setChecked={setChecked}
+                <IssuesList title="Completed Issues" items={completedIssues}
+                            el="CompletedIssue" setChecked={setChecked}
                             checked={checked} addIssue={addIssue}
                             deleteIssue={deleteIssue}
                             changeIssue={changeIssue}

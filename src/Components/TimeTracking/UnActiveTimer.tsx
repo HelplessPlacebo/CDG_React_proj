@@ -1,25 +1,26 @@
 import React from "react"
-import TTS from "./TimeTracking.module.css";
-import NewWorklogButtonShadowed from "../../assets/imgs/new_worklog_button_shadowed.svg";
-import NewWorklogButton from "../../assets/imgs/new_worklog_button.svg";
+import TTS from "./TimeTracking.module.css"
+import NewWorklogButtonShadowed from "../../assets/imgs/new_worklog_button_shadowed.svg"
+import NewWorklogButton from "../../assets/imgs/new_worklog_button.svg"
+import {useParams} from 'react-router-dom'
 
 type TUnActiveTimerProps = {
-    favoritesIsClicked: boolean
     onAddEmptyWorklog : ()=>void
 }
 export const UnActiveTimer: React.FC<TUnActiveTimerProps> = (props) => {
+    const {worklogsType}=useParams()
     return (
         <div className={TTS.TTMainContentRoot}>
             <div className={TTS.NewWorklogContainer}>
                 <div className={TTS.NewWorklog}>
 
-                    <div onClick={!props.favoritesIsClicked
+                    <div onClick={worklogsType === "All"
                         ? props.onAddEmptyWorklog
                         : undefined}
                          className={TTS.NewWorklogButtonPose}>
 
                         <img className={TTS.NewWorklogButtonSize}
-                             src={props.favoritesIsClicked
+                             src={worklogsType === "Favorites"
                                  ? NewWorklogButtonShadowed
                                  : NewWorklogButton
                              }

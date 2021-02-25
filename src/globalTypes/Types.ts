@@ -9,3 +9,7 @@ export type TWorklogsContainerOwnProps={
     closeWorklogChangeModal: () => void
 }
 
+export type TworklogsType = "All" | "Favorites"
+export type TWorklogsTypeControlButtons = {
+    worklogsType : TworklogsType
+}

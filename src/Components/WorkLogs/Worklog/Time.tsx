@@ -1,5 +1,5 @@
 import React from "react"
-import WLS from "../WorkLog.module.css";
+import WLS from "../Worklog.module.css";
 type TWorklogTimeProps = {
     timerValue : string | null
 }

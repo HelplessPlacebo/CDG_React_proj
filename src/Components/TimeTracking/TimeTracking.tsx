@@ -2,13 +2,12 @@ import React from "react";
 import TTS from "./TimeTracking.module.css"
 import {Timer} from "../Timer/Timer"
 import {useSelector} from "react-redux"
-import {getIssues} from "../../assets/utils/Selectors/IssuesSelectors";
-import {getPlayingWorklog} from "../../assets/utils/Selectors/WorklogsSelectors";
-import {useWorklogsFunctions} from "../hooks/useWorklogsFunctions";
-import {UnActiveTimer} from "./UnActiveTimer";
+import {getIssues} from "../../assets/utils/Selectors/IssuesSelectors"
+import {getPlayingWorklog} from "../../assets/utils/Selectors/WorklogsSelectors"
+import {useWorklogsFunctions} from "../hooks/useWorklogsFunctions"
+import {UnActiveTimer} from "./UnActiveTimer"
 
 export type TTimeTrackingProps = {
-    favoritesIsClicked: boolean
     openWorklogChangeModal: () => void
 }
 
@@ -42,7 +41,7 @@ export const TimeTracking: React.FC<TTimeTrackingProps> = (props) => {
                              setWorklogToChange={WFS.setWorklogToChange}
                              issues={issues}
                     />
-                    : <UnActiveTimer favoritesIsClicked={props.favoritesIsClicked}
+                    : <UnActiveTimer
                                      onAddEmptyWorklog={OnAddEmptyWorklog}/>
                 }
             </div>

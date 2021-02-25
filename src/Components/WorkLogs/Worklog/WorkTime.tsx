@@ -1,5 +1,5 @@
 import React from "react"
-import WLS from "../WorkLog.module.css";
+import WLS from "../Worklog.module.css";
 import ArrowUp from "../../../assets/imgs/arrow-up.svg";
 import {TWorkLog} from "../../../Redux/WorkLogsReducer";
 import {useBooleanStateReturnType} from "../../hooks/useBooleanState";

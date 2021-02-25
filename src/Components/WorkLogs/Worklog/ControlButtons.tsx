@@ -1,5 +1,5 @@
 import React from "react"
-import WLS from "../WorkLog.module.css";
+import WLS from "../Worklog.module.css";
 import StopButton from "../../../assets/imgs/stop_button.svg";
 import PlayButton from "../../../assets/imgs/play-button.svg";
 

@@ -1,17 +1,18 @@
 import React, {useEffect, useState,} from "react"
+import MS from "./ModalWindow.module.css"
 import {TimeSlider} from "./TimeSlider/TimeSlider"
 import Dialog from "@material-ui/core/Dialog/Dialog"
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle"
 import DialogContent from "@material-ui/core/DialogContent/DialogContent"
 import Grid from "@material-ui/core/Grid/Grid"
-import { TWorkLog} from "../../Redux/WorkLogsReducer";
-import {ChangeWorklogModalReduxForm} from "./ChangeWorklogModalForm";
-import {CalculateNewStartTime, ToFullTime} from "../../assets/secondary/CalculateTime";
-import {parseTimeStr} from "../../assets/secondary/ParseTimeStr";
-import {useSelector} from "react-redux";
-import {getWorklogToChange} from "../../assets/utils/Selectors/WorklogsSelectors";
-import {getIssues} from "../../assets/utils/Selectors/IssuesSelectors";
-import {useWorklogsFunctions} from "../hooks/useWorklogsFunctions";
+import { TWorkLog} from "../../Redux/WorkLogsReducer"
+import {ChangeWorklogModalReduxForm} from "./ChangeWorklogModalForm"
+import {CalculateNewStartTime, ToFullTime} from "../../assets/secondary/CalculateTime"
+import {parseTimeStr} from "../../assets/secondary/ParseTimeStr"
+import {useSelector} from "react-redux"
+import {getWorklogToChange} from "../../assets/utils/Selectors/WorklogsSelectors"
+import {getIssues} from "../../assets/utils/Selectors/IssuesSelectors"
+import {useWorklogsFunctions} from "../hooks/useWorklogsFunctions"
 
 
 export type TTimerValues = {
@@ -73,10 +74,12 @@ const ChangeWorklogModal: React.FC<TChangeWorklogModalProps> = (props) => {
     }
 
 
+
     if (!props.worklogChangeModalIsOpen) return null;
 
     return (
         <Dialog
+            className={MS.modalContainer}
             open={props.worklogChangeModalIsOpen}
             onClose={props.closeWorklogChangeModal}
             aria-labelledby="alert-dialog-title"

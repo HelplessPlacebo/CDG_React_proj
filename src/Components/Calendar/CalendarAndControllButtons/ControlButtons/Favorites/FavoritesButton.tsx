@@ -1,36 +1,19 @@
 import React from "react";
 import FS from "./Favorites.module.css"
 import {NavLink} from "react-router-dom";
-import { pink } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import {pink} from '@material-ui/core/colors'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import {TWorklogsTypeControlButtons} from "../../../../../globalTypes/Types"
 
-export type TFavoritesProps = {
-    favoritesIsClicked: boolean
-    onFavoritesClick: () => void
-}
-
-export const FavoritesButton: React.FC<TFavoritesProps> = (props) => {
-    return (
-        <div
-             className={props.favoritesIsClicked
-            ? FS.FavoritesButtonBgActive
-            : FS.FavoritesButtonBg} >
-
-            <div className={!props.favoritesIsClicked
-                ? FS.item
-                : FS.ActiveItem}>
-                <div className={FS.FavoritesTextContainer}>
-
-                    <div>
-                        <NavLink onClick={props.onFavoritesClick}  to={"/Home/Favorites"}> Favorites </NavLink>
-                    </div>
-
-                    <div style={{paddingLeft:".5rem"}}>
-                        <FavoriteIcon fontSize="small" style={{color : pink[500]}} />
-                    </div>
-
+export const FavoritesButton: React.FC<TWorklogsTypeControlButtons> = (props) => {
+    return <div className={props.worklogsType === "Favorites" ? FS.FavoritesButtonBgActive : FS.FavoritesButtonBg}>
+        <div className={props.worklogsType === "Favorites" ? FS.ActiveItem : FS.item}>
+            <div className={FS.FavoritesTextContainer}>
+                <NavLink to="/Home/Favorites"> Favorites </NavLink>
+                <div style={{paddingLeft: ".5rem"}}>
+                    <FavoriteIcon fontSize="small" style={{color: pink[500]}}/>
                 </div>
             </div>
         </div>
-    )
+    </div>
 }

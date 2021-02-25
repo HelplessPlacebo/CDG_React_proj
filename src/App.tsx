@@ -10,8 +10,8 @@ import SnackBar, {TSnackBarOptions} from "./Components/SnackBar/SnackBar"
 import {withSuspense} from "./Components/HOCs/withSuspense/withSuspense"
 import {PathErr} from "./Components/PathErrorPage/PathErr"
 import {CalendarAndControlButtons} from "./Components/Calendar/CalendarAndControllButtons/CalendarAndControlButtons"
-import {useSelector} from "react-redux";
-import {getProfileInfo} from "./assets/utils/Selectors/ProfileSelectors";
+import {useSelector} from "react-redux"
+import {getProfileInfo} from "./assets/utils/Selectors/ProfileSelectors"
 
 //////////////////////////// lazy loading ////////////////////////////////////////
 const Issues = React.lazy(() => import("./Components/Issues/Issues"))
@@ -31,7 +31,6 @@ export const App = () => {
 
     const [, setIsAuth] = useState<boolean | null>(null)
     const worklogModalStatus = useBooleanState(false)
-    const favoritesClickedStatus = useBooleanState(false)
     const userProfileClickedStatus = useBooleanState(false)
     const snackBarDisplayingStatus = useBooleanState(false)
     const [snackBarOptions, setSnackBarOptions] = useState<TSnackBarOptions>({
@@ -58,58 +57,57 @@ export const App = () => {
     }
 
 
-    return <div className="AppWrapper">
+    return <div className={AS.appWrapper}>
 
         {localStorage.getItem("IsAuth") === "true"
             ? <>
-                <MaterialNav openUserProfile={userProfileClickedStatus.Show} onUnAuth={onUnAuth} profileAvatarUrl={profileInfo.avatarUrl}/>
+                <MaterialNav openUserProfile={userProfileClickedStatus.Show} onUnAuth={onUnAuth}
+                             profileAvatarUrl={profileInfo.avatarUrl}/>
 
                 <Switch>
-                    <Route exact path='/' render={() => <Redirect to={"/Home/All"}/>}/>
-                    <Route exact path='/Issues'
-                           render={() => <SuspendedIssues/>}/>
+                    <Route exact path='/'>
+                        <Redirect to={"/Home/All"}/>
+                    </Route>
 
-                    <Route path='/Home'
-                           render={() => <>
-                               <div className={AS.CalendarAndButtonsContainer}>
-                                   <CalendarAndControlButtons
-                                       favoritesIsClicked={favoritesClickedStatus.isDisplayed}
-                                       onAllClicked={favoritesClickedStatus.Hide}
-                                       onFavoritesClick={favoritesClickedStatus.Show}
-                                   />
-                               </div>
+                    <Route exact path='/Issues'>
+                        <SuspendedIssues/>
+                    </Route>
 
-                               <div className={AS.MainWrapper}>
-                                   <Switch>
-                                       <Route exact path='/Home/All'
-                                              render={() => <WorkLogsBlock
-                                                  openWorklogChangeModal={worklogModalStatus.Show}
-                                                  componentToDraw="Worklogs"
-                                                  showSnackBar={showSnackBar}
-                                                  closeWorklogChangeModal={worklogModalStatus.Hide}
-                                              />
-                                              }/>
+                    <Route path='/Home/:worklogsType'>
+                        <>
+                            <div className={AS.CalendarAndButtonsContainer}>
+                                <CalendarAndControlButtons/>
+                            </div>
 
-                                       <Route exact path='/Home/Favorites'
-                                              render={() => <SuspendedFavorites
-                                                  openWorklogChangeModal={worklogModalStatus.Show}
-                                                  showSnackBar={showSnackBar}
-                                                  closeWorklogChangeModal={worklogModalStatus.Hide}
-                                                  componentToDraw="FavoritesWorklogs"
-                                              />}/>
-                                       <Route component={PathErr}/>
-                                   </Switch>
+                            <div className={AS.MainWrapper}>
+                                <Switch>
+                                    <Route exact path='/Home/All'>
+                                        <WorkLogsBlock
+                                            openWorklogChangeModal={worklogModalStatus.Show}
+                                            componentToDraw="Worklogs"
+                                            showSnackBar={showSnackBar}
+                                            closeWorklogChangeModal={worklogModalStatus.Hide}
+                                        />
+                                    </Route>
 
-                                   <div className={AS.TImeTracking_and_Calendar}>
-                                       <TimeTracking favoritesIsClicked={worklogModalStatus.isDisplayed}
-                                                     openWorklogChangeModal={worklogModalStatus.Show}
-                                       />
-                                   </div>
+                                    <Route exact path='/Home/Favorites'>
+                                        <SuspendedFavorites
+                                            openWorklogChangeModal={worklogModalStatus.Show}
+                                            showSnackBar={showSnackBar}
+                                            closeWorklogChangeModal={worklogModalStatus.Hide}
+                                            componentToDraw="FavoritesWorklogs"/>
+                                    </Route>
+                                    <Route component={PathErr}/>
+                                </Switch>
 
-                               </div>
-                           </>
-                           }
-                    />
+                                <div className={AS.TImeTracking_and_Calendar}>
+                                    <TimeTracking openWorklogChangeModal={worklogModalStatus.Show}/>
+                                </div>
+
+                            </div>
+                        </>
+                    </Route>
+
                     <Route component={PathErr}/>
                 </Switch>
             </>

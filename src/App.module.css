@@ -1,7 +1,4 @@
 
-html{
-    background-color: #E5E5E5;
-}
 
 @font-face {
     font-family: 'Roboto', serif;
@@ -10,9 +7,10 @@ html{
     font-style: normal;
     font-display: fallback;
 }
-
-.MainWrapper {
+.appWrapper{
     font-family: "Roboto",serif;
+}
+.MainWrapper {
     display: grid;
     /*grid-template-columns: 1296px 624px;*/
     grid-template-columns: 70% 30%;
@@ -20,7 +18,6 @@ html{
 }
 
 .CalendarAndButtonsContainer {
-    font-family: "Roboto",serif;
     padding-top: 52px;
     padding-left: 96px;
 }

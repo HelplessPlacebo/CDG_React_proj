@@ -1,0 +1,26 @@
+
+.userPhoto{
+    border-radius: 50%;
+    cursor: pointer;
+}
+.fileInput{
+    display: none;
+}
+.deletePhotoIcon{
+    display: none;
+}
+
+.imgContainer{
+    position: relative;
+}
+.imgContainer:hover .deletePhotoIcon{
+    display: block;
+    position: absolute;
+    top:0;
+    border-radius: 50%;
+    background-color: #ffffff;
+    animation: show .7s;
+}
+@keyframes show {
+    from {opacity: 0;} to {opacity: 1;}
+}

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {WorkLog} from "./WorkLog";
 import {WorklogInfo} from "./WorklogInfo/WorklogInfo";
-import WLS from "./WorkLog.module.css"
+import WLS from "./Worklog.module.css"
 import {useBooleanState} from "../hooks/useBooleanState"
 import {useSelector} from "react-redux"
 import {getFavoritesWorklog, getPlayingWorklog, getWorklogsBlocks} from "../../assets/utils/Selectors/WorklogsSelectors"

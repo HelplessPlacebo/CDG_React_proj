@@ -1,5 +1,5 @@
 import React, {Dispatch} from "react";
-import WLDD from "./WorklogDropDown.module.css"
+import WLDD from "../Worklog.module.css"
 import {
     CurrentDate, randomInteger, TAddToFavorite,
     TAddWorklog, TBlockInfo, TWorkLog
@@ -19,14 +19,14 @@ export type TWorklogDropDownProps = {
     onHideMenu: () => void
     worklogInfo: TWorkLog
     nestingIsShowing: boolean
-    parentId : number | undefined
+    parentId: number | undefined
 }
 export const WorkLogDropDown: React.FC<TWorklogDropDownProps> = (props) => {
 
     const OnDeleteModalOpenContainer = () => {
         if ((props.componentToDraw === "FavoritesWorklogs" && !props.playingWorklog)
             || (props.blockInfo?.BlockCreatedDate === CurrentDate && !props.playingWorklog)) {
-            props.setWorklogToDelete({...props.worklogInfo,ParentId : props.parentId})
+            props.setWorklogToDelete({...props.worklogInfo, ParentId: props.parentId})
             props.showDeleteModal()
         }
     }
@@ -53,23 +53,11 @@ export const WorkLogDropDown: React.FC<TWorklogDropDownProps> = (props) => {
         }
     }
 
-
-    return (<div onMouseLeave={props.onHideMenu} className={WLDD.Container}>
-        <div onClick={props.onHideMenu} className={WLDD.ContentContainer}>
-
-            <div onClick={OnDuplicateWorklog} className={WLDD.ContainerEl}>
-                Duplicate
-            </div>
-
-            <div onClick={OnAddToFavorites} className={WLDD.ContainerEl}>
-                Add to Favorite
-            </div>
-
-            <div onClick={OnDeleteModalOpenContainer} className={WLDD.ContainerEl}>
-                Delete
-            </div>
-
+    return <div onClick={props.onHideMenu} className={WLDD.dropDownMenuContainer}>
+        <div className={WLDD.dropDownMenuContainerContent}>
+            <div onClick={OnDuplicateWorklog}>Duplicate</div>
+            <div onClick={OnAddToFavorites}>Add to Favorite</div>
+            <div onClick={OnDeleteModalOpenContainer}>Delete</div>
         </div>
-
-    </div>)
+    </div>
 }

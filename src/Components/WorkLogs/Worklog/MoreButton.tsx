@@ -1,5 +1,5 @@
 import React from "react"
-import WLS from "../WorkLog.module.css";
+import WLS from "../Worklog.module.css";
 import WLMoreButtonBG from "../../../assets/imgs/worklogMoreButtonBG.svg";
 import WLMoreButtonVertical from "../../../assets/imgs/worklogMoreVertical.svg";
 type TOnHoverMoreButtonProps = {
@@ -7,12 +7,14 @@ type TOnHoverMoreButtonProps = {
     onShow : ()=>void
 }
 
-export const OnHoverMoreButton:React.FC<TOnHoverMoreButtonProps>=(props)=><div className="WLMoreContainer">
+export const MoreButton:React.FC<TOnHoverMoreButtonProps>=(props)=><div className="WLMoreContainer">
     <div className={props.isActive ? WLS.WorklogMoreButtonActive : WLS.WorklogMoreButton}>
         <img src={WLMoreButtonBG} alt=""/>
     </div>
 
-    <div onMouseEnter={props.onShow} className={props.isActive ? WLS.WorklogMoreVerticalActive : WLS.WorklogMoreVertical}>
+    <div
+        // onMouseEnter={props.onShow}
+        className={props.isActive ? WLS.WorklogMoreVerticalActive : WLS.WorklogMoreVertical}>
         <img src={WLMoreButtonVertical} alt="more-vertical"/>
     </div>
 

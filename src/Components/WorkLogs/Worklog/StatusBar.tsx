@@ -1,5 +1,5 @@
 import React from "react"
-import WLS from "../WorkLog.module.css";
+import WLS from "../Worklog.module.css";
 import CP_ok from "../../../assets/imgs/ok_cp.svg";
 import CP_warning from "../../../assets/imgs/warning_cp.svg";
 import CP_danger from "../../../assets/imgs/danger_cp.svg";

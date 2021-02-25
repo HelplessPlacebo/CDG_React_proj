@@ -5,7 +5,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import {TransitionProps} from '@material-ui/core/transitions';
 import {UserProfileReduxForm} from "./UserProfileForm";
-import {putProfileAC, TProfileInfo} from "../../Redux/ProfileReducer";
+import {deletePhotoAC, putProfileAC, TProfileInfo} from "../../Redux/ProfileReducer";
 import {TImgValue} from "../CustomElements/CustomInputs/ImgInput";
 import {useDispatch} from "react-redux";
 
@@ -28,13 +28,12 @@ const ModalUserProfile: React.FC<TModalUserProfile> = (props) => {
     const dispatch = useDispatch()
 
     const SaveProfileData = (formData: TProfileInfo) => {
-        try {
             dispatch(putProfileAC({...formData, avatarUrl : tempImg.url}))
             props.hide()
-        }
-        catch (e) {
-            console.log(e)
-        }
+    }
+    const onDeleteClick=()=>{
+        dispatch(deletePhotoAC())
+        setTempImg({file : null,url : null})
     }
 
     return <Dialog open={props.isOpen} TransitionComponent={Transition} keepMounted
@@ -47,6 +46,7 @@ const ModalUserProfile: React.FC<TModalUserProfile> = (props) => {
             <UserProfileReduxForm
                 value={tempImg}
                 setValue={setTempImg}
+                onDeleteClick={onDeleteClick}
                 initialValues={props.profileInfo}
                 onSubmit={SaveProfileData} profileInfo={props.profileInfo} onClose={props.hide}/>
         </DialogContent>

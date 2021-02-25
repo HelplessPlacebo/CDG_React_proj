@@ -1,6 +1,5 @@
 
 .WorklogInfoContainer {
-    font-family: 'Roboto', serif;
     /*width: 1085px;*/
     padding-top: 50px;
     padding-left: 96px;
@@ -14,19 +13,14 @@
     z-index: 30;
 }
 
-
-
 .WorklogBlockContainer:hover {
+    width: 1150px;
     background-color: #FFFFFF;
     border-radius: 10px;
-    z-index: 200;
+    animation: show .271s;
 }
 
-.WorklogBlockContainer:hover .WorklogMoreButton {
-    display: block;
-}
-
-.WorklogBlockContainer:hover .WorklogMoreVertical {
+.WorklogBlockContainer:hover .moreButtonsContainer {
     display: block;
 }
 
@@ -50,44 +44,30 @@
 }
 
 .WorklogMoreVertical {
-    display: none;
     position: relative;
     top: 32px;
     left: 50px;
     z-index: 40;
 }
-
-.WorklogMoreVerticalActive {
+.WorklogMoreVertical:hover .dropDownMenuContainer{
     display: block;
-    position: relative;
-    top: 32px;
-    left: 50px;
-    z-index: 40;
+    animation: show .3s;
 }
 
+.moreButtonsContainer{
+    display: none;
+}
+.moreButtonsActiveContainer{
+    display: block;
+}
 .WorklogMoreButton {
-    display: none;
     position: absolute;
     padding-left: 20px;
-}
-
-.WorklogMoreButtonActive {
-    position: absolute;
-    padding-left: 20px;
-    display: block;
 }
 
 /*                                              */
 
-.WorklogBlockContainer:hover {
-    font-family: 'Roboto', serif;
-    width: 1150px;
-    background-color: #FFFFFF;
-    border-radius: 10px;
-}
-
 .WorklogBlockContainerActive {
-    font-family: 'Roboto', serif;
     width: 1150px;
     margin-top: 5px;
     margin-left: 73px;
@@ -98,7 +78,6 @@
 .WorklogBlockContainer:hover .WLInfoButton {
     margin-left: 20px;
     display: block;
-    transition: 0.6s ease-in-out;
 }
 
 .WorklogBlockContainer:hover .WLlinestroke {
@@ -267,4 +246,41 @@
 .TwwContentImg {
     margin-top: 13.6px;
     margin-left: 13.6px;
+}
+
+
+.dropDownMenuContainer{
+    display: none;
+    margin-top: 10px;
+    position: absolute;
+    left : -70px;
+    top:10px;
+    width: 169px;
+    height: 140px;
+    background: #FFFFFF;
+    box-shadow: 0 3px 33px -.5px rgba(0, 0, 0, .2);
+    border-radius: 10px;
+    z-index: 200;
+}
+.dropDownMenuContainerContent{
+    margin-top: 13px;
+}
+.dropDownMenuContainerContent div {
+    cursor: pointer;
+    display: flex;
+    padding: .5rem 0 .5rem 0;
+    align-items: center;
+    justify-content: center;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1rem;
+    line-height: 144.2%;
+    color: #4F4F4F;
+}
+.dropDownMenuContainerContent div:hover{
+    background: #E3F3FF;
+}
+
+@keyframes show {
+    from {opacity: 0;} to {opacity: 1;}
 }

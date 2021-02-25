@@ -6,8 +6,10 @@ import {CreateField, FormInput} from "../../assets/utils/ValidartorsComponents/E
 import {required} from "../../assets/utils/validators"
 import {CustomizedButton} from "../CustomElements/CustomizedButton/CustomizedButton"
 import {InjectedFormProps, reduxForm} from "redux-form"
-import {ImgInput, TImgValue} from "../CustomElements/CustomInputs/ImgInput"
+import {ImgInput, onDeleteClick, TImgValue} from "../CustomElements/CustomInputs/ImgInput"
 import EmptyAvatar from "../../assets/imgs/EmptyAvatar.jpg"
+import SaveIcon from "@material-ui/icons/Save";
+import CloseIcon from "@material-ui/icons/Close";
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -26,8 +28,9 @@ const useStyles = makeStyles((theme: Theme) =>
 type TOwnProps = {
     profileInfo: TProfileInfo
     onClose: () => void
-    value : TImgValue
-    setValue : Dispatch<SetStateAction<TImgValue>>
+    value: TImgValue
+    setValue: Dispatch<SetStateAction<TImgValue>>
+    onDeleteClick?: onDeleteClick
 }
 
 export const UserProfileForm: React.FC<InjectedFormProps<TProfileInfo, TOwnProps> & TOwnProps> = (props) => {
@@ -39,10 +42,9 @@ export const UserProfileForm: React.FC<InjectedFormProps<TProfileInfo, TOwnProps
               className={"SignInFormContainer"}>
             <Grid container direction="column" justify="center" alignItems="center">
 
-                <ImgInput value={props.value} setValue={props.setValue} defaultImgUrl={EmptyAvatar} />
+                <ImgInput value={props.value} setValue={props.setValue} defaultImgUrl={EmptyAvatar}
+                          options={{withDeleting: true, onDeleteClick: props.onDeleteClick}}/>
 
-                {/*{CreateField(null, "avatarUrl", [],*/}
-                {/*    ImgsInput,{defaultImg : EmptyAvatar,type:"file"})}*/}
 
                 <Grid style={{paddingTop: "2rem"}} item className="ProfileFormInputs">
                     {CreateField("Enter your fist name", "firstName", [required],
@@ -59,13 +61,14 @@ export const UserProfileForm: React.FC<InjectedFormProps<TProfileInfo, TOwnProps
 
                     <Grid item>
                         <CustomizedButton onClick={props.handleSubmit} text="save"
-                                          variant="contained" bgColor="green"
-                                          fontSize="1.11rem"/>
+                                          variant="outlined" fontColor="blue"
+                                          fontSize=".9rem" startIcon={<SaveIcon/>}/>
                     </Grid>
 
                     <Grid item>
                         <CustomizedButton onClick={props.onClose} text="close"
-                                          variant="contained" bgColor="blue" fontSize="1.11rem"/>
+                                          variant="outlined" fontColor="red"
+                                          fontSize=".9rem" startIcon={<CloseIcon/>}/>
                     </Grid>
                 </Grid>
 

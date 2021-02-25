@@ -1,5 +1,5 @@
 import React, {Dispatch, SetStateAction} from "react";
-import WLS from "./WorkLog.module.css"
+import WLS from "./Worklog.module.css"
 import {LineStroke} from "../LineStroke/LineStroke";
 import {
     CurrentDate,
@@ -20,7 +20,9 @@ import {StatusBar} from "./Worklog/StatusBar";
 import {IssueAndTask} from "./Worklog/IssueAndTask";
 import {WorklogTime} from "./Worklog/Time";
 import {ControlButtons} from "./Worklog/ControlButtons";
-import {OnHoverMoreButton} from "./Worklog/OnHoverMoreButton";
+import {MoreButton} from "./Worklog/MoreButton";
+import WLMoreButtonBG from "../../assets/imgs/worklogMoreButtonBG.svg";
+import WLMoreButtonVertical from "../../assets/imgs/worklogMoreVertical.svg";
 
 
 export type TWorklogOwnProps = {
@@ -33,7 +35,7 @@ export type TWorklogOwnProps = {
     setWorklogToChange: TSetWorklogToChange
     addWorklog: TAddWorklog
     addToFavorite: TAddToFavorite
-    showDeleteModal : ()=> void
+    showDeleteModal: () => void
 }
 export type TWorklogProps = TWorklogsContainerOwnProps & TWorklogOwnProps
 
@@ -98,9 +100,33 @@ export const WorkLog: React.FC<TWorklogProps> = (props) => {
                         onStopButtonClicked={onStopButtonClicked}
                         onPlayButtonClicked={onPlayButtonClicked}/>
 
-                    <OnHoverMoreButton
-                        isActive={props.playingWorklog?.id === props.worklogInfo.id || dropDownMenuStatus.isDisplayed}
-                        onShow={dropDownMenuStatus.Show}/>
+                    <div className={props.playingWorklog?.id === props.worklogInfo.id
+                        ? WLS.moreButtonsActiveContainer
+                        : WLS.moreButtonsContainer}>
+
+                        <div className={WLS.WorklogMoreButton}>
+                            <img src={WLMoreButtonBG} alt=""/>
+                        </div>
+
+                        <div className={WLS.WorklogMoreVertical}>
+                            <img src={WLMoreButtonVertical} alt="more-vertical"/>
+
+                            <WorkLogDropDown onHideMenu={dropDownMenuStatus.Hide}
+                                             nestingIsShowing={nestingItemsStatus.isDisplayed}
+                                             showSnackBar={props.showSnackBar}
+                                             playingWorklog={props.playingWorklog}
+                                             addWorklog={props.addWorklog}
+                                             componentToDraw={props.componentToDraw}
+                                             setWorklogToDelete={props.setWorklogToDelete}
+                                             showDeleteModal={props.showDeleteModal}
+                                             addToFavorite={props.addToFavorite}
+                                             worklogInfo={props.worklogInfo}
+                                             blockInfo={props.blockInfo}
+                                             parentId={props.parentId}
+                            />
+
+                        </div>
+                    </div>
 
                 </div>
 
